@@ -1,0 +1,12 @@
+<launch>
+    <param name="ekf_option" type="bool" value="true" /> <!--false-->
+    <arg   name="ekf_option_flag" default="1"/>
+
+
+    <!-- ekf_localization -->
+    <group if="$(eval arg('ekf_option_flag')==1)">
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" clear_params="true"> 
+            <rosparam command="load" file="$(find eric_a_navigation)/config/ekf_localization.yaml" />
+        </node>
+    </group>
+</launch>

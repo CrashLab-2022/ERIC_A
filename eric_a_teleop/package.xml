@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eric_a_teleop</name>
+  <version>0.0.0</version>
+  <description> ERIC_A_teleop package </description> 
+  <author email="kimjh9813@naver.com">jeonghan</author>
+  <maintainer email="kimjh9813@naver.com">jeonghan</maintainer> 
+  <license>Apache 2.0</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>rospy</depend>
+  <depend>geometry_msgs</depend>
+</package>

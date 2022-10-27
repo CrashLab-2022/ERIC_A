@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eric_a_navigation</name>
+  <version>0.0.1</version>
+  <description> ERIC_A navigation package
+  </description>
+  <author email="kimjh9813@naver.com">jeonghan</author>
+  <maintainer email="kimjh9813@naver.com">jeonghan</maintainer> 
+  <license>Apache 2.0</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
+</package>

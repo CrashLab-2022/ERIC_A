@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eric_a_obstacle_detect</name>
+  <version>0.0.0</version>
+  <description> ERIC_A obstacle_detect package </description> 
+  <author email="kimjh9813@naver.com">jeonghan</author>
+  <maintainer email="kimjh9813@naver.com">jeonghan</maintainer> 
+  <license>Apache 2.0</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <exec_depend>message_runtime</exec_depend>
+</package>
