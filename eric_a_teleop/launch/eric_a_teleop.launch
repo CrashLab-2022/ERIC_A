@@ -1,3 +1,3 @@
 <launch>
-  <node pkg="eric_a_teleop" type="eric_a_teleop_key" name="eric_a_teleop_keyboard"  output="screen"/>
+  <node pkg="eric_a_teleop" type="eric_a_teleop.py" name="eric_a_teleop_keyboard"  output="screen"/>
 </launch>
