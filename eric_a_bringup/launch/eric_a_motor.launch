@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="eric_a_bringup" type="eric_a_motor_node.py" name="eric_a_motor_node"  output="screen"/>
+</launch>

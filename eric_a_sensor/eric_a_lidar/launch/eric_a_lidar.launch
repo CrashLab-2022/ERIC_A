@@ -1,8 +1,12 @@
 <launch>
-  <node name="ydlidar_lidar_publisher"  pkg="ydlidar_ros_driver"  type="ydlidar_ros_driver_node" output="screen" respawn="false" >
+
+  <arg name="set_port" default="/dev/ttyLIDAR"/>
+  <arg name="set_frame_id" default="laser_link"/>
+  
+  <node pkg="eric_a_lidar"  type="eric_a_lidar_node" name="ydlidar_lidar_publisher" output="screen" respawn="false" >
     <!-- string property -->
-    <param name="port"         type="string" value="/dev/ydlidar"/>  
-    <param name="frame_id"     type="string" value="laser_frame"/>
+    <param name="port"         type="string" value="$(arg set_port)"/>  
+    <param name="frame_id"     type="string" value="$(arg set_frame_id)"/>
     <param name="ignore_array"     type="string" value=""/>
 
     <!-- int property -->
@@ -26,12 +30,13 @@
     <param name="point_cloud_preservative"    type="bool"   value="false"/>
 
     <!-- float property -->
-    <param name="angle_min"    type="double" value="-180" />
-    <param name="angle_max"    type="double" value="180" />
+    <param name="angle_min"    type="double" value="-100.54" />
+    <param name="angle_max"    type="double" value="100.54" />
     <param name="range_min"    type="double" value="0.1" />
     <param name="range_max"    type="double" value="16.0" />
     <param name="frequency"    type="double" value="10.0"/>
   </node>
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4"
-    args="0.0 0.0 0.2 0.0 0.0 0.0 /base_footprint /laser_frame 40" />
+  
+  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
+    args="0.168 0.0 0.0712 0.0 0.0 0.0 /base_link /base_scan 40" />
 </launch>

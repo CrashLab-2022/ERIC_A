@@ -1,0 +1,4 @@
+<launch>
+  <arg name="urdf_file" default="$(find xacro)/xacro.py --inorder '$(find eric_a_description)/urdf/eric_a.urdf.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+</launch>

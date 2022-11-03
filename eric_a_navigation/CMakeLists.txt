@@ -7,11 +7,17 @@ project(eric_a_navigation)
 ################################################################################
 # Find catkin packages and libraries for catkin and system dependencies
 ################################################################################
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+    rospy
+    std_msgs
+    message_generation
+)
 
 ################################################################################
 # Setup for python modules and scripts
 ################################################################################
+
+catkin_python_setup()
 
 ################################################################################
 # Declare ROS messages, services and actions
@@ -24,7 +30,12 @@ find_package(catkin REQUIRED)
 ################################################################################
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
-catkin_package()
+catkin_package(
+#  INCLUDE_DIRS include
+#  LIBRARIES eric_a_teleop
+ CATKIN_DEPENDS rospy std_msgs
+#  DEPENDS system_lib
+)
 
 ################################################################################
 # Build

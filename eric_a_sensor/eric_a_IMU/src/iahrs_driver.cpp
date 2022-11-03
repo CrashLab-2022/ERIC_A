@@ -61,6 +61,8 @@ double m_dRoll, m_dPitch, m_dYaw;
 sensor_msgs::Imu imu_data_msg;
 //tf_prefix add
 std::string tf_prefix_;
+std::string imu_frame_id;
+std::string frame_id;
 //single_used TF
 bool m_bSingle_TF_option = false;
 
@@ -283,7 +285,10 @@ int main (int argc, char** argv)
     	ros::init(argc, argv, "eric_a_imu");
 
 	ros::NodeHandle private_node_handle("~");
-    	private_node_handle.param<double>("time_offset_in_seconds", time_offset_in_seconds, 0.0);
+	private_node_handle.param<double>("time_offset_in_seconds", time_offset_in_seconds, 0.0);
+	
+	// std::string frame_id = "IMU_frame";
+	private_node_handle.param<std::string>("frame_id", frame_id, "imu_link");
 	
 	ros::param::get("tf_prefix", tf_prefix_);
 
@@ -317,8 +322,10 @@ int main (int argc, char** argv)
 	
 	nh.getParam("m_bSingle_TF_option", m_bSingle_TF_option);
     	printf("##m_bSingle_TF_option: %d \n", m_bSingle_TF_option);
+	int frequency = 100
+	nh.getparam("frequency", frequency);
 
-    	ros::Rate loop_rate(100); //HZ
+    	ros::Rate loop_rate(frequency); //HZ
     	serial_open();
 
 	SendRecv("za\n", dSend_Data, 10);	// Euler Angle -> '0.0' Reset
@@ -387,7 +394,7 @@ int main (int argc, char** argv)
 				q.setRPY(_pIMU_data.dEuler_angle_Roll, _pIMU_data.dEuler_angle_Pitch, _pIMU_data.dEuler_angle_Yaw);
 				transform.setRotation(q);
 				//br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "imu_link"));
-				br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), tf_prefix_ + "/base_link", tf_prefix_ + "/imu_link"));
+				br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), tf_prefix_ + "/base_link", tf_prefix_ + frame_id));
 			}
 
 

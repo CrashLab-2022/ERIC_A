@@ -59,8 +59,8 @@ int main(int argc, char **argv) {
 //    nh.advertise<ydlidar_ros_driver::LaserFan>("laser_fan", 1);
 
   ros::NodeHandle nh_private("~");
-  std::string str_optvalue = "/dev/ydlidar";
-  nh_private.param<std::string>("port", str_optvalue, "/dev/ydlidar");
+  std::string str_optvalue = "/dev/ttyLIDAR";
+  nh_private.param<std::string>("port", str_optvalue, "/dev/ttyLIDAR");
   ///lidar port
   laser.setlidaropt(LidarPropSerialPort, str_optvalue.c_str(),
                     str_optvalue.size());

@@ -1,0 +1,19 @@
+<launch>
+    <arg name="set_port_lidar" default="/dev/ttyLIDAR"/>
+    <arg name="set_port_imu" default="/dev/ttyIMU"/>
+    <arg name="set_lidar_frame_id" default="laser_link"/>
+    <arg name="set_imu_frame_id" default="imu_link"/>
+
+    <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch"/>
+
+    <include file="$(find eric_a_lidar)/launch/omo_r1_lidar.launch">
+        <arg name="set_port" default="$(arg set_port_lidar)"/>
+        <arg name="set_frame_id" default="$(arg set_lidar_frame_id)"/>
+    </include>
+
+    <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
+        <arg name="set_port" default="$(arg set_port_imu)"/>
+        <arg name="set_frame_id" default="$(arg set_imu_frame_id)"/>
+    </include>
+
+</launch>

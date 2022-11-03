@@ -67,7 +67,7 @@ link_directories(${YDLIDAR_SDK_LIBRARY_DIRS})
 #---------------------------------------------------------------------------------------
 # generate excutable and add libraries
 #---------------------------------------------------------------------------------------
-add_executable(${PROJECT_NAME}_node src/ydlidar_ros_driver.cpp)
+add_executable(${PROJECT_NAME}_node src/eirc_a_lidar.cpp)
 
 #---------------------------------------------------------------------------------------
 # add projects that depend on

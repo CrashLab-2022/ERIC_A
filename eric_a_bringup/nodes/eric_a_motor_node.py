@@ -98,9 +98,9 @@ class hongdorosMotorNode:
       self.config = RobotConfig()
       self.config.wheel_separation = 0.2052
       self.config.wheel_radius = 0.0575
-      self.config.max_lin_vel_wheel = 1200.0
-      self.config.max_lin_vel_x = 1.2
-      self.config.max_ang_vel_z = 1.0
+      self.config.max_lin_vel_wheel = 1101.0
+      self.config.max_lin_vel_x = 1.101
+      self.config.max_ang_vel_z = 5.365
       self.config.encoder_pulse_per_gear_rev = 1000
       self.config.encoder_gear_ratio = 21
       self.config.body_circumference = self.config.wheel_separation * math.pi
@@ -167,7 +167,7 @@ class hongdorosMotorNode:
 
       odom = Odometry()
       odom.header.frame_id = "/odom"
-      odom.child_frame_id = "/base_footprint"
+      odom.child_frame_id = "/base_link"
 
       self.odom_broadcaster.sendTransform((self.odom_pose.x, self.odom_pose.y, 0.), 
                                              odom_orientation_quat, self.odom_pose.timestamp, 

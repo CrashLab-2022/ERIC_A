@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
+<arg name="set_frame_id" default="imu_link"/>
+<arg name="frequency" default="100"/>
 <launch>
-  <param name="m_bSingle_TF_option" type="bool" value="true" /> <!--false-->
-  <node pkg="iahrs_driver" type="iahrs_driver" name="iahrs_driver" output="screen" />
+  <node pkg="eric_a_imu" type="iahrs_driver" name="eric_a_IMU_node" output="screen" >
+    <param name="m_bSingle_TF_option" type="bool" value="true" /> <!--false-->
+    <param name="frame_id" type="string" value="$(arg set_frame_id)" />
+    <param name="frame_id" type="int" value="$(frequency)" />
+  </node>
+
 </launch>
