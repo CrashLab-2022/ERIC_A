@@ -14,9 +14,21 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
 )
 
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
+find_path(YAML_CPP_INCLUDE_DIR
+  NAMES yaml_cpp.h
+  PATHS ${YAML_CPP_INCLUDE_DIRS}
+)
+find_library(YAML_CPP_LIBRARY
+  NAMES YAML_CPP
+  PATHS ${YAML_CPP_LIBRARY_DIRS}
+)
+link_directories(${YAML_CPP_LIBRARY_DIRS})
 
+if(NOT ${YAML_CPP_VERSION} VERSION_LESS "0.5")
+add_definitions(-DHAVE_NEW_YAMLCPP)
+endif(NOT ${YAML_CPP_VERSION} VERSION_LESS "0.5")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -104,11 +116,11 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES eric_a_bringup
-CATKIN_DEPENDS  rospy
+  CATKIN_DEPENDS  rospy
                 std_msgs
                 roscpp
                 
-#  DEPENDS system_lib
+  DEPENDS system_lib
 )
 
 ###########
@@ -118,8 +130,9 @@ CATKIN_DEPENDS  rospy
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
+  include
+  ${catkin_INCLUDE_DIRS}
+  ${YAML_CPP_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -135,8 +148,9 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/eric_a_bringup_node.cpp)
-
+add_executable(eric_a_control_node src/eric_a_control.cpp)
+add_dependencies(eric_a_control_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(eric_a_control_node ${catkin_LIBRARIES} pigpiod_if2)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -187,7 +201,7 @@ catkin_install_python(PROGRAMS
 #   PATTERN ".svn" EXCLUDE
 # )
 
-install( DIRECTORY launch
+install( DIRECTORY launch scripts 
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
