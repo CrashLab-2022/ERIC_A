@@ -1,3 +1,9 @@
 <launch>
-  <node pkg="eric_a_bringup" type="eric_a_motor_node.py" name="eric_a_motor_node"  output="screen"/>
+  <arg name="machine" />     
+  <node pkg="eric_a_bringup" 
+        type="eric_a_motor_node.py" 
+        name="eric_a_motor_node"  
+        output="screen"
+        machine="$(arg machine)"
+  />
 </launch>
