@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eric_a_slam</name>
+  <version>0.0.0</version>
+  <description>
+    ERIC_A robot slam package
+  </description>
+  <license>Apache 2.0</license>
+  <author email="kimjh9813@naver.com">jeonghan</author>
+  <maintainer email="kimjh9813@naver.com">jeonghan</maintainer> 
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>eric_a_bringup</exec_depend>
+  <exec_depend>gmapping</exec_depend>
+</package>
