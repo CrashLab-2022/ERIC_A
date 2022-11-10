@@ -29,7 +29,7 @@
 #include <dirent.h>
 #include <signal.h>
 
-#define SERIAL_PORT		"/dev/IMU"
+#define SERIAL_PORT		"/dev/ttyIMU"
 #define SERIAL_SPEED		B115200
 
 typedef struct IMU_DATA
@@ -61,8 +61,9 @@ double m_dRoll, m_dPitch, m_dYaw;
 sensor_msgs::Imu imu_data_msg;
 //tf_prefix add
 std::string tf_prefix_;
-std::string imu_frame_id;
 std::string frame_id;
+std::string set_port;
+float frequency;
 //single_used TF
 bool m_bSingle_TF_option = false;
 
@@ -285,11 +286,20 @@ int main (int argc, char** argv)
     	ros::init(argc, argv, "eric_a_imu");
 
 	ros::NodeHandle private_node_handle("~");
+	//IMU port
+	// set_port = "/dev/ttyIMU";
+	// private_node_handle.param<std::string>("port", set_port, "/dev/ttyIMU")
+
+	//time_offset_in_seconds
 	private_node_handle.param<double>("time_offset_in_seconds", time_offset_in_seconds, 0.0);
 	
-	// std::string frame_id = "IMU_frame";
+	frame_id = "imu_link";
 	private_node_handle.param<std::string>("frame_id", frame_id, "imu_link");
 	
+	frequency = 100.f;
+	private_node_handle.param<float>("frequency", frequency, 100.f);
+
+
 	ros::param::get("tf_prefix", tf_prefix_);
 
 	tf::TransformBroadcaster br;
@@ -309,24 +319,22 @@ int main (int argc, char** argv)
 	imu_data_msg.orientation_covariance[4] = 0.011*(M_PI/180.0);
 	imu_data_msg.orientation_covariance[8] = 0.006*(M_PI/180.0);
 
-    	ros::NodeHandle nh;
+	ros::NodeHandle nh;
 	ros::Publisher imu_data_pub = nh.advertise<sensor_msgs::Imu>("imu/data", 1);
 	
 	//IMU Service///////////////////////////////////////////////////////////////////////////////////////////////
-    	ros::NodeHandle sh;
-    	all_data_reset_service = sh.advertiseService("all_data_reset_cmd", All_Data_Reset_Command);
+	ros::NodeHandle sh;
+	all_data_reset_service = sh.advertiseService("all_data_reset_cmd", All_Data_Reset_Command);
 	euler_angle_init_service = sh.advertiseService("euler_angle_init_cmd", Euler_Angle_Init_Command);
 	euler_angle_reset_service = sh.advertiseService("euler_angle_reset_cmd", Euler_Angle_Reset_Command);
 	pose_velocity_reset_service = sh.advertiseService("pose_velocity_reset_cmd", Pose_Velocity_Reset_Command);
 	reboot_sensor_service = sh.advertiseService("reboot_sensor_cmd", Reboot_Sensor_Command);
 	
-	nh.getParam("m_bSingle_TF_option", m_bSingle_TF_option);
-    	printf("##m_bSingle_TF_option: %d \n", m_bSingle_TF_option);
-	int frequency = 100
-	nh.getparam("frequency", frequency);
+	nh.param<bool>("m_bSingle_TF_option", m_bSingle_TF_option, true);
+		printf("##m_bSingle_TF_option: %d \n", m_bSingle_TF_option);
 
-    	ros::Rate loop_rate(frequency); //HZ
-    	serial_open();
+	ros::Rate loop_rate(frequency); //HZ
+	serial_open();
 
 	SendRecv("za\n", dSend_Data, 10);	// Euler Angle -> '0.0' Reset
 	usleep(10000);
