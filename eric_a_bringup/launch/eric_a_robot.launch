@@ -1,7 +1,9 @@
 <launch>
+    <arg name="mode" default="0"/>
+    <!--slam is 0, navigation is 1 -->
+
 
     <!-- master rasberry pi -->
-    
     <arg name="set_port_lidar" default="/dev/ttyLIDAR"/>
     <!-- <arg name="set_port_imu" default="/dev/ttyIMU"/> -->
     <arg name="set_lidar_frame_id" default="laser_link"/>
@@ -20,7 +22,11 @@
         <arg name="frequency" default="100.0"/>
     </include>
 
+    <include if="$(eval arg(mode) =='0')" file="$(find eric_a_slam)/lauch/eric_a_slam.launch"/>
+    <!-- mapping -->
 
+    <include if="$(eval arg(mode) =='1')" file="$(find eric_a_navigation)/launch/eric_a_navigation"/>
+    <!-- navigation -->
 
     <!-- remote control rasberry pi -->
     <group>
@@ -35,6 +41,13 @@
             <arg name="machine" default="control_machine"/>
         </include>
 
+        <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
+            <arg name="machine" default="control_machine"/>
+        </include>  
+
+        <include if="$(eval arg(mode) =='1')"  file="$(find eric_a_navigation)/launch/amcl.launch">
+            <arg name="machine" default="control_machine"/>
+        </include>
     </group>
 
 </launch>

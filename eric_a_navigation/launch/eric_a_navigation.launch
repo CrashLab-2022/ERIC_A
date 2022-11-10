@@ -4,9 +4,6 @@
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
 
-  <!-- OMO R1 -->
-  <!-- <include file="$(find omo_r1_bringup)/launch/omo_r1_remote.launch"/> -->
-
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 

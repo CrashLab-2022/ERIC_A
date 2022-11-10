@@ -1,5 +1,6 @@
 <launch>
   <!-- Arguments -->
+  <arg name="machine" /> 
   <arg name="scan_topic"     default="base_scan"/>
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
@@ -8,7 +9,7 @@
 
   <!-- AMCL -->
   <group if="$(eval arg('ekf_option')==1)">
-    <node pkg="amcl" type="amcl" name="amcl">
+    <node pkg="amcl" type="amcl" name="amcl" machine="$(arg machine)">
       <remap from="odom" to="odometry/filtered" />
       <param name="global_frame_id"           value="map"/>
       <param name="odom_frame_id"             value="$(optenv ROS_NAMESPACE)/odom"/>
@@ -51,7 +52,7 @@
   </group>
 
   <group if="$(eval arg('ekf_option')==0)">
-    <node pkg="amcl" type="amcl" name="amcl">
+    <node pkg="amcl" type="amcl" name="amcl" machine="$(arg machine)">
       <param name="global_frame_id"           value="map"/>
       <param name="odom_frame_id"             value="$(optenv ROS_NAMESPACE)/odom"/>
       <param name="base_frame_id"             value="$(optenv ROS_NAMESPACE)/base_footprint"/>
