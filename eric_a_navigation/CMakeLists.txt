@@ -44,7 +44,12 @@ catkin_package(
 ################################################################################
 # Install
 ################################################################################
-install(DIRECTORY launch maps param rviz
+catkin_install_python(PROGRAMS
+  nodes/init_pose.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY launch maps param rviz bag
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
