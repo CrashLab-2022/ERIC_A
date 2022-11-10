@@ -1,7 +1,8 @@
 <launch>
 
   <arg name="set_port" default="/dev/ttyLIDAR"/>
-  <arg name="set_frame_id" default="laser_link"/>
+  <arg name="set_frame_id" default="lidar_link"/>
+  <arg name="frequency" default="10.0"/>
   
   <node pkg="eric_a_lidar"  type="eric_a_lidar_node" name="ydlidar_lidar_publisher" output="screen" respawn="false" >
     <!-- string property -->
@@ -34,9 +35,9 @@
     <param name="angle_max"    type="double" value="100.54" />
     <param name="range_min"    type="double" value="0.1" />
     <param name="range_max"    type="double" value="16.0" />
-    <param name="frequency"    type="double" value="10.0"/>
+    <param name="frequency"    type="double" value="$(arg frequency)"/>
   </node>
   
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
-    args="0.168 0.0 0.0712 0.0 0.0 0.0 /base_link /base_scan 40" />
+    args="0.168 0.0 0.0712 0.0 0.0 0.0 /lidar_link /base_scan 40" />
 </launch>

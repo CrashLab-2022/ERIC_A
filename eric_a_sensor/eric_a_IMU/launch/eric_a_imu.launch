@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- <arg name="set_port_imu" default="/dev/ttyIMU"/> -->
+  <arg name="set_frame_id" default="imu_link"/>
+  <arg name="frequency" default="100.0"/>
+  <node pkg="eric_a_imu" type="iahrs_driver" name="eric_a_IMU_node" output="screen" >
+    <!-- string property -->
+    <!-- <param name="port" type="string" value="$(arg set_port_imu)" /> -->
+    <param name="frame_id" type="string" value="$(arg set_frame_id)" />
+    <param name="tf_prefix" type="string" value="" />
+    
+    <!-- double property -->
+    <param name="frequency" type="double" value="$(arg frequency)" />
+    <param name="time_offset_in_seconds" type="double" value=""/>
+    
+    <!-- bool property -->
+    <param name="m_bSingle_TF_option" type="bool" value="true" /> <!--false-->
+  </node>
+
+</launch>
