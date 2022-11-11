@@ -6,4 +6,11 @@
         output="screen"
         machine="$(arg machine)"
   />
+
+  <node pkg="eric_a_bringup" 
+        type="eric_a_control_node" 
+        name="eric_a_control_node"  
+        machine="$(arg machine)"
+  />
+  
 </launch>
