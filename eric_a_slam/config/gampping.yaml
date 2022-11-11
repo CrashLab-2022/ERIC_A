@@ -1,0 +1,19 @@
+throttle_scans : 1     #Process 1 out of every this many scans (set it to a higher number to skip more scans)
+map_update_interval : 2.0 #(s)얼마나 지도를 더 자주 update하는지를 의미, 낮을수록 컴퓨터 연산량의 증가
+maxUrange : 10.0  #Process 1 out of every this many scans (set it to a higher number to skip more scans)
+sigma : 0.05 #this is the parameter used by the greedy end point matching. It is standard deviation for the scan matching process.
+kernelSize : 1 #The kernel in which to look for a correspondence
+lstep : 0.05 #The optimization step in translation
+astep: 0.05 #The optimization step in rotation
+iterations : 5 #The number of iterations of the scanmatcher
+lsigma : 0.075 #The sigma of a beam used for likelihood computation
+minimumScore : 0 #5m 정도의 limited range일 경우 사용
+xmin : -50
+ymin : -50
+xmax : 50
+ymax : 50
+
+particles : 100 #Number of particles in the filter 다다익선
+maxRange : 16.0 #lidar maximun range
+#The maximum range of the sensor. If regions with no obstacles within the range of the sensor should appear as free space in the map, 
+#set maxUrange < maximum range of the real sensor <= maxRange.

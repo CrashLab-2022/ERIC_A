@@ -1,6 +1,6 @@
 <launch>
   <!-- launching state publishers -->
-  <include file="$(find eric_a_bringup)/launch/eric_a_remote.launch"/>
+  <!-- <include file="$(find eric_a_bringup)/launch/eric_a_remote.launch"/> -->
 
   <!-- launching gmapping node and parameters -->
   <include file="$(find eric_a_slam)/launch/eric_a_gmapping.launch">
@@ -9,6 +9,6 @@
     <arg name="set_map_frame"  default="map"/>
   </include>
 
-  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find omo_r1_slam)/launch/eric_a_gmapping.rviz"/>
+  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find eric_a_slam)/launch/eric_a_gmapping.rviz"/>
 
 </launch>
