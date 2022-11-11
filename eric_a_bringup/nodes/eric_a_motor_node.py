@@ -7,7 +7,7 @@ from time import sleep
 from sensor_msgs.msg import JointState
 from nav_msgs.msg import Odometry
 from eric_a_bringup.msg import MotorPacket
-from geometry_msgs.msg import Twist, Pose, Point, Vector3, Quaternion
+from geometry_msgs.msg import Twist, Pose, Point, Vector3, Quaternion, PoseWithCovarianceStamped
 from tf.broadcaster import TransformBroadcaster
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 from eric_a_bringup.srv import ResetOdom, ResetOdomResponse
@@ -118,14 +118,16 @@ class hongdorosMotorNode:
       rospy.Subscriber(self.tf_prefix+"cmd_vel", Twist, self.cbSubCmdVelTMsg, queue_size=1)        # command velocity data subscriber
       rospy.Subscriber(self.tf_prefix+"motor_packet", MotorPacket, self.ph.read_packet, queue_size=1)
 
+
       # publisher
       self.pub_joint_states = rospy.Publisher(self.tf_prefix+'joint_states', JointState, queue_size=10)
       self.odom_pub = rospy.Publisher(self.tf_prefix+"odom", Odometry, queue_size=10)
       self.odom_broadcaster = TransformBroadcaster()
       self.pub_vel = rospy.Publisher("motor_input", Twist, queue_size=10)
+      self.pub_init_pose = rospy.Publisher("initialpose",PoseWithCovarianceStamped, queue_size=10)
 
       #service server
-      rospy.Service('reset_odom', ResetOdom, self.reset_odom_handle)
+      rospy.Service('set_odom', ResetOdom, self.reset_odom_handle)
       
       # timer
       rospy.Timer(rospy.Duration(0.01), self.cbTimerUpdateDriverData) # 10 hz update

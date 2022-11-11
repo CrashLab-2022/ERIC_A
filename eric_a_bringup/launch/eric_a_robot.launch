@@ -1,5 +1,6 @@
 <launch>
-    <arg name="mode" default="0"/><!--slam is 0, navigation is 1 -->
+    <arg name="mode" default="0"/>
+    <!--slam is 0, navigation is 1 -->
 
 
     <!-- master rasberry pi -->
@@ -14,38 +15,44 @@
         <arg name="frequency" default="10.0"/>
     </include>
 
-    <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
-        <!-- <arg name="set_port" default="$(arg set_port_imu)"/>  -->
+    <!-- <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
+        <arg name="set_port" default="$(arg set_port_imu)"/> 
         <arg name="set_frame_id" default="$(arg set_imu_frame_id)"/>
         <arg name="frequency" default="100.0"/>
-    </include>
+    </include> -->
 
-
-    <include if="$(eval arg('mode') =='0')" file="$(find eric_a_slam)/lauch/eric_a_slam.launch"/>
+    <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/>
     <!-- mapping -->
 
-    <include if="$(eval arg('mode') =='1')" file="$(find eric_a_navigation)/launch/eric_a_navigation"/>
+    <include if="$(eval arg('mode') ==1)" file="$(find eric_a_navigation)/launch/eric_a_navigation"/>
     <!-- navigation -->
 
     <!-- remote control rasberry pi -->
     <group>
         <machine
             name="control_machine"
-            address="192.168.91.52" 
+            address="192.168.240.52" 
             env-loader="/opt/ros/noetic/env_remote.sh"
             default="true"
             user="ubuntu"
         />
+        <machine           
+            name="main_machine"
+            address="192.168.240.22" 
+            env-loader="/opt/ros/noetic/env_remote.sh"
+            default="true"
+            user="jeonghan"
+        />
         <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
-            <arg name="machine" default="control_machine"/>
+            <arg name="machine" default="main_machine"/>
         </include>
 
         <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
-            <arg name="machine" default="control_machine"/>
+            <arg name="machine" default="main_machine"/>
         </include>  
 
         <include if="$(eval arg('mode') =='1')"  file="$(find eric_a_navigation)/launch/amcl.launch">
-            <arg name="machine" default="control_machine"/>
+            <arg name="machine" default="main_machine"/>
         </include>
     </group>
 
