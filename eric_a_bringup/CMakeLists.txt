@@ -119,8 +119,6 @@ catkin_package(
   CATKIN_DEPENDS  rospy
                 std_msgs
                 roscpp
-                
-  DEPENDS system_lib
 )
 
 ###########
