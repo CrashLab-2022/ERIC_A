@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>eric_a_servo</name>
+  <version>0.0.0</version>
+  <description>The eric_a_servo package</description>
+  <maintainer email="kimjh9813@naver.com">jeonghan</maintainer>
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>dynamixel_workbench_msgs</exec_depend>
+  <exec_depend>dynamixel_workbench_operators</exec_depend>
+  <exec_depend>dynamixel_workbench_controllers</exec_depend>
+  <exec_depend>dynamixel_workbench_toolbox</exec_depend>
+  <exec_depend>rosserial_python</exec_depend>
+</package>
