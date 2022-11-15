@@ -37,12 +37,20 @@
             user="ubuntu"
         />
         <machine           
+            name="rpi_main_machine"
+            address="192.168.240.127" 
+            env-loader="/opt/ros/noetic/env_remote.sh"
+            default="true"
+            user="ubuntu"
+        />
+        <machine           
             name="main_machine"
             address="192.168.240.22" 
             env-loader="/opt/ros/noetic/env_remote.sh"
             default="true"
             user="jeonghan"
         />
+
         <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
             <arg name="machine" default="main_machine"/>
         </include>

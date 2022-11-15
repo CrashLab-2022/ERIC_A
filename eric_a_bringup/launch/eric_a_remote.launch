@@ -1,5 +1,5 @@
 <launch>
-  <include file="$(find eric_a_bringup)/launch/includes/description.launch.xml"/>
+  <include file="$(find eric_a_bringup)/launch/include/description.launch.xml"/>
 
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="50.0" />

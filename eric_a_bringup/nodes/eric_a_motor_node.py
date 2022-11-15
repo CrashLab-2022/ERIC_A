@@ -127,7 +127,7 @@ class hongdorosMotorNode:
       self.pub_init_pose = rospy.Publisher("initialpose",PoseWithCovarianceStamped, queue_size=10)
 
       #service server
-      rospy.Service('set_odom', ResetOdom, self.reset_odom_handle)
+      rospy.Service('set_odom', ResetOdom, self.set_odom_handle)
       
       # timer
       rospy.Timer(rospy.Duration(0.01), self.cbTimerUpdateDriverData) # 10 hz update
@@ -163,6 +163,7 @@ class hongdorosMotorNode:
 
       odom_orientation_quat = quaternion_from_euler(0, 0, self.odom_pose.theta)
 
+
       self.odom_vel.x = trans_vel
       self.odom_vel.y = 0.
       self.odom_vel.w = orient_vel
@@ -178,7 +179,6 @@ class hongdorosMotorNode:
       odom.header.stamp = rospy.Time.now()
       odom.pose.pose = Pose(Point(self.odom_pose.x, self.odom_pose.y, 0.), Quaternion(*odom_orientation_quat))
       odom.twist.twist = Twist(Vector3(self.odom_vel.x, self.odom_vel.y, 0), Vector3(0, 0, self.odom_vel.w))
-
       self.odom_pub.publish(odom)
 
    def updateJointStates(self, odo_l, odo_r, trans_vel, orient_vel):
@@ -221,10 +221,12 @@ class hongdorosMotorNode:
       ang_vel_z = max(-self.config.max_ang_vel_z, min(self.config.max_ang_vel_z, ang_vel_z))
       self.pub_vel.publish(Twist(Vector3(lin_vel_x*1000, 0, 0), Vector3(0, 0, ang_vel_z*1000)))
 
-   def reset_odom_handle(self, req):
+   def set_odom_handle(self, req):
       self.odom_pose.x = req.x
       self.odom_pose.y = req.y
       self.odom_pose.theta = req.theta
+      
+      # self.pub_init_pose.publish(PoseWithCovarianceStamped(Pose(Point(self.odom_pose.x, self.odom_pose.y, 0.)),Quaternion(*quaternion_from_euler(0, 0, self.odom_pose.theta)),0))
 
       return ResetOdomResponse()
 

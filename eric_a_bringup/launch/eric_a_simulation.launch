@@ -1,0 +1,46 @@
+<launch>
+
+    <group>
+        <machine           
+            name="main_machine"
+            address="192.168.240.22" 
+            env-loader="/opt/ros/noetic/env_remote.sh"
+            default="true"
+            user="jeonghan"
+        />
+        <!-- simulation -->
+        <include file="$(find eric_a_gazebo)/launch/omo_r1_erica.launch">
+            <arg name="x_pos" default="-10.0"/>
+            <arg name="y_pos" default="-1.5"/>
+            <arg name="z_pos" default="0.0"/>
+        </include>
+
+        <!-- kalman, init_odom -->
+        <!-- <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
+            <arg name="machine" default="main_machine"/>
+        </include>   -->
+
+        <!-- amcl -->
+        <!-- <include file="$(find eric_a_navigation)/launch/amcl.launch">
+            <arg name="machine" default="main_machine"/>
+            <arg name="ekf_option"     default="0"/>
+        </include> -->
+
+        <!-- slam -->
+        <include file="$(find eric_a_slam)/launch/eric_a_gmapping.launch">
+            <arg name="set_base_frame" default="base_link"/>
+            <arg name="set_odom_frame" default="odom"/>
+            <arg name="set_map_frame"  default="map"/>
+        </include>
+
+        <include file="$(find eric_a_navigation)/launch/move_base.launch">
+            <arg name="move_forward_only" value="true"/>
+        </include>
+
+        <!-- tf -->
+        <!-- <include file="$(find eric_a_bringup)/launch/eric_a_remote.launch"/> -->
+
+        <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find eric_a_slam)/rviz/eric_a_gmapping.rviz"/>
+    </group>
+
+</launch>

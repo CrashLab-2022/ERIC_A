@@ -466,10 +466,10 @@ void Motor_View()
 int main(int argc, char** argv)
 {
   ROS_INFO("ASDF");
-  ros::init(argc, argv, "motor_node");
+  ros::init(argc, argv, "eric_a_control");
   ros::NodeHandle nh;
   ros::Publisher packet_pub = nh.advertise<eric_a_bringup::MotorPacket>("motor_packet",1, false);
-  ros::Subscriber vel_sub = nh.subscribe("cmd_vel", 10, cmd_vel_callback);
+  ros::Subscriber vel_sub = nh.subscribe("motor_input", 10, cmd_vel_callback);
   Initialize();
   
   ros::Rate loop_rate(Control_cycle);
