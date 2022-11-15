@@ -1,9 +1,10 @@
 <launch>
   <!-- Arguments -->
   <arg name="machine" /> 
-  <arg name="scan_topic"     default="base_scan"/>
+  <arg name="scan_topic"     default="scan"/>
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_z" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
   <arg name="ekf_option"     default="1"/>
 
@@ -53,6 +54,7 @@
 
   <group if="$(eval arg('ekf_option')==0)">
     <node pkg="amcl" type="amcl" name="amcl" machine="$(arg machine)">
+      <!-- <remap from="odom" to="odometry/filtered" /> -->
       <param name="global_frame_id"           value="map"/>
       <param name="odom_frame_id"             value="$(optenv ROS_NAMESPACE)/odom"/>
       <param name="base_frame_id"             value="$(optenv ROS_NAMESPACE)/base_footprint"/>
@@ -64,13 +66,15 @@
       <param name="update_min_a"              value="0.25"/>
       <param name="resample_interval"         value="1.0"/>
       <param name="transform_tolerance"       value="0.3"/>
-      <param name="recovery_alpha_slow"       value="0.0001"/>
-      <param name="recovery_alpha_fast"       value="0.5"/>
+      <param name="recovery_alpha_slow"       value="0.0"/>
+      <param name="recovery_alpha_fast"       value="0.0"/>
       <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
       <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
       <param name="initial_pose_z"            value="$(arg initial_pose_z)"/>
       <param name="initial_pose_a"            value="$(arg initial_pose_a)"/>
       <param name="gui_publish_rate"          value="-1.0"/>
+      <param name="use_map_topic"             value="true"/>
+      <param name="selective_resampling"      value="true"/>
 
       <remap from="scan"                      to="$(arg scan_topic)"/>
       <param name="laser_max_range"           value="-0.1"/>
