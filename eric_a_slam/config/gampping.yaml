@@ -8,10 +8,10 @@ astep: 0.05 #The optimization step in rotation
 iterations : 5 #The number of iterations of the scanmatcher
 lsigma : 0.075 #The sigma of a beam used for likelihood computation
 minimumScore : 0 #5m 정도의 limited range일 경우 사용
-xmin : -50
-ymin : -50
-xmax : 50
-ymax : 50
+xmin : -10
+ymin : -10
+xmax : 10
+ymax : 10
 
 particles : 100 #Number of particles in the filter 다다익선
 maxRange : 16.0 #lidar maximun range
