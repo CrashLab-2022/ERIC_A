@@ -1,7 +1,7 @@
 <launch>
 
   <arg name="set_port" default="/dev/ttyLIDAR"/>
-  <arg name="set_frame_id" default="lidar_link"/>
+  <arg name="set_frame_id" default="base_link"/>
   <arg name="frequency" default="10.0"/>
   
   <node pkg="eric_a_lidar"  type="eric_a_lidar_node" name="ydlidar_lidar_publisher" output="screen" respawn="false" >

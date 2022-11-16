@@ -6,7 +6,7 @@
     <!-- master rasberry pi -->
     <arg name="set_port_lidar" default="/dev/ttyLIDAR"/>
     <!-- <arg name="set_port_imu" default="/dev/ttyIMU"/> -->
-    <arg name="set_lidar_frame_id" default="laser_link"/>
+    <arg name="set_lidar_frame_id" default="base_link"/>
     <arg name="set_imu_frame_id" default="imu_link"/>
 
     <include file="$(find eric_a_lidar)/launch/eric_a_lidar.launch">
