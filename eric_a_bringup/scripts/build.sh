@@ -7,4 +7,5 @@ sudo apt install -y ros-noetic-rosserial \
  ros-noetic-dynamixel-workbench-msgs \
  ros-noetic-dynamixel-workbench-toolbox \
  ros-noetic-dynamixel-sdk \
- ros-noetic-slam-toolbox
+ ros-noetic-slam-toolbox \
+ ros-noetic-rosbridge-server 
