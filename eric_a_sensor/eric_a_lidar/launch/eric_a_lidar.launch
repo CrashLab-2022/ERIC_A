@@ -38,6 +38,6 @@
     <param name="frequency"    type="double" value="$(arg frequency)"/>
   </node>
   
-  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
-    args="0.168 0.0 0.0712 0.0 0.0 0.0 /base_scan /base_link 40" />
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser"
+    args="0.168 0.0 0.0712 0.0 0.0 0.0 /base_scan /base_link 40" /> -->
 </launch>

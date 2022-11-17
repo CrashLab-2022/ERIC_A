@@ -10,6 +10,6 @@
     <arg name="set_map_frame"  default="map"/>
   </include>
 
-  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find eric_a_slam)/launch/rviz/eric_a_gmapping.rviz"/>
+  <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find eric_a_slam)/rviz/eric_a_gmapping.rviz"/>
 
 </launch> 

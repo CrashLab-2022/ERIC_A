@@ -92,7 +92,7 @@
   </link> <!--wheel_left_joint-->
   <joint
     name="wheel_left_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="0 0.2052 0"
       rpy="0 0 0" />
@@ -101,7 +101,7 @@
     <child
       link="wheel_left_link" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 1 0" />
   </joint>
   <link
     name="wheel_right_link">
@@ -145,7 +145,7 @@
   </link> <!--wheel_right_joint-->
   <joint
     name="wheel_right_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="0 -0.2052 0"
       rpy="0 0 0" />
@@ -154,7 +154,7 @@
     <child
       link="wheel_right_link" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 1 0" />
   </joint>
   <link
     name="base_scan">
