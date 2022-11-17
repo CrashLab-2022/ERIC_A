@@ -4,7 +4,7 @@
   <arg name="z_pos" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find eric_a_gazebo)/worlds/erica.world"/>
+    <arg name="world_name" value="$(find eric_a_gazebo)/worlds/erica_112.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -12,7 +12,7 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find eric_a_gazebo)/sdf/omo_r1.gazebo.xacro" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find eric_a_gazebo)/sdf/eric_a.gazebo.xacro" />
 
-  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model omo_r1_sim -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model eric_a_sim -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 </launch>

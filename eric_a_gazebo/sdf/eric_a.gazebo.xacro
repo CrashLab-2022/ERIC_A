@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<robot name="omo_r1_sim" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find eric_a_description)/urdf/omo_r1.urdf.xacro"/>
+<robot name="eric_a_sim" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find eric_a_description)/urdf/eric_a.urdf.xacro"/>
   <xacro:arg name="laser_visual"  default="false"/>
   <xacro:arg name="camera_visual" default="false"/>
   <xacro:arg name="imu_visual"    default="false"/>
