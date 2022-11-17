@@ -170,7 +170,7 @@ class hongdorosMotorNode:
 
       odom = Odometry()
       odom.header.frame_id = "/odom"
-      odom.child_frame_id = "/base_link"
+      odom.child_frame_id = "/base_footprint"
 
       self.odom_broadcaster.sendTransform((self.odom_pose.x, self.odom_pose.y, 0.), 
                                              odom_orientation_quat, self.odom_pose.timestamp, 
