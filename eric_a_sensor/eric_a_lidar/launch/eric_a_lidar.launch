@@ -1,10 +1,10 @@
 <launch>
-
+  <arg name="machine" />     
   <arg name="set_port" default="/dev/ttyLIDAR"/>
   <arg name="set_frame_id" default="base_link"/>
   <arg name="frequency" default="10.0"/>
   
-  <node pkg="eric_a_lidar"  type="eric_a_lidar_node" name="ydlidar_lidar_publisher" output="screen" respawn="false" >
+  <node pkg="eric_a_lidar"  type="eric_a_lidar_node" name="ydlidar_lidar_publisher" output="screen" respawn="false" machine="$(arg machine)">
     <!-- string property -->
     <param name="port"         type="string" value="$(arg set_port)"/>  
     <param name="frame_id"     type="string" value="$(arg set_frame_id)"/>
@@ -31,8 +31,8 @@
     <param name="point_cloud_preservative"    type="bool"   value="false"/>
 
     <!-- float property -->
-    <param name="angle_min"    type="double" value="-100.54" />
-    <param name="angle_max"    type="double" value="100.54" />
+    <param name="angle_min"    type="double" value="-85" /> -100.54
+    <param name="angle_max"    type="double" value="85" />  100.54
     <param name="range_min"    type="double" value="0.1" />
     <param name="range_max"    type="double" value="16.0" />
     <param name="frequency"    type="double" value="$(arg frequency)"/>
