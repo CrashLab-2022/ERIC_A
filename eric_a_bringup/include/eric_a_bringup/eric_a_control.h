@@ -27,6 +27,9 @@ double Robot_radius;
 int Encoder_resolution;
 double Wheel_round;
 double Robot_round;
+double kp;
+double ki;
+double kd;
 
 //Motor_Setup
 int Motor_Setup(void);
@@ -87,6 +90,15 @@ typedef struct purpose{
 
 int PWM_want;
 double vel_gap;
+double left_rpm;
+double right_rpm;
+double present_pwm1;
+double last_pwm1;
+double present_pwm2;
+double last_pwm2;
+double pwm2;
+double left_speed;
+double right_speed;
 
 void linear_vel();
 void Motor_View();

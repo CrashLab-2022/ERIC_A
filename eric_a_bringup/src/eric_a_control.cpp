@@ -1,11 +1,8 @@
-/*
- * motor_node.cpp
- *
- *      Author: Chis Chun
- */
 #include <ros/ros.h>
 #include <eric_a_bringup/eric_a_control.h>
 #include <fstream>
+#include <cmath>
+#define constrain(amt, low, high) ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)))
 
 purpose purposevel;
 
@@ -29,6 +26,9 @@ void Text_Input(void)
       case 5: Wheel_radius = atof(line.substr(found+2).c_str()); break;
       case 6: Robot_radius = atof(line.substr(found+2).c_str()); break;
       case 7: Encoder_resolution = atof(line.substr(found+2).c_str()); break;
+      case 8: kp = atof(line.substr(found+2).c_str()); break;
+      case 9: ki = atof(line.substr(found+2).c_str()); break;
+      case 10: kd = atof(line.substr(found+2).c_str()); break;
           //case :  = atof(line.substr(found+2).c_str()); break;
       }
       i +=1;
@@ -199,175 +199,6 @@ void Motor_Controller(int motor_num, bool direction, int pwm)
    }
   }
 }
-void Accel_Controller(int motor_num, bool direction, int desired_pwm)
-{
-  bool local_current_direction;
-  int local_PWM;
-  int local_current_PWM;
-
-  if(motor_num == 1)
-  {
-    local_current_direction = current_Direction1;
-    local_current_PWM = current_PWM1;
-  }
-  else if(motor_num == 2)
-  {
-    local_current_direction = current_Direction2;
-    local_current_PWM = current_PWM2;
-  }
-
-  if(direction == local_current_direction)
-  {
-    if(desired_pwm > local_current_PWM)
-    {
-      local_PWM = local_current_PWM + acceleration;
-      Motor_Controller(motor_num, direction, local_PWM);
-    }
-    else if(desired_pwm < local_current_PWM)
-    {
-      local_PWM = local_current_PWM - acceleration;
-      Motor_Controller(motor_num, direction, local_PWM);
-    }
-    else
-    {
-      local_PWM = local_current_PWM;
-      Motor_Controller(motor_num, direction, local_PWM);
-    }
-  }
-  else
-  {
-	  if(desired_pwm >= 0)
-	  {
-      local_PWM = local_current_PWM - acceleration;
-      if(local_PWM <= 0)
-      {
-        local_PWM = 0;
-        Motor_Controller(motor_num, direction, local_PWM);
-      }
-      else Motor_Controller(motor_num, local_current_direction, local_PWM);
-	  }
-    else
-    {
-      local_PWM = local_current_PWM;
-      Motor_Controller(motor_num, direction, local_PWM);
-    }
-  }
-}
-
-void Switch_Turn_Example(int PWM1, int PWM2)
-{
-  int local_PWM1 = Limit_Function(PWM1);
-  int local_PWM2 = Limit_Function(PWM2);
-  if(switch_direction == true)
-  {
-    Motor_Controller(1, switch_direction, local_PWM1);
-    Motor_Controller(2, switch_direction, local_PWM2);
-    switch_direction = false;
-    ROS_INFO("true");
-  }
-  else
-  {
-    Motor_Controller(1, switch_direction, local_PWM1);
-    Motor_Controller(2, switch_direction, local_PWM2);
-    switch_direction = true;
-    ROS_INFO("false");
-  }
-}
-void Theta_Turn(double Theta, int PWM)
-{
-  double local_encoder;
-  int local_PWM = Limit_Function(PWM);
-  if(Theta_Distance_Flag == 1)
-  {
-      Init_Encoder();
-      Theta_Distance_Flag = 2;
-  }
-  Motor1_Encoder_Sum();
-  Motor2_Encoder_Sum();
-  if(Theta > 0)
-  {
-    local_encoder = (Encoder_resolution*4/360)*(Robot_round/Wheel_round)*Theta;
-    Motor_Controller(1, false, local_PWM);
-    Motor_Controller(2, false, local_PWM);
-    //Accel_Controller(1, false, local_PWM);
-    //Accel_Controller(2, false, local_PWM);
-  }
-  else
-  {
-    local_encoder = -(Encoder_resolution*4/360)*(Robot_round/Wheel_round)*Theta;
-    Motor_Controller(1, true, local_PWM);
-    Motor_Controller(2, true, local_PWM);
-    //Accel_Controller(1, true, local_PWM);
-    //Accel_Controller(2, true, local_PWM);
-  }
-
-  if(EncoderCounter1 > local_encoder)
-  {
-    Init_Encoder();
-    Motor_Controller(1, true, 0);
-    Motor_Controller(2, true, 0);
-    Theta_Distance_Flag = 3;
-  }
-}
-void Distance_Go(double Distance, int PWM)
-{
-  double local_encoder = (Encoder_resolution*4*Distance)/Wheel_round;
-  int local_PWM = Limit_Function(PWM);
-  bool Direction = true;
-  if(Distance < 0)
-  {
-    Direction = false;
-    local_encoder = -local_encoder;
-  }
-  if(Theta_Distance_Flag == 3)
-  {
-      Init_Encoder();
-      Theta_Distance_Flag = 4;
-  }
-  Motor1_Encoder_Sum();
-  Motor2_Encoder_Sum();
-  if(EncoderCounter1 < local_encoder)
-  {
-    if(Direction==true)
-    {
-      Motor_Controller(1, false, local_PWM);
-      Motor_Controller(2, true, local_PWM);
-      //Accel_Controller(1, false, local_PWM);
-      //Accel_Controller(2, true, local_PWM);
-    }
-    else
-    {
-      Motor_Controller(1, true, local_PWM);
-      Motor_Controller(2, false, local_PWM);
-      //Accel_Controller(1, true, local_PWM);
-      //Accel_Controller(2, false, local_PWM);
-    }
-  }
-  else
-  {
-    Init_Encoder();
-    Motor_Controller(1, true, 0);
-    Motor_Controller(2, true, 0);
-    //Accel_Controller(1, true, 0);
-    //Accel_Controller(2, true, 0);
-    Theta_Distance_Flag = 0;
-  }
-}
-void Theta_Distance(double Theta, int Turn_PWM, double Distance, int Go_PWM)
-{
-  if(Theta_Distance_Flag == 0)
-  {
-    Theta_Distance_Flag = 1;
-  }
-  else if(Theta_Distance_Flag == 1 || Theta_Distance_Flag == 2)
-  {
-    Theta_Turn(Theta, Turn_PWM);
-  }
-  else if(Theta_Distance_Flag == 3 || Theta_Distance_Flag == 4)
-  {
-    Distance_Go(Distance, Go_PWM);
-  }
-}
 
 int Limit_Function(int pwm)
 {
@@ -386,7 +217,7 @@ int Limit_Function(int pwm)
   else output = pwm;
   return output; 
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 void RPM_Calculator()
 {
   RPM_Value1 = (EncoderSpeedCounter1*(60*Control_cycle))/(Encoder_resolution*4);
@@ -394,71 +225,126 @@ void RPM_Calculator()
   RPM_Value2 = (EncoderSpeedCounter2*(60*Control_cycle))/(Encoder_resolution*4);
   EncoderSpeedCounter2 = 0;
 }
-
 void carcul_packet()
 {
  linear = (linear_vel1 + linear_vel2)/2;
- angular =(linear_vel2 - linear_vel1)/Robot_radius*2;
- odom_l = linear_vel2/(Control_cycle*Wheel_radius);
- odom_r = linear_vel1/(Control_cycle*Wheel_radius);
+ angular =(linear_vel1 - linear_vel2)/Robot_radius*2;
+ odom_l = Wheel_radius*packet_msg.encod[0]*(2*M_PI)/960;
+ odom_r = Wheel_radius*packet_msg.encod[1]*(2*M_PI)/960;
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg){
-  ROS_INFO("i heard :[%f]", msg->linear.x);
+  // ROS_INFO("i heard :[%f]", msg->linear.x);
   purposevel.linear_x=msg->linear.x;
   purposevel.angular_z=msg->angular.z;
-  ROS_INFO("purpose linear vel is %f", purposevel.linear_x);
-  ROS_INFO("purpose angular vel is %f", purposevel.angular_z);
-  if(purposevel.angular_z == 0){  //stop
-    if(purposevel.linear_x > 0 && purposevel.linear_x <= 50){ //go straight 50mm/s
-      Accel_Controller(1, false, 50);
-      Accel_Controller(2, true, 50);
-    }
-    else if(purposevel.linear_x > 50 && purposevel.linear_x <= 140){ //go straight 139mm/s
-      Accel_Controller(1, false, 60);
-      Accel_Controller(2, true, 60);
-    }
-    else if(purposevel.linear_x > 140 && purposevel.linear_x <= 230){ //go straight 222mm/s
-      Accel_Controller(1, false, 80);
-      Accel_Controller(2, true, 80);
-    }
-    else if(purposevel.linear_x > 230 && purposevel.linear_x <= 300){ //go straight 309mm/s
-      Accel_Controller(1, false, 100);
-      Accel_Controller(2, true, 100);
-    }
-    else if(purposevel.linear_x > 300 && purposevel.linear_x <= 400){ //go straight 400mm/s
-      Accel_Controller(1, false, 120);
-      Accel_Controller(2, true, 120);
-    }
-    else if(purposevel.linear_x == 0){
-      Accel_Controller(1, false, 0);
-      Accel_Controller(2, true, 0);
-    }
-  }
-  else if(purposevel.angular_z > 0){ //turn right
-      Accel_Controller(1,false,100);
-      Accel_Controller(2,true, 60);
-    }
-  else if(purposevel.angular_z < 0){ //turn left
-      Accel_Controller(1,false, 60);
-      Accel_Controller(2,true, 100);
-  }
+  // ROS_INFO("purpose linear vel is %f", purposevel.linear_x);
+  // ROS_INFO("purpose angular vel is %f", purposevel.angular_z);
+  left_speed = purposevel.linear_x + (purposevel.angular_z*Robot_radius);
+  right_speed = purposevel.linear_x - (purposevel.angular_z*Robot_radius);
+  left_rpm = (left_speed*60)/(2*M_PI*Wheel_radius);
+  right_rpm = (right_speed*60)/(2*M_PI*Wheel_radius);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// void PID_Input(void)
+// {
+//   int i = 0;
+//   std::size_t found;
+//   std::ifstream inFile;
+//   inFile.open("/home/ubuntu/catkin_ws/src/motor_test20/PID_input.txt");
+//   for(std::string line; std::getline(inFile,line);)                                                                                                                                
+//   {
+//       found=line.find("=");
+
+//       switch(i)
+//       {
+//       case 0: kP = atof(line.substr(found+2).c_str()); break;
+//       case 1: kI = atof(line.substr(found+2).c_str()); break;
+//       case 2: kD = atof(line.substr(found+2).c_str()); break;
+//           //case :  = atof(line.substr(found+2).c_str()); break;
+//       }
+//       i +=1;
+//   }
+//   inFile.close();
+// }
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+typedef struct pid_param
+{
+  double kP=2.5;
+  double kI=1;
+  double kD=0;
+  double Imax=1;
+  double Dmax=1;
+} pid_param;
+
+typedef struct pid
+{
+  double p_out=0;
+  double integrator=0;
+  double derivative=0;
+  double last_input=0;
+  double lastderivative=0;
+
+  double output=0;
+} pid;
+
+pid data1, data2;
+pid_param paramdata1, paramdata2;
+
+double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat)
+{
+  pid_paramdata->kP =kp;
+  pid_paramdata->kI =ki;
+  pid_paramdata->kD = kd;
+  double error = goal - curr;
+  double dt = 1/control_cycle;
+  ROS_INFO(" goal : %f, curr: %f", goal,curr);
+  ROS_INFO(" error : %f", error);
+  
+  if (fabs(error) < error_rat)
+    error = 0;
+
+  pid_data->p_out = pid_paramdata->kP * error;
+  double p_data = pid_data->p_out ;
+
+  pid_data->integrator += (error * pid_paramdata->kI) * dt;
+  pid_data->integrator = constrain(pid_data->integrator, -pid_paramdata->Imax, pid_paramdata->Imax);
+  double i_data = pid_data->integrator;
+
+  double filter = 15.9155e-3; // Set to  "1 / ( 2 * PI * f_cut )";
+  // Examples for _filter:
+  // f_cut = 10 Hz -> _filter = 15.9155e-3
+  // f_cut = 15 Hz -> _filter = 10.6103e-3
+  // f_cut = 20 Hz -> _filter =  7.9577e-3
+  // f_cut = 25 Hz -> _filter =  6.3662e-3
+  // f_cut = 30 Hz -> _filter =  5.3052e-3
+
+  pid_data->derivative = (goal - pid_data->last_input) / dt;
+  pid_data->derivative = pid_data->lastderivative + (dt / (filter + dt)) * (pid_data->derivative - pid_data->lastderivative);
+  pid_data->last_input = goal;
+  pid_data->lastderivative = pid_data->derivative;
+  double d_data = pid_paramdata->kD * pid_data->derivative;
+  d_data = constrain(d_data, -pid_paramdata->Dmax, pid_paramdata->Dmax);
+
+  double output = p_data + i_data + d_data;
+  pid_data->output = output;
+
+  return pid_data->output;
 }
 
 void Motor_View()
 {
-  RPM_Calculator();
-	carcul_packet();
+  
 	printf("\033[2J");
 	printf("\033[1;1H");
-	printf("Encoder1A : %5d  ||  Encoder2A : %5d\n", EncoderCounter2A, EncoderCounter1A);
-	printf("Encoder1B : %5d  ||  Encoder2B : %5d\n", EncoderCounter2B, EncoderCounter1B);
-	printf("RPM1 : %10.0f    ||  RPM2 : %10.0f\n", RPM_Value2, RPM_Value1);
+	printf("Encoder1A : %5d  ||  Encoder2A : %5d\n", EncoderCounter1A, EncoderCounter2A);
+	printf("Encoder1B : %5d  ||  Encoder2B : %5d\n", EncoderCounter1B, EncoderCounter2B);
+	printf("RPM1 : %10.0f    ||  RPM2 : %10.0f\n", RPM_Value1, RPM_Value2);
 	printf("PWM1 : %10.0d    ||  PWM2 : %10.0d\n", current_PWM1, current_PWM2);
   printf("DIR1 :%10.0d     ||  DIR2 :%10.0d\n", current_Direction1, current_Direction2);
 	printf("Acc  :%10.0d\n", acceleration);
 	printf("\n");
-	printf("linear vel1: %10.0f || linear vel2: %10.0f\n",linear_vel2, linear_vel1); 
+	printf("linear vel1: %10.0f || linear vel2: %10.0f\n",linear_vel1, linear_vel2); 
   printf("liner_vel: %10.0f || angular_vel: %10.0f\n",linear, angular); 
   printf("odom_l: %10.0f || odom_r: %10.0f\n",odom_l, odom_r);
 }
@@ -475,11 +361,9 @@ int main(int argc, char** argv)
   ros::Rate loop_rate(Control_cycle);
   while(ros::ok())
   {
-    // Motor_Controller(1, false, 120);  //motor_left
-    // Motor_Controller(2, true, 100);   //motor_right
-    // Accel_Controller(1, false, 120);
-    // Accel_Controller(2, true, 120);
     Motor_View();
+    RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
+    carcul_packet();  //linear, angular odom 계산
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
     packet_msg.encod[0] = Motor1_Encoder_Sum();
@@ -487,6 +371,15 @@ int main(int argc, char** argv)
     packet_msg.odo[0] = odom_l;
     packet_msg.odo[1] = odom_r;
     packet_pub.publish(packet_msg);
+  
+    present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
+    last_pwm1+=present_pwm1;
+
+    present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
+    last_pwm2 += present_pwm2;
+
+    Motor_Controller(1, false, last_pwm1); //오차에 대한 rpm
+    Motor_Controller(2,true, last_pwm2);  //오차에 대한 rpm
     ros::spinOnce();
     loop_rate.sleep();
   }
