@@ -4,8 +4,9 @@ import rospy
 import rospkg
 from move_base_msgs.msg import *
 from tf.transformations import quaternion_from_euler
-from geometry_msgs.msg import Pose, Point, Quaternion
+from geometry_msgs.msg import Pose, Point, Quaternion, Twist
 from eric_a_navigation.srv import ClassNumber, ClassNumberResponse
+from std_srvs.srv import Empty, EmptyRequest
 import actionlib
 import os
 from eric_a_classnumber import classnumber
@@ -42,6 +43,7 @@ from eric_a_classnumber import classnumber
 class EricAStartNode:
     def __init__(self):
         #sound
+        
         # voice_path = fileRoot.webconnect + '/speak/voice'
         # sound_path = fileRoot.webconnect + '/speak/sound'
 
@@ -50,50 +52,68 @@ class EricAStartNode:
         
 
         ##service
-        rospy.Service('/classnumber',ClassNumber , self.purpose_class_set)
+        rospy.Service('classnumber',ClassNumber , self.purpose_class_set)
+        
         # rospy.Service('/play_voice', PlaySong, self.sound_start.play_voice)
         
         #action
-        self.goalclient = actionlib.SimpleActionClient('move_base/goal', move_base_msgs.msg.MoveBaseAction)
+        self.goalclient = actionlib.ActionClient('move_base/goal', MoveBaseAction)
         
         #timer
         # self.move_base_goal.header.stamp = rospy.Time.now()
 
-        self.goalclient.wait_for_server()
+        # self.goalclient.wait_for_server()
         # self.opencvStart()
         rospy.loginfo('Ready to eric_a_speak Node')
         rospy.on_shutdown(self.__del__)
 
     def purpose_class_set(self, req):
+        ## web to robot
         # self.classnum = classnumber.class
         # self.classnum=[]
         if req.number ==101:
             self.classnum = classnumber.class101
+            
         elif req.number == 102:
             self.classnum = classnumber.class102
         elif req.number == 103:
             self.classnum = classnumber.class103
 
-
+        self.update_nav_goal()
         return ClassNumberResponse('finish')
 
     def update_nav_goal(self):
         id_number = 0
-        x = self.classnum[0]
-        y = self.classnum[1]
-        thetha = self.classnum[2]
+        x = 0 #self.classnum[0]
+        y = 0# self.classnum[1]
+        thetha = 0 #self.classnum[2]
         purpose = Point(x,y,0)
         goal_orientation_quat = quaternion_from_euler(0,0, thetha)
         
         
-        move_base_goal = move_base_msgs.msg.MoveBaseActionGoal()
+        move_base_goal = MoveBaseActionGoal()
 
         move_base_goal.header.stamp = rospy.Time.now()
         move_base_goal.goal_id.id = id_number
-        move_base_goal.goal.target_pose.pose = Pose(Point(purpose),Quaternion(*goal_orientation_quat))
-        self.goalclient(move_base_goal)
-        self.goalclient.wait_for_result()
+        move_base_goal.goal.target_pose.pose = Pose(purpose,Quaternion(*goal_orientation_quat))
+        self.goalclient.send_goal(move_base_goal)
+        # self.goalclient.wait_for_result()
+        print('hijj')
+        action_result = self.goalclient.
+        if action_result == 3:
+            self.costmap_clear()
+        else: 
+            pass
         return self.goalclient.get_result()
+        
+
+
+    def costmap_clear(self):
+        try:
+            start_clear = rospy.ServiceProxy('clear_costmaps', Empty)
+            return start_clear()
+        except rospy.ServiceException as e:
+            print("Service call failed: %s"%e)
 
 
     def main(self):
