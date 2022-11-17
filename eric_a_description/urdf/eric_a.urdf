@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot name="eric_a">
+
+  <link name="base_footprint"/>
+
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+    <origin xyz="0 0.0 0.0575" rpy="0 0 0.0"/>
+  </joint>
+
+  <link 
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.08918 0.00041086 0.16907"
+        rpy="0 0 0" />
+      <mass
+        value="15.765" />
+      <inertia
+        ixx="0.1406"
+        ixy="8.3462E-05"
+        ixz="-1.7887E-05"
+        iyy="0.16077"
+        iyz="-3.918E-07"
+        izz="0.14619" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link> <!--base_link-->
+  <link
+    name="wheel_left_link">
+    <inertial>
+      <origin
+        xyz="3.19382949254265E-09 0.000399087327025344 6.66536636301229E-09"
+        rpy="0 0 0" />
+      <mass
+        value="0.168927897451557" />
+      <inertia
+        ixx="0.000180292959455697"
+        ixy="-6.26327828918663E-12"
+        ixz="-1.82522160131774E-10"
+        iyy="0.000340883721412519"
+        iyz="-1.2044020877843E-11"
+        izz="0.000180293557512405" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/wheel_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/wheel_left_link.STL" />
+      </geometry>
+    </collision>
+  </link> <!--wheel_left_joint-->
+  <joint
+    name="wheel_left_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.2052 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_left_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel_right_link">
+    <inertial>
+      <origin
+        xyz="-3.19394335979162E-09 -0.000399087326916181 6.66631318202437E-09"
+        rpy="0 0 0" />
+      <mass
+        value="0.168927897449527" />
+      <inertia
+        ixx="0.000180292959453293"
+        ixy="-6.26350367029057E-12"
+        ixz="1.82520747759246E-10"
+        iyy="0.000340883721410212"
+        iyz="1.20453843524227E-11"
+        izz="0.000180293557512052" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/wheel_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/wheel_right_link.STL" />
+      </geometry>
+    </collision>
+  </link> <!--wheel_right_joint-->
+  <joint
+    name="wheel_right_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.2052 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_right_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="base_scan">
+    <inertial>
+      <origin
+        xyz="-0.00057115802102764 -3.71346293298179E-05 -0.0125441512533557"
+        rpy="0 0 0" />
+      <mass
+        value="0.168014657323867" />
+      <inertia
+        ixx="7.93896958957229E-05"
+        ixy="1.59101639507677E-07"
+        ixz="1.19708808248234E-06"
+        iyy="7.78669927066167E-05"
+        iyz="7.78992587311874E-08"
+        izz="0.000107042359804628" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/base_scan.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://eric_a_description/meshes/base_scan.STL" />
+      </geometry>
+    </collision>
+  </link> <!--base_scan-->
+  <joint
+    name="scan_joint"
+    type="fixed">
+    <origin
+      xyz="0.163 0 0.0993"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_scan" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
