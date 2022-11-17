@@ -4,9 +4,10 @@
   <arg name="initial_pose_x" default="-2.0"/>
   <arg name="initial_pose_y" default="-0.5"/>
   <arg name="initial_pose_a" default="0.0"/>
+  <arg name="machine" />     
 
   <!-- EMCL -->
-  <node pkg="eric_a_navigation" type="emcl2_node" name="emcl2_node" output="screen">
+  <node pkg="eric_a_navigation" type="emcl2_node" name="emcl2_node" output="screen" machine="$(arg machine)">
 
     <param name="odom_freq"                 value="20"/>
     <param name="num_particles"             value="500"/>
