@@ -1,0 +1,3 @@
+[submodule "eric_a_web"]
+	path = eric_a_web
+	url = https://github.com/CrashLab-2022/eric_a_web
