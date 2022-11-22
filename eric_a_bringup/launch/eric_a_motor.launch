@@ -10,6 +10,6 @@
         type="eric_a_control_node" 
         name="eric_a_control_node"  
         machine="$(arg machine)"
-  /> -->
+  /> 
 
 </launch>
