@@ -8,4 +8,5 @@ sudo apt install -y ros-noetic-rosserial \
  ros-noetic-dynamixel-workbench-toolbox \
  ros-noetic-dynamixel-sdk \
  ros-noetic-slam-toolbox \
- ros-noetic-rosbridge-server 
+ ros-noetic-rosbridge-server \
+ robot_localization
