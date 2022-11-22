@@ -142,9 +142,6 @@ void Initialize(void)
   Wheel_round = 2*M_PI*Wheel_radius;
   Robot_round = 2*M_PI*Robot_radius;
 
-  switch_direction = true;
-  Theta_Distance_Flag = 0;
-
   ROS_INFO("PWM_range %d", PWM_range);
   ROS_INFO("PWM_frequency %d", PWM_frequency);
   ROS_INFO("PWM_limit %d", PWM_limit);
@@ -234,62 +231,40 @@ void carcul_packet()
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg){
-  // ROS_INFO("i heard :[%f]", msg->linear.x);
   purposevel.linear_x=msg->linear.x;
   purposevel.angular_z=msg->angular.z;
-  // ROS_INFO("purpose linear vel is %f", purposevel.linear_x);
-  // ROS_INFO("purpose angular vel is %f", purposevel.angular_z);
-  left_speed = purposevel.linear_x + (purposevel.angular_z*Robot_radius);
-  right_speed = purposevel.linear_x - (purposevel.angular_z*Robot_radius);
+  left_speed = purposevel.linear_x + (purposevel.angular_z*Robot_radius*0.001);
+  right_speed = purposevel.linear_x - (purposevel.angular_z*Robot_radius*0.001);
   left_rpm = (left_speed*60)/(2*M_PI*Wheel_radius);
   right_rpm = (right_speed*60)/(2*M_PI*Wheel_radius);
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-// void PID_Input(void)
-// {
-//   int i = 0;
-//   std::size_t found;
-//   std::ifstream inFile;
-//   inFile.open("/home/ubuntu/catkin_ws/src/motor_test20/PID_input.txt");
-//   for(std::string line; std::getline(inFile,line);)                                                                                                                                
-//   {
-//       found=line.find("=");
 
-//       switch(i)
-//       {
-//       case 0: kP = atof(line.substr(found+2).c_str()); break;
-//       case 1: kI = atof(line.substr(found+2).c_str()); break;
-//       case 2: kD = atof(line.substr(found+2).c_str()); break;
-//           //case :  = atof(line.substr(found+2).c_str()); break;
-//       }
-//       i +=1;
-//   }
-//   inFile.close();
-// }
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-typedef struct pid_param
+void PID_TO_MOTOR()
 {
-  double kP=2.5;
-  double kI=1;
-  double kD=0;
-  double Imax=1;
-  double Dmax=1;
-} pid_param;
+   if(left_rpm < 0){
+      left_rpm_abs = -left_rpm;
+      present_pwm1 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
+      last_pwm1+=present_pwm1;
+      Motor_Controller(1, true, last_pwm1);
+    }
+    else if(left_rpm >= 0){
+      present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
+      last_pwm1+=present_pwm1;
+      Motor_Controller(1, false, last_pwm1);
+    }
 
-typedef struct pid
-{
-  double p_out=0;
-  double integrator=0;
-  double derivative=0;
-  double last_input=0;
-  double lastderivative=0;
-
-  double output=0;
-} pid;
-
-pid data1, data2;
-pid_param paramdata1, paramdata2;
+    if(right_rpm < 0){
+      right_rpm_abs = -right_rpm;
+      present_pwm2 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
+      last_pwm2 += present_pwm2;
+      Motor_Controller(2, false, last_pwm2);
+    }
+    else if(right_rpm >=0){
+      present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
+      last_pwm2 += present_pwm2;
+      Motor_Controller(2, true, last_pwm2);
+    }
+}
 
 double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat)
 {
@@ -372,14 +347,8 @@ int main(int argc, char** argv)
     packet_msg.odo[1] = odom_r;
     packet_pub.publish(packet_msg);
   
-    present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
-    last_pwm1+=present_pwm1;
+    PID_TO_MOTOR();
 
-    present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
-    last_pwm2 += present_pwm2;
-
-    Motor_Controller(1, false, last_pwm1); //오차에 대한 rpm
-    Motor_Controller(2,true, last_pwm2);  //오차에 대한 rpm
     ros::spinOnce();
     loop_rate.sleep();
   }

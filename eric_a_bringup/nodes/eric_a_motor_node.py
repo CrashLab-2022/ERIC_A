@@ -96,7 +96,7 @@ class hongdorosMotorNode:
 
       # Set vehicle specific configurations
       self.config = RobotConfig()
-      self.config.wheel_separation = 0.2052
+      self.config.wheel_separation = 0.4104
       self.config.wheel_radius = 0.0575
       self.config.max_lin_vel_wheel = 1101.0
       self.config.max_lin_vel_x = 1.101
