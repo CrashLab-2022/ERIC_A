@@ -49,7 +49,7 @@ class EricAStartNode:
 
         #storaging
         # self.sound_start=SoundStart(voice_path, sound_path)
-        
+    
 
         ##service
         rospy.Service('classnumber',ClassNumber , self.purpose_class_set)
@@ -58,7 +58,8 @@ class EricAStartNode:
         
         #action
         self.goalclient = actionlib.ActionClient('move_base/goal', MoveBaseAction)
-        
+        self.client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+
         #timer
         # self.move_base_goal.header.stamp = rospy.Time.now()
 
@@ -66,6 +67,13 @@ class EricAStartNode:
         # self.opencvStart()
         rospy.loginfo('Ready to eric_a_speak Node')
         rospy.on_shutdown(self.__del__)
+
+    def euler2quat(self):
+        self.qx = np.sin(0) * np.cos(0) * np.cos(self.theta) - np.cos(0) * np.sin(0) * np.sin(self.theta)
+        self.qy = np.cos(0) * np.sin(0) * np.cos(self.theta) + np.sin(0) * np.cos(0) * np.sin(self.theta)
+        self.qz = np.cos(0) * np.cos(0) * np.sin(self.theta) - np.sin(0) * np.sin(0) * np.cos(self.theta)
+        self.qw = np.cos(0) * np.cos(0) * np.cos(self.theta) + np.sin(0) * np.sin(0) * np.sin(self.theta)
+        self.movebase_client()
 
     def purpose_class_set(self, req):
         ## web to robot
