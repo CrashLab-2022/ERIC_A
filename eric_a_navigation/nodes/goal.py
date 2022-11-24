@@ -6,6 +6,7 @@ import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import numpy as np
 from turtlebot3_navigation.srv import Track, TrackResponse
+from std_srvs.srv import EmptyRequest, Empty
 
 class Dest():
     start=(-3,2,0)
@@ -26,6 +27,7 @@ class MoveClient():
         self.movebase_client()
 
     def movebase_client(self):
+        self.costmap_clear()
         self.actionclient.wait_for_server()
 
         goal = MoveBaseGoal()
@@ -45,10 +47,10 @@ class MoveClient():
             rospy.logerr("Action server not available!")
             rospy.signal_shutdown("Action server not available!")
         else:
-            rospy.loginfo(self.client.get_state())
+            rospy.loginfo(self.actionclient.get_state())
             # self.costmap_clear()
             # if client.get_state()!=3:
-            state= self.client.get_state() 
+            state= self.actionclient.get_state() 
             if state == 3:
                 return self.finish()
             else:
@@ -56,13 +58,22 @@ class MoveClient():
 
     def restart(self):
         rospy.sleep(2)
-        
-    # def costmap_clear(self):
-    #     try:
-    #         start_clear = rospy.ServiceProxy('clear_costmaps')
-    #         return start_clear()
-    #     except rospy.ServiceException as e:
-    #         print("Service call failed: %s"%e)
+        self.movebase_client()
+
+    def finish(self):
+        try:    
+            start_clear = rospy.ServiceProxy('destarrive', Empty)
+            return start_clear()s
+        except rospy.ServiceException as e:
+            print("Service call failed: %s"%e)
+        pass
+
+    def costmap_clear(self):
+        try:    
+            start_clear = rospy.ServiceProxy('move_base/clear_costmaps', Empty)
+            return start_clear()
+        except rospy.ServiceException as e:
+            print("Service call failed: %s"%e)
 
     def handle_track(self, req):
         if req.str=='middle':
