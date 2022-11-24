@@ -91,7 +91,9 @@ typedef struct purpose{
 int PWM_want;
 double vel_gap;
 double left_rpm;
+double left_rpm_abs;
 double right_rpm;
+double right_rpm_abs;
 double present_pwm1;
 double last_pwm1;
 double present_pwm2;
@@ -99,7 +101,29 @@ double last_pwm2;
 double pwm2;
 double left_speed;
 double right_speed;
+typedef struct pid_param
+{
+  double kP=0;
+  double kI=0;
+  double kD=0;
+  double Imax=0;
+  double Dmax=0;
+} pid_param;
 
+typedef struct pid
+{
+  double p_out=0;
+  double integrator=0;
+  double derivative=0;
+  double last_input=0;
+  double lastderivative=0;
+
+  double output=0;
+} pid;
+
+pid data1, data2;
+pid_param paramdata1, paramdata2;
+void PID_TO_MOTOR();
 void linear_vel();
 void Motor_View();
 void carcul_packet();
