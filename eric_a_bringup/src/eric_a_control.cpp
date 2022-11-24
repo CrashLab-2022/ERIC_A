@@ -239,32 +239,7 @@ void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg){
   right_rpm = (right_speed*60)/(2*M_PI*Wheel_radius);
 }
 
-void PID_TO_MOTOR()
-{
-   if(left_rpm < 0){
-      left_rpm_abs = -left_rpm;
-      present_pwm1 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
-      last_pwm1+=present_pwm1;
-      Motor_Controller(1, true, last_pwm1);
-    }
-    else if(left_rpm >= 0){
-      present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
-      last_pwm1+=present_pwm1;
-      Motor_Controller(1, false, last_pwm1);
-    }
 
-    if(right_rpm < 0){
-      right_rpm_abs = -right_rpm;
-      present_pwm2 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
-      last_pwm2 += present_pwm2;
-      Motor_Controller(2, false, last_pwm2);
-    }
-    else if(right_rpm >=0){
-      present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
-      last_pwm2 += present_pwm2;
-      Motor_Controller(2, true, last_pwm2);
-    }
-}
 
 double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat)
 {
