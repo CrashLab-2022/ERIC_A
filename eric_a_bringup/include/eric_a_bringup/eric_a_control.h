@@ -64,13 +64,6 @@ void Initialize(void);
 void Motor_Controller(int motor_num, bool direction, int pwm);
 void Accel_Controller(int motor_num, bool direction, int desired_pwm);
 
-//Example
-bool switch_direction;
-int Theta_Distance_Flag;
-void Switch_Turn_Example(int PWM1, int PWM2);
-void Theta_Turn(double Theta, int PWM);
-void Distance_Go(double Distance, int PWM);
-void Theta_Distance(double Theta, int Turn_PWM, double Distance, int Go_PWM);
 
 //Utiliy
 int Limit_Function(int pwm);
@@ -101,13 +94,16 @@ double last_pwm2;
 double pwm2;
 double left_speed;
 double right_speed;
+bool DIR_L;
+bool DIR_R;
+//////////////////////////PID control
 typedef struct pid_param
 {
   double kP=0;
   double kI=0;
   double kD=0;
-  double Imax=0;
-  double Dmax=0;
+  double Imax=1;
+  double Dmax=1;
 } pid_param;
 
 typedef struct pid
@@ -123,7 +119,9 @@ typedef struct pid
 
 pid data1, data2;
 pid_param paramdata1, paramdata2;
+double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat);
 void PID_TO_MOTOR();
+////////////////////////////////
 void linear_vel();
 void Motor_View();
 void carcul_packet();
