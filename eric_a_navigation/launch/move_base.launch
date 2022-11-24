@@ -1,9 +1,9 @@
 <launch>
   <!-- Arguments -->
   <arg name="cmd_vel_topic" default="cmd_vel" />
-  <arg name="odom_topic" default="odometry/filtered" />
+  <arg name="odom_topic" default="odom" />
   <arg name="move_forward_only" default="false"/>
-
+  <arg name="machine" />  
   <!-- move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" machine="$(arg machine)">
     <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />

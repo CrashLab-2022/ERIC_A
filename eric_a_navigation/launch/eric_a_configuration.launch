@@ -2,7 +2,7 @@
     <arg name="machine" />s
     <!-- ekf_localization -->
     <node pkg="robot_localization" type="ekf_localization_node" name="eric_a_ekf_kalman" clear_params="true" > 
-        <!-- <rosparam command="load" file="$(find eric_a_navigation)/config/ekf_localization.yaml" /> -->
+        <rosparam command="load" file="$(find eric_a_navigation)/config/ekf_localization.yaml" />
     </node>
 
     <node pkg="eric_a_navigation" type="init_pose.py" name="eric_a_init_pose" />
