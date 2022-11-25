@@ -1,12 +1,13 @@
 <launch>
+  <arg name="machine" default=""/>     
   <include file="$(find eric_a_bringup)/launch/include/description.launch.xml"/>
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" machine="$(arg machine)">
     <param name="publish_frequency" type="double" value="50.0" />
     <param name="tf_prefix" value=""/>
   </node>
 
-  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" machine="$(arg machine)">
     <param name="use_gui" value="false"/>
     <param name="rate" value="50"/>
   </node>

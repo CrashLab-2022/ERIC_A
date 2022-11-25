@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="machine" />     
+  <arg name="machine" default=""/>     
   <!-- <arg name="set_port_imu" default="/dev/ttyIMU"/> -->
   <arg name="set_frame_id" default="imu_link"/>
   <arg name="frequency" default="100.0"/>

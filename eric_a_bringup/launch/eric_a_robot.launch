@@ -85,7 +85,7 @@
         </include>
 
 
-        <!-- <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/> -->
+        <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/>
         <!-- mapping -->
 
 
