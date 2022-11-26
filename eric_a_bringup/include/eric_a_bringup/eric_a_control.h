@@ -96,6 +96,8 @@ double left_speed;
 double right_speed;
 bool DIR_L;
 bool DIR_R;
+double linear_2;
+double angular_2;
 //////////////////////////PID control
 typedef struct pid_param
 {

@@ -225,17 +225,17 @@ void RPM_Calculator()
 void carcul_packet()
 {
  linear = (linear_vel1 + linear_vel2)/2;
- angular =(linear_vel1 - linear_vel2)/Robot_radius*2;
- odom_l = Wheel_radius*packet_msg.encod[0]*(2*M_PI)/960;
- odom_r = Wheel_radius*packet_msg.encod[1]*(2*M_PI)/960;
+ angular =(linear_vel1 - linear_vel2)/(Robot_radius*2);
+ odom_l = Wheel_radius*packet_msg.encod[0]*(2*M_PI)/(Encoder_resolution*4);
+ odom_r = Wheel_radius*packet_msg.encod[1]*(2*M_PI)/(Encoder_resolution*4);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg){
   purposevel.linear_x=msg->linear.x;
   purposevel.angular_z=msg->angular.z;
-  left_speed = purposevel.linear_x + (purposevel.angular_z*Robot_radius*0.001);
-  right_speed = purposevel.linear_x - (purposevel.angular_z*Robot_radius*0.001);
-  left_rpm = (left_speed*60)/(2*M_PI*Wheel_radius);
+  left_speed = purposevel.linear_x - (purposevel.angular_z*Robot_radius*0.001);
+  right_speed = purposevel.linear_x + (purposevel.angular_z*Robot_radius*0.001);
+  left_rpm = (left_speed*60)/ (2*M_PI*Wheel_radius);
   right_rpm = (right_speed*60)/(2*M_PI*Wheel_radius);
 }
 
@@ -322,7 +322,7 @@ void Motor_View()
 	printf("Acc  :%10.0d\n", acceleration);
 	printf("\n");
 	printf("linear vel1: %10.0f || linear vel2: %10.0f\n",linear_vel1, linear_vel2); 
-  printf("liner_vel: %10.0f || angular_vel: %10.0f\n",linear, angular); 
+  printf("liner_vel: %10.0f || angular_vel: %10.0f\n",linear, angular);
   printf("odom_l: %10.0f || odom_r: %10.0f\n",odom_l, odom_r);
 }
 
@@ -338,9 +338,9 @@ int main(int argc, char** argv)
   ros::Rate loop_rate(Control_cycle);
   while(ros::ok())
   {
+    carcul_packet();  //linear, angular odom 계산
     Motor_View();
     RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
-    carcul_packet();  //linear, angular odom 계산
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
     packet_msg.encod[0] = Motor1_Encoder_Sum();
