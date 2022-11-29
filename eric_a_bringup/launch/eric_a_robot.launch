@@ -1,5 +1,5 @@
 <launch>
-    <arg name="mode" default="0"/>
+    <arg name="mode" default="1"/>
     <!--slam is 0, navigation is 1 -->
     <group>
         <arg name="set_port_imu" default="/dev/ttyIMU"/>
@@ -52,9 +52,9 @@
         </include>
         <!-- navigation -->
 
-        <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/mcl.launch">
+        <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/amcl.launch">
             <arg name="machine" default="main_machine"/>
-        </include> -->
+        </include>
         <!-- amcl -->
 
         <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/mcl.launch">
@@ -62,9 +62,9 @@
         </include> -->
         <!-- mcl -->
 
-        <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
+        <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
             <arg name="machine" default="main_machine"/>
-        </include>
+        </include> -->
         <!-- emcl2 -->
 
 
