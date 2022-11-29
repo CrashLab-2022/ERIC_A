@@ -5,7 +5,7 @@ import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import numpy as np
-from turtlebot3_navigation.srv import Track, TrackResponse
+from eric_a_navigation.srv import Destination, DestinationResponse
 from std_srvs.srv import EmptyRequest, Empty
 
 class Dest():
@@ -16,7 +16,7 @@ class Dest():
 class MoveClient():
     def __init__(self):
         self.srvs = [] 
-        self.srvs.append(rospy.Service('track', Track, self.handle_track)) 
+        self.srvs.append(rospy.Service('dest', Destination, self.handle_track)) 
         self.actionclient = actionlib.SimpleActionClient('move_base',MoveBaseAction)
         
     def euler2quat(self):
@@ -62,8 +62,8 @@ class MoveClient():
 
     def finish(self):
         try:    
-            start_clear = rospy.ServiceProxy('destarrive', Empty)
-            return start_clear()s
+            start_clear = rospy.ServiceProxy(' ', Empty)
+            return start_clear()
         except rospy.ServiceException as e:
             print("Service call failed: %s"%e)
         pass
@@ -76,33 +76,34 @@ class MoveClient():
             print("Service call failed: %s"%e)
 
     def handle_track(self, req):
-        if req.str=='middle':
+        if req.dest=='middle':
             rospy.loginfo("middle")
             self.x=Dest.middle[0]
             self.y=Dest.middle[1]
             self.theta=Dest.middle[2] 
             self.euler2quat()           
-            return TrackResponse('middle')
+            return DestinationResponse('middle')
 
-        elif req.str=='final':
+        elif req.dest=='final':
             rospy.loginfo("final")
             self.x=Dest.final[0]
             self.y=Dest.final[1]
             self.theta=Dest.final[2]
             self.euler2quat()
-            return TrackResponse('final')
+            return DestinationResponse('final')
 
-        elif req.str=='start':
+        elif req.dest=='start':
             rospy.loginfo("start")
             self.x=Dest.start[0]
             self.y=Dest.start[1]
             self.theta=Dest.start[2]
             self.euler2quat()
-            return TrackResponse('start')
+            return DestinationResponse('start')
 
-
+    def main(self):
+        rospy.spin()
 
 if __name__ == '__main__':
     rospy.init_node('movebase_client_py')
-    cls_=MoveClient()
-    rospy.spin()
+    node=MoveClient()
+    node.main()
