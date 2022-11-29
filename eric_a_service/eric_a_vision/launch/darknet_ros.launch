@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+  <arg name="machine" default=""/> 
+  <!-- Console launch prefix -->
+  <include file="$(find eric_a_vision)/launch/usb_cam-test.launch"/>
+  
+  <arg name="launch_prefix" default=""/>
+  <arg name="image" default="/usb_cam/image_raw" />
+
+  <!-- Config and weights folder. -->
+  <arg name="yolo_weights_path"          default="$(find eric_a_vision)/yolo_network_config/weights"/>
+  <arg name="yolo_config_path"           default="$(find eric_a_vision)/yolo_network_config/cfg"/>
+
+  <!-- ROS and network parameter files -->
+  <arg name="ros_param_file"             default="$(find eric_a_vision)/config/ros.yaml"/>
+  <arg name="network_param_file"         default="$(find eric_a_vision)/config/yolov3-tiny.yaml"/>
+
+  <!-- Load parameters -->
+  <rosparam command="load" ns="darknet_ros" file="$(arg ros_param_file)"/>
+  <rosparam command="load" ns="darknet_ros" file="$(arg network_param_file)"/>
+
+  <!-- Start darknet and ros wrapper -->
+  <node pkg="darknet_ros" type="darknet_ros" name="darknet_ros" output="screen" launch-prefix="$(arg launch_prefix)" machine="$(arg machine)">
+    <param name="weights_path"          value="/home/crashlab/catkin_ws/src/darknet_ros/darknet_ros/yolo_network_config/weights" />
+    <param name="config_path"           value="/home/crashlab/catkin_ws/src/darknet_ros/darknet_ros/yolo_network_config/cfg" />
+    <remap from="camera/usb_cam/image_raw"  to="$(arg image)" />
+  </node>
+ <!--<node name="republish" type="republish" pkg="image_transport" output="screen" 	args="compressed in:=/front_camera/image_raw raw out:=/camera/image_raw" /> -->
+</launch>
