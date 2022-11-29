@@ -1,5 +1,4 @@
 sudo apt install -y ros-noetic-rosserial \
- ros-noetic-hls-lfcd-lds-driver \
  ros-noetic-urdf \
  ros-noetic-gazebo-ros \
  ros-noetic-xacro \
@@ -9,4 +8,5 @@ sudo apt install -y ros-noetic-rosserial \
  ros-noetic-dynamixel-sdk \
  ros-noetic-slam-toolbox \
  ros-noetic-rosbridge-server \
- robot_localization
+ ros-noetic-robot_localization \
+ ros-noetic-usb-cam
