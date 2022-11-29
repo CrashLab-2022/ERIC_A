@@ -225,7 +225,7 @@ void RPM_Calculator()
 void carcul_packet()
 {
  linear = (linear_vel1 + linear_vel2)/2;
- angular =(linear_vel1 - linear_vel2)/(Robot_radius*2);
+ angular =(linear_vel2 - linear_vel1)/(Robot_radius*2)*1000;
  odom_l = Wheel_radius*packet_msg.encod[0]*(2*M_PI)/(Encoder_resolution*4);
  odom_r = Wheel_radius*packet_msg.encod[1]*(2*M_PI)/(Encoder_resolution*4);
 }
@@ -248,8 +248,6 @@ double PidContoller(double goal, double curr, double control_cycle, pid *pid_dat
   pid_paramdata->kD = kd;
   double error = goal - curr;
   double dt = 1/control_cycle;
-  ROS_INFO(" goal : %f, curr: %f", goal,curr);
-  ROS_INFO(" error : %f", error);
   
   if (fabs(error) < error_rat)
     error = 0;
@@ -264,7 +262,8 @@ double PidContoller(double goal, double curr, double control_cycle, pid *pid_dat
   double filter = 15.9155e-3; // Set to  "1 / ( 2 * PI * f_cut )";
   // Examples for _filter:
   // f_cut = 10 Hz -> _filter = 15.9155e-3
-  // f_cut = 15 Hz -> _filter = 10.6103e-3
+  // f_cut = 15 Hz -> _filter / ROS_INFO(" goal : %f, curr: %f", goal,curr);
+  // ROS_INFO(" error : %f", error);= 10.6103e-3
   // f_cut = 20 Hz -> _filter =  7.9577e-3
   // f_cut = 25 Hz -> _filter =  6.3662e-3
   // f_cut = 30 Hz -> _filter =  5.3052e-3
@@ -343,8 +342,8 @@ int main(int argc, char** argv)
     RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
-    packet_msg.encod[0] = Motor1_Encoder_Sum();
-    packet_msg.encod[1] = Motor2_Encoder_Sum();
+    packet_msg.encod[0] = last_pwm1;
+    packet_msg.encod[1] = last_pwm2;
     packet_msg.odo[0] = odom_l;
     packet_msg.odo[1] = odom_r;
     packet_pub.publish(packet_msg);
