@@ -276,7 +276,7 @@ double PidContoller(double goal, double curr, double control_cycle, pid *pid_dat
   d_data = constrain(d_data, -pid_paramdata->Dmax, pid_paramdata->Dmax);
 
   double output = p_data + i_data + d_data;
-  pid_data->output += output;
+  pid_data->output = output;
 
   return pid_data->output;
 }
@@ -286,13 +286,13 @@ void PID_TO_MOTOR()
   if(left_rpm < 0){ //left_motor DIR
       left_rpm_abs = -left_rpm;
 
-      present_pwm1 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data1, &paramdata1, 15); //오차에 대한 output rpm
-      last_pwm1=present_pwm1;
+      present_pwm1 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
+      last_pwm1+=present_pwm1;
       Motor_Controller(1, true, last_pwm1);
     }
     else if(left_rpm > 0){
-      present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 15); //오차에 대한 output rpm
-      last_pwm1=present_pwm1;
+      present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
+      last_pwm1+=present_pwm1;
       Motor_Controller(1, false, last_pwm1); 
     }
     else if(left_rpm == 0){
@@ -302,13 +302,13 @@ void PID_TO_MOTOR()
 
     if(right_rpm < 0){  //right_motor DIR 
       right_rpm_abs = -right_rpm;
-      present_pwm2 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data2, &paramdata2, 15);
-      last_pwm2 = present_pwm2;
+      present_pwm2 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
+      last_pwm2 += present_pwm2;
       Motor_Controller(2, false, last_pwm2);
     }
     else if(right_rpm > 0){
-      present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 15);
-      last_pwm2 = present_pwm2;
+      present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
+      last_pwm2 += present_pwm2;
       Motor_Controller(2, true, last_pwm2);
     }
     else if(right_rpm == 0){
@@ -354,12 +354,12 @@ int main(int argc, char** argv)
 
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
-    packet_msg.encod[0] = last_pwm1;
-    packet_msg.encod[1] = last_pwm2;
+    packet_msg.encod[0] = Motor2_Encoder_Sum();
+    packet_msg.encod[1] = Motor1_Encoder_Sum();
     packet_msg.odo[0] = odom_l;
     packet_msg.odo[1] = odom_r;
-    packet_msg.pwml =RPM_Value1;
-    packet_msg.pwmr =RPM_Value2;
+    // packet_msg.pwml =RPM_Value1;
+    // packet_msg.pwmr =RPM_Value2;
     packet_pub.publish(packet_msg);
     ros::spinOnce();
     loop_rate.sleep();

@@ -132,7 +132,7 @@ class hongdorosMotorNode:
       rospy.Service('set_odom', ResetOdom, self.set_odom_handle)
       
       # timer
-      rospy.Timer(rospy.Duration(0.02), self.cbTimerUpdateDriverData) # 50 hz update
+      rospy.Timer(rospy.Duration(0.05), self.cbTimerUpdateDriverData) # 50 hz update
       self.odom_pose.timestamp = rospy.Time.now().to_nsec()
       self.odom_pose.pre_timestamp = rospy.Time.now()
       self.reset_odometry()
