@@ -29,17 +29,17 @@
             user="jeonghan"
         />
 
-        <machine           
+        <!-- <machine           
             name="jetson"
             address="192.168.240.24" 
             env-loader="/opt/ros/melodic/env_remote.sh"
             default="true"
             user="crashlab"
-        />
+        /> -->
 
-        <!-- <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
+        <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
             <arg name="machine" default="control_machine"/>
-        </include> -->
+        </include>
         <!-- motor -->
 
         <!-- <include file="$(find eric_a_servo)/launch/eric_a_dynamixel_controller.launch">
@@ -97,14 +97,14 @@
         <!-- mapping -->
 
 
-        <!-- <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
+        <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
             <arg name="machine" default="main_machine"/>
-        </include>   -->
+        </include>  
         <!-- kalman, reset -->
 
-        <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
+        <!-- <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
             <arg name="machine" default="jetson"/>
-        </include> 
+        </include>  -->
     </group>
 
 </launch>
