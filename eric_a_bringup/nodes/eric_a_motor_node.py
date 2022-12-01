@@ -9,7 +9,7 @@ from nav_msgs.msg import Odometry
 from eric_a_bringup.msg import MotorPacket
 from geometry_msgs.msg import Twist, Pose, Point, Vector3, Quaternion, PoseWithCovarianceStamped, PoseWithCovariance
 from tf.broadcaster import TransformBroadcaster
-from tf.transformations import quaternion_from_euler, euler_from_quaternion
+from tf.transformations import quaternion_from_euler
 from eric_a_bringup.srv import ResetOdom, ResetOdomResponse
 from std_srvs.srv import TriggerRequest, Trigger
 
@@ -170,14 +170,15 @@ class hongdorosMotorNode:
       self.odom_vel.w = orient_vel
 
       odom = Odometry()
-      odom.header.frame_id = "/odom"
-      odom.child_frame_id = "/base_footprint"
+      odom.header.frame_id = "odom"
+      odom.child_frame_id = "base_footprint"
 
-      self.odom_broadcaster.sendTransform((self.odom_pose.x, self.odom_pose.y, 0.), 
-                                             odom_orientation_quat, self.odom_pose.timestamp, 
-                                             odom.child_frame_id, odom.header.frame_id)
+      # self.odom_broadcaster.sendTransform((self.odom_pose.x, self.odom_pose.y, 0.), 
+      #                                        odom_orientation_quat, self.odom_pose.timestamp, 
+      #                                        odom.child_frame_id, odom.header.frame_id)
 
       odom.header.stamp = rospy.Time.now()
+      
       odom.pose.pose = Pose(Point(self.odom_pose.x, self.odom_pose.y, 0.), Quaternion(*odom_orientation_quat))
       odom.twist.twist = Twist(Vector3(self.odom_vel.x, self.odom_vel.y, 0), Vector3(0, 0, self.odom_vel.w))
       self.odom_pub.publish(odom)
@@ -196,7 +197,7 @@ class hongdorosMotorNode:
       self.joint.joint_vel = [wheel_ang_vel_left, wheel_ang_vel_right]
 
       joint_states = JointState()
-      joint_states.header.frame_id = self.tf_prefix + "/base_link"
+      joint_states.header.frame_id = self.tf_prefix + "base_link"
       joint_states.header.stamp = rospy.Time.now()
       joint_states.name = self.joint.joint_name
       joint_states.position = self.joint.joint_pos

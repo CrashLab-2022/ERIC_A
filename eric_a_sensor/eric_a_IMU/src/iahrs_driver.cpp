@@ -389,7 +389,7 @@ int main (int argc, char** argv)
             		ros::Time measurement_time = ros::Time::now() + ros::Duration(time_offset_in_seconds);
 
 			imu_data_msg.header.stamp = measurement_time;
-			imu_data_msg.header.frame_id = tf_prefix_ + "/imu_link";  // "imu_link"
+			imu_data_msg.header.frame_id = tf_prefix_ + "imu_link";  // "imu_link"
 
 			// publish the IMU data
 			imu_data_pub.publish(imu_data_msg);
