@@ -82,6 +82,7 @@ class hongdorosMotorNode:
       sleep(0.1)
 
       # Storaging
+      self.purposevel = Twist()
       self.odom_pose = OdomPose()
       self.odom_vel = OdomVel()
       self.joint = Joint() 
@@ -212,14 +213,15 @@ class hongdorosMotorNode:
       rospy.loginfo('V= {}, W= {}, odo_l: {} odo_r:{}'.format(trans_vel, orient_vel, odo_l, odo_r))
       self.update_odometry(odo_l, odo_r, trans_vel, orient_vel)
       self.updateJointStates(odo_l, odo_r, trans_vel, orient_vel)
-      self.pub_vel.publish(Twist(Vector3(self.pub_lin_vel_x*1000, 0, 0), Vector3(0, 0, self.pub_ang_vel_z*1000)))
+      self.pub_vel.publish(self.purposevel)
 
    def cbSubCmdVelTMsg(self, cmd_vel_msg): ## send to cmd_vel message
       lin_vel_x = cmd_vel_msg.linear.x
       ang_vel_z = cmd_vel_msg.angular.z
 
-      self.pub_lin_vel_x = max(-self.config.max_lin_vel_x, min(self.config.max_lin_vel_x, lin_vel_x))
-      self.pub_ang_vel_z = max(-self.config.max_ang_vel_z, min(self.config.max_ang_vel_z, ang_vel_z))
+      lin_vel_x = max(-self.config.max_lin_vel_x, min(self.config.max_lin_vel_x, lin_vel_x))
+      ang_vel_z = max(-self.config.max_ang_vel_z, min(self.config.max_ang_vel_z, ang_vel_z))
+      self.purposevel = Twist(Vector3(self.pub_lin_vel_x*1000, 0, 0), Vector3(0, 0, self.pub_ang_vel_z*1000))
 
    def set_odom_handle(self, req):
       self.odom_pose.x = req.x
