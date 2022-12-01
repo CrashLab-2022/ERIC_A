@@ -19,6 +19,7 @@ class OdomPose(object):
    theta = 0.0
    timestamp = 0
    pre_timestamp = 0
+   
 
 class OdomVel(object):
    x = 0.0
