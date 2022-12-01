@@ -222,7 +222,7 @@ class hongdorosMotorNode:
 
       lin_vel_x = max(-self.config.max_lin_vel_x, min(self.config.max_lin_vel_x, lin_vel_x))
       ang_vel_z = max(-self.config.max_ang_vel_z, min(self.config.max_ang_vel_z, ang_vel_z))
-      self.purposevel = Twist(Vector3(self.pub_lin_vel_x*1000, 0, 0), Vector3(0, 0, self.pub_ang_vel_z*1000))
+      self.purposevel = Twist(Vector3(ang_vel_z*1000, 0, 0), Vector3(0, 0, ang_vel_z*1000))
 
    def set_odom_handle(self, req):
       self.odom_pose.x = req.x
