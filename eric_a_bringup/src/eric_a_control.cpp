@@ -350,7 +350,7 @@ int main(int argc, char** argv)
     carcul_packet();  //linear, angular odom 계산
     Motor_View();
     RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
-    // PID_TO_MOTOR();
+    PID_TO_MOTOR();
 
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
@@ -361,8 +361,6 @@ int main(int argc, char** argv)
     packet_msg.pwml =RPM_Value1;
     packet_msg.pwmr =RPM_Value2;
     packet_pub.publish(packet_msg);
-  
-    Motor_Controller(1, true, 100);
     ros::spinOnce();
     loop_rate.sleep();
   }
