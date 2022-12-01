@@ -4,7 +4,7 @@
   <arg name="initial_pose_x" default="-2.0"/>
   <arg name="initial_pose_y" default="-0.5"/>
   <arg name="initial_pose_a" default="0.0"/>
-  <arg name="machine" />   
+  <arg name="machine" default=""/>   
   
   <!-- MCL -->
   <node pkg="emcl" type="mcl_node" name="mcl_node" output="screen" machine="$(arg machine)">

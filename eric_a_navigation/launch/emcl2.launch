@@ -4,7 +4,7 @@
   <arg name="initial_pose_x" default="2"/>
   <arg name="initial_pose_y" default="0"/>
   <arg name="initial_pose_a" default="0.0"/>
-  <arg name="machine" />     
+  <arg name="machine" default=""/>     
 
   <!-- EMCL -->
   <node pkg="eric_a_navigation" type="emcl2_node" name="emcl2_node" output="screen" machine="$(arg machine)">

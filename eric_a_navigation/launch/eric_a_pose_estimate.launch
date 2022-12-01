@@ -1,5 +1,5 @@
 <launch>
-  <arg name="mahcine"/>
+  <arg name="mahcine" default=""/>
 
   <!-- AMCL -->
   <include file="$(find eric_a_navigation)/launch/amcl.launch">

@@ -354,8 +354,8 @@ int main(int argc, char** argv)
 
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
-    packet_msg.encod[0] = Motor2_Encoder_Sum(); 
-    packet_msg.encod[1] = Motor1_Encoder_Sum(); 
+    packet_msg.encod[0] = last_pwm1;
+    packet_msg.encod[1] = last_pwm2;
     packet_msg.odo[0] = odom_l;
     packet_msg.odo[1] = odom_r;
     packet_msg.pwml =RPM_Value1;

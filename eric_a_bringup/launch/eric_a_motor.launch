@@ -1,16 +1,16 @@
 <launch>
-  <arg name="machine" />     
+  <arg name="machine" default=""/>     
   <node pkg="eric_a_bringup" 
         type="eric_a_motor_node.py" 
         name="eric_a_motor_node"  
         machine="$(arg machine)"
   />
 
-  <!-- <node pkg="eric_a_bringup" 
+  <node pkg="eric_a_bringup" 
         type="eric_a_control_node" 
         name="eric_a_control_node"  
         machine="$(arg machine)"
         output="screen"
-  />  -->
+  /> 
 
 </launch>

@@ -7,7 +7,7 @@ from time import sleep
 from sensor_msgs.msg import JointState
 from nav_msgs.msg import Odometry
 from eric_a_bringup.msg import MotorPacket
-from geometry_msgs.msg import Twist, Pose, Point, Vector3, Quaternion, PoseWithCovarianceStamped
+from geometry_msgs.msg import Twist, Pose, Point, Vector3, Quaternion, PoseWithCovarianceStamped, PoseWithCovariance
 from tf.broadcaster import TransformBroadcaster
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 from eric_a_bringup.srv import ResetOdom, ResetOdomResponse
@@ -82,6 +82,7 @@ class hongdorosMotorNode:
       sleep(0.1)
 
       # Storaging
+      self.purposevel = Twist()
       self.odom_pose = OdomPose()
       self.odom_vel = OdomVel()
       self.joint = Joint() 
@@ -130,7 +131,7 @@ class hongdorosMotorNode:
       rospy.Service('set_odom', ResetOdom, self.set_odom_handle)
       
       # timer
-      rospy.Timer(rospy.Duration(0.01), self.cbTimerUpdateDriverData) # 10 hz update
+      rospy.Timer(rospy.Duration(0.02), self.cbTimerUpdateDriverData) # 50 hz update
       self.odom_pose.timestamp = rospy.Time.now().to_nsec()
       self.odom_pose.pre_timestamp = rospy.Time.now()
       self.reset_odometry()
@@ -212,6 +213,7 @@ class hongdorosMotorNode:
       rospy.loginfo('V= {}, W= {}, odo_l: {} odo_r:{}'.format(trans_vel, orient_vel, odo_l, odo_r))
       self.update_odometry(odo_l, odo_r, trans_vel, orient_vel)
       self.updateJointStates(odo_l, odo_r, trans_vel, orient_vel)
+      self.pub_vel.publish(self.purposevel)
 
    def cbSubCmdVelTMsg(self, cmd_vel_msg): ## send to cmd_vel message
       lin_vel_x = cmd_vel_msg.linear.x
@@ -219,14 +221,18 @@ class hongdorosMotorNode:
 
       lin_vel_x = max(-self.config.max_lin_vel_x, min(self.config.max_lin_vel_x, lin_vel_x))
       ang_vel_z = max(-self.config.max_ang_vel_z, min(self.config.max_ang_vel_z, ang_vel_z))
-      self.pub_vel.publish(Twist(Vector3(lin_vel_x*1000, 0, 0), Vector3(0, 0, ang_vel_z*1000)))
+      self.purposevel = Twist(Vector3(self.pub_lin_vel_x*1000, 0, 0), Vector3(0, 0, self.pub_ang_vel_z*1000))
 
    def set_odom_handle(self, req):
       self.odom_pose.x = req.x
       self.odom_pose.y = req.y
       self.odom_pose.theta = req.theta
-      
-      # self.pub_init_pose.publish(PoseWithCovarianceStamped(Pose(Point(self.odom_pose.x, self.odom_pose.y, 0.)),Quaternion(*quaternion_from_euler(0, 0, self.odom_pose.theta)),0))
+
+      initpose=PoseWithCovarianceStamped()
+      initpose.pose.pose.position.x
+      initpose.pose.pose.position.y
+      initpose.pose.pose.orientation = Quaternion(*quaternion_from_euler(0, 0, self.odom_pose.theta))
+      self.pub_init_pose.publish(initpose)
 
       return ResetOdomResponse()
 
