@@ -29,24 +29,26 @@
             user="jeonghan"
         />
 
-        <machine           
+        <!-- <machine           
             name="jetson"
             address="192.168.240.24" 
             env-loader="/opt/ros/melodic/env_remote.sh"
             default="true"
             user="crashlab"
-        />
+        /> -->
 
-        <!-- <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
+        <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
             <arg name="machine" default="control_machine"/>
-        </include> -->
+        </include>
         <!-- motor -->
 
         <!-- <include file="$(find eric_a_servo)/launch/eric_a_dynamixel_controller.launch">
             <arg name="machine" default="control_machine"/>
         </include>
         <include file="$(find eric_a_servo)/launch/eric_a_dynamixel_operator.launch">
-            <arg name="machine" default="control_machine"/>
+            <arg name="machine" default="contro<include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
+            <arg name="machine" default="main_machine"/>
+        </includl_machine"/>
         </include> -->
         <!-- servo -->
 
@@ -55,9 +57,9 @@
         </include> -->
         <!-- linear -->
 
-        <!-- <include if="$(eval arg('mode') ==1)" file="$(find eric_a_navigation)/launch/eric_a_navigation.launch">
+        <include if="$(eval arg('mode') ==1)" file="$(find eric_a_navigation)/launch/eric_a_navigation.launch">
             <arg name="machine" default="main_machine"/>
-        </include> -->
+        </include>
         <!-- navigation -->
 
         <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/amcl.launch">
@@ -70,9 +72,9 @@
         </include> -->
         <!-- mcl -->
 
-        <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
+        <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
             <arg name="machine" default="main_machine"/>
-        </include> -->
+        </include>
         <!-- emcl2 -->
 
 
@@ -85,15 +87,15 @@
             <arg name="machine" default="control_machine"/>
         </include> -->
 
-        <!-- <include file="$(find eric_a_lidar)/launch/eric_a_lidar.launch">
+        <include file="$(find eric_a_lidar)/launch/eric_a_lidar.launch">
             <arg name="set_port" default="$(arg set_port_lidar)"/>
             <arg name="set_frame_id" default="$(arg set_lidar_frame_id)"/>
             <arg name="frequency" default="10.0"/>
             <arg name="machine" default="control_machine"/>
-        </include> -->
+        </include>
 
 
-        <!-- <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/> -->
+        <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/>
         <!-- mapping -->
 
 
@@ -102,9 +104,9 @@
         </include>   -->
         <!-- kalman, reset -->
 
-        <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
+        <!-- <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
             <arg name="machine" default="jetson"/>
-        </include> 
+        </include>  -->
     </group>
 
 </launch>
