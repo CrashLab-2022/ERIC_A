@@ -1,5 +1,5 @@
-obstacle_range: 11.0
-raytrace_range: 12.0
+obstacle_range: 6.0
+raytrace_range: 6.0
 
 # footprint: [[-0.475, -0.355], [-0.475, 0.355], [0.201, 0.355], [0.201, -0.355]]
 footprint: [[-0.367, -0.250], [-0.367, 0.250], [0.213, 0.250], [0.213, -0.250]] # Wall-E
