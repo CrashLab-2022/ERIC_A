@@ -2,13 +2,13 @@
 #define MOTOR_NODE_H
 #include <pigpiod_if2.h>
 
-#define motor1_DIR 19
-#define motor1_PWM 26
+#define motor1_DIR 6
+#define motor1_PWM 13
 #define motor1_ENA 23
 #define motor1_ENB 24
 
-#define motor2_DIR 6
-#define motor2_PWM 13
+#define motor2_DIR 19
+#define motor2_PWM 26
 #define motor2_ENA 27
 #define motor2_ENB 17
 
@@ -27,9 +27,6 @@ double Robot_radius;
 int Encoder_resolution;
 double Wheel_round;
 double Robot_round;
-double kp;
-double ki;
-double kd;
 
 //Motor_Setup
 int Motor_Setup(void);
@@ -81,8 +78,6 @@ typedef struct purpose{
     double angular_z=0;
 } purpose;
 
-int PWM_want;
-double vel_gap;
 double left_rpm;
 double left_rpm_abs;
 double right_rpm;
@@ -91,13 +86,9 @@ double present_pwm1;
 double last_pwm1;
 double present_pwm2;
 double last_pwm2;
-double pwm2;
 double left_speed;
 double right_speed;
-bool DIR_L;
-bool DIR_R;
-double linear_2;
-double angular_2;
+
 //////////////////////////PID control
 typedef struct pid_param
 {
@@ -118,7 +109,9 @@ typedef struct pid
 
   double output=0;
 } pid;
-
+double kp;
+double ki;
+double kd;
 pid data1, data2;
 pid_param paramdata1, paramdata2;
 double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat);

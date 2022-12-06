@@ -19,6 +19,7 @@ class OdomPose(object):
    theta = 0.0
    timestamp = 0
    pre_timestamp = 0
+   
 
 class OdomVel(object):
    x = 0.0
@@ -131,7 +132,7 @@ class hongdorosMotorNode:
       rospy.Service('set_odom', ResetOdom, self.set_odom_handle)
       
       # timer
-      rospy.Timer(rospy.Duration(0.05), self.cbTimerUpdateDriverData) # 50 hz update
+      rospy.Timer(rospy.Duration(0.01), self.cbTimerUpdateDriverData) # 50 hz update
       self.odom_pose.timestamp = rospy.Time.now().to_nsec()
       self.odom_pose.pre_timestamp = rospy.Time.now()
       self.reset_odometry()
@@ -222,7 +223,7 @@ class hongdorosMotorNode:
 
       lin_vel_x = max(-self.config.max_lin_vel_x, min(self.config.max_lin_vel_x, lin_vel_x))
       ang_vel_z = max(-self.config.max_ang_vel_z, min(self.config.max_ang_vel_z, ang_vel_z))
-      self.purposevel = Twist(Vector3(self.pub_lin_vel_x*1000, 0, 0), Vector3(0, 0, self.pub_ang_vel_z*1000))
+      self.purposevel = Twist(Vector3(lin_vel_x*1000, 0, 0), Vector3(0, 0, ang_vel_z*1000))
 
    def set_odom_handle(self, req):
       self.odom_pose.x = req.x

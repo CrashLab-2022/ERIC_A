@@ -90,26 +90,26 @@ void Interrupt_Setting(void)
 }
 void Interrupt1A(int pi, unsigned user_gpio, unsigned level, uint32_t tick)  //motor right
 {
-  if(gpio_read(pinum, motor1_DIR) == true)EncoderCounter1A ++;
-  else EncoderCounter1A --;
+  if(gpio_read(pinum, motor1_DIR) == true)EncoderCounter1A --;
+  else EncoderCounter1A ++;
   EncoderSpeedCounter1 ++;
 }
 void Interrupt1B(int pi, unsigned user_gpio, unsigned level, uint32_t tick)
 {
-  if(gpio_read(pinum, motor1_DIR) == true)EncoderCounter1B ++;
-  else EncoderCounter1B --;
+  if(gpio_read(pinum, motor1_DIR) == true)EncoderCounter1B --;
+  else EncoderCounter1B ++;
   EncoderSpeedCounter1 ++;
 }
 void Interrupt2A(int pi, unsigned user_gpio, unsigned level, uint32_t tick) // motor left
 {
-  if(gpio_read(pinum, motor2_DIR) == true)EncoderCounter2A --;
-  else EncoderCounter2A ++;
+  if(gpio_read(pinum, motor2_DIR) == true)EncoderCounter2A ++;
+  else EncoderCounter2A --;
   EncoderSpeedCounter2 ++;
 }
 void Interrupt2B(int pi, unsigned user_gpio, unsigned level, uint32_t tick)
 {
-  if(gpio_read(pinum, motor2_DIR) == true)EncoderCounter2B --;
-  else EncoderCounter2B ++;
+  if(gpio_read(pinum, motor2_DIR) == true)EncoderCounter2B ++;
+  else EncoderCounter2B --;
   EncoderSpeedCounter2 ++;
 }
 int Motor1_Encoder_Sum()
@@ -156,7 +156,7 @@ void Motor_Controller(int motor_num, bool direction, int pwm)
 {
   int local_PWM = Limit_Function(pwm);
 
-  if(motor_num == 1)  //motor left
+  if(motor_num == 1)
   {
     if(direction == true)
     {
@@ -164,7 +164,7 @@ void Motor_Controller(int motor_num, bool direction, int pwm)
       set_PWM_dutycycle(pinum, motor1_PWM, local_PWM);
       current_PWM1 = local_PWM;
       current_Direction1 = true;
-      linear_vel1 = -((2*57.5*M_PI*RPM_Value1)/60); //linear velocity 
+      linear_vel1 = ((2*57.5*M_PI*RPM_Value1)/60); //linear velocity 
     }
     else if(direction == false)
     {
@@ -172,11 +172,11 @@ void Motor_Controller(int motor_num, bool direction, int pwm)
       set_PWM_dutycycle(pinum, motor1_PWM, local_PWM);
       current_PWM1 = local_PWM;
       current_Direction1 = false;
-      linear_vel1 = ((2*57.5*M_PI*RPM_Value1)/60); //linear velocity 
+      linear_vel1 = -((2*57.5*M_PI*RPM_Value1)/60); //linear velocity 
     }
   }
   
-  else if(motor_num == 2) //motor right
+  else if(motor_num == 2) 
   {
    if(direction == true)
    {
@@ -184,7 +184,7 @@ void Motor_Controller(int motor_num, bool direction, int pwm)
      set_PWM_dutycycle(pinum, motor2_PWM, local_PWM);
      current_PWM2 = local_PWM;
      current_Direction2 = true;
-     linear_vel2 = ((2*57.5*M_PI*RPM_Value2)/60);
+     linear_vel2 = -((2*57.5*M_PI*RPM_Value2)/60);
    }
    else if(direction == false)
    {
@@ -192,7 +192,7 @@ void Motor_Controller(int motor_num, bool direction, int pwm)
      set_PWM_dutycycle(pinum, motor2_PWM, local_PWM);
      current_PWM2 = local_PWM;
      current_Direction2 = false;
-     linear_vel2 = -((2*57.5*M_PI*RPM_Value2)/60);
+     linear_vel2 = ((2*57.5*M_PI*RPM_Value2)/60);
    }
   }
 }
@@ -225,7 +225,7 @@ void RPM_Calculator()
 void carcul_packet()
 {
  linear = (linear_vel1 + linear_vel2)/2;
- angular =(linear_vel2 - linear_vel1)/(Robot_radius*2)*1000;
+ angular =(linear_vel1 - linear_vel2)/(Robot_radius*2)*1000;
  odom_l = Wheel_radius*packet_msg.encod[0]*(2*M_PI)/(Encoder_resolution*4);
  odom_r = Wheel_radius*packet_msg.encod[1]*(2*M_PI)/(Encoder_resolution*4);
 }
@@ -285,26 +285,35 @@ void PID_TO_MOTOR()
 {
   if(left_rpm < 0){ //left_motor DIR
       left_rpm_abs = -left_rpm;
-      present_pwm1 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
-      last_pwm1+=present_pwm1;
-      Motor_Controller(1, true, last_pwm1);
+
+      present_pwm2 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
+      last_pwm2+=present_pwm2;
+      Motor_Controller(2, true, last_pwm2);
     }
-    else{
-      present_pwm1 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data1, &paramdata1, 1); //오차에 대한 output rpm
-      last_pwm1+=present_pwm1;
-      Motor_Controller(1, false, last_pwm1); 
+    else if(left_rpm > 0){
+      present_pwm2 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
+      last_pwm2 += present_pwm2;
+      Motor_Controller(2, false, last_pwm2); 
+    }
+    else if(left_rpm == 0){
+      Motor_Controller(2, false, 0);
+      last_pwm2 = 0;
     }
 
     if(right_rpm < 0){  //right_motor DIR 
       right_rpm_abs = -right_rpm;
-      present_pwm2 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
-      last_pwm2 += present_pwm2;
-      Motor_Controller(2, false, last_pwm2);
+      present_pwm1 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
+      last_pwm1 += present_pwm1;
+      Motor_Controller(1, false, last_pwm1);
     }
-    else{
-      present_pwm2 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data2, &paramdata2, 1);
-      last_pwm2 += present_pwm2;
-      Motor_Controller(2, true, last_pwm2);
+    else if(right_rpm > 0){
+      present_pwm1 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
+      last_pwm1 += present_pwm1;
+      Motor_Controller(1, true, last_pwm1);
+    }
+    else if(right_rpm == 0){
+      Motor_Controller(1, true, 0);
+      last_pwm1 = 0;
     }
 }
 
@@ -315,6 +324,7 @@ void Motor_View()
 	printf("\033[1;1H");
 	printf("Encoder1A : %5d  ||  Encoder2A : %5d\n", EncoderCounter1A, EncoderCounter2A);
 	printf("Encoder1B : %5d  ||  Encoder2B : %5d\n", EncoderCounter1B, EncoderCounter2B);
+  printf("Encodersum1 : %5d  ||  Encodersum2 : %5d\n", EncoderCounter1, EncoderCounter2);
 	printf("RPM1 : %10.0f    ||  RPM2 : %10.0f\n", RPM_Value1, RPM_Value2);
 	printf("PWM1 : %10.0d    ||  PWM2 : %10.0d\n", current_PWM1, current_PWM2);
   printf("DIR1 :%10.0d     ||  DIR2 :%10.0d\n", current_Direction1, current_Direction2);
@@ -340,15 +350,17 @@ int main(int argc, char** argv)
     carcul_packet();  //linear, angular odom 계산
     Motor_View();
     RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
+    PID_TO_MOTOR();
+
     packet_msg.vw[0] = linear;
     packet_msg.vw[1] = angular;
-    packet_msg.encod[0] = last_pwm1;
-    packet_msg.encod[1] = last_pwm2;
+    packet_msg.encod[0] = Motor2_Encoder_Sum();
+    packet_msg.encod[1] = Motor1_Encoder_Sum(); 
     packet_msg.odo[0] = odom_l;
     packet_msg.odo[1] = odom_r;
+    packet_msg.pwml =RPM_Value2;
+    packet_msg.pwmr =RPM_Value1;
     packet_pub.publish(packet_msg);
-  
-    PID_TO_MOTOR();
     ros::spinOnce();
     loop_rate.sleep();
   }
