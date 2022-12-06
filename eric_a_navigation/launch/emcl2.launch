@@ -8,7 +8,7 @@
 
   <!-- EMCL -->
   <node pkg="eric_a_navigation" type="emcl2_node" name="emcl2_node" output="screen" machine="$(arg machine)">
-
+    <remap from="odom" to="odometry/filtered" />
     <param name="odom_freq"                 value="20"/>
     <param name="num_particles"             value="500"/>
 
