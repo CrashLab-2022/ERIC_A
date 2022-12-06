@@ -23,4 +23,6 @@
         radius_of_wheel: 0.033            <!--default value is set by reference of TB3-->
     </rosparam>
   </node>
+  
+  <node name="dynamixel_control" pkg="dynamixel_workbench_controllers" type="dynamixel_control" output="screen"/>
 </launch>
