@@ -22,21 +22,24 @@ Control::Control() {
 
 bool Control::pushitem_service(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res)
 {
-    ROS_INFO("Me");
     ros::Rate loop_rate(10);
 
     int count = 0;   
-    while (count < 210) {     
+    while (count < 112) {     
         geometry_msgs::Twist twist;
         
-        if (count < 100) {
-            twist.linear.x = 0.1;     
+        if (count < 50) {
+            twist.linear.x = -0.1;     
         }
-        else if (count < 110) {
+        else if (count < 60) {
             twist.linear.x = 0;
         }
+        else if (count < 110) {
+            twist.linear.x = 0.1;
+        }
+
         else {
-            twist.linear.x = -0.1;
+            twist.linear.x = 0;
         }
         
         vel_pub_.publish(twist);
@@ -53,7 +56,6 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "dynamixel_control");
   Control dynamixel_cnt;
-  ROS_INFO("Ready to dynamixel_cmd_vel pub");
   ros::spin();
 
   return 0;
