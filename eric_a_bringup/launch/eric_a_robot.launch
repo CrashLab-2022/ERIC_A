@@ -81,7 +81,6 @@
         <!--            up control down main             -->
 
         <!-- <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
-            <arg name="set_port" default="$(arg set_port_imu)"/> 
             <arg name="set_frame_id" default="$(arg set_imu_frame_id)"/>
             <arg name="frequency" default="100.0"/>
             <arg name="machine" default="control_machine"/>
