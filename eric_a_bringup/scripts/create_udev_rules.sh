@@ -24,6 +24,16 @@ else
     echo 'eric_a_lidar.rules created'
 fi
 
+echo ""
+echo "ERIC_A LiDAR (USB Serial) : /dev/ttyUSBx to /dev/ttyLiDAR :"
+if [ -f "/etc/udev/rules.d/eric_a_lidar.rules" ]; then
+    echo "eric_a_lidar.rules file already exist."
+else 
+    echo  'KERNEL=="tty*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{serial}=="1111", MODE:="0666", GROUP:="dialout",  SYMLINK+="ttyLIDAR"' >/etc/udev/rules.d/eric_a_lidar.rules    
+
+    echo 'eric_a_lidar.rules created'
+fi
+
 
 echo ""
 echo "Reload rules"
