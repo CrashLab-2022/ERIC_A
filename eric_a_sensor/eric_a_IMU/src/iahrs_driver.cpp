@@ -330,7 +330,7 @@ int main (int argc, char** argv)
 	pose_velocity_reset_service = sh.advertiseService("pose_velocity_reset_cmd", Pose_Velocity_Reset_Command);
 	reboot_sensor_service = sh.advertiseService("reboot_sensor_cmd", Reboot_Sensor_Command);
 	
-	nh.param<bool>("m_bSingle_TF_option", m_bSingle_TF_option, true);
+	nh.param<bool>("m_bSingle_TF_option", m_bSingle_TF_option, false);
 		printf("##m_bSingle_TF_option: %d \n", m_bSingle_TF_option);
 
 	ros::Rate loop_rate(frequency); //HZ

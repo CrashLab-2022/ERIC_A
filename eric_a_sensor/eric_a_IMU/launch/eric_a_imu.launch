@@ -16,7 +16,7 @@
     <!-- <param name="time_offset_in_seconds" type="double" value=""/> -->
     
     <!-- bool property -->
-    <param name="m_bSingle_TF_option" type="bool" value="true" /> <!--false-->
+    <param name="m_bSingle_TF_option" type="bool" value="false" /> <!--false-->
   </node>
 
 </launch> 
