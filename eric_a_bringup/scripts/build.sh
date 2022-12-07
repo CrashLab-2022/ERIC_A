@@ -11,6 +11,8 @@ sudo apt install -y ros-noetic-rosserial \
  ros-noetic-usb-cam \
  ros-noetic-actionlib \
  ros-noetic-tf2-ros \
- ros-noetic-tf2 
+ ros-noetic-tf2 \
+ ros-noetic-geographic-msgs
+
 
 
