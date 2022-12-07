@@ -9,8 +9,10 @@
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>eric_a_bringup</exec_depend>
   <exec_depend>eric_a_description</exec_depend>
-  <exec_depend>eric_a_sensor</exec_depend>
   <exec_depend>eric_a_navigation</exec_depend>
-  <!-- <exec_depend>eric_a_sensor</exec_depend> -->
+  <exec_depend>eric_a_sensor</exec_depend>
+  <exec_depend>eric_a_service</exec_depend>
+  <exec_depend>eric_a_slam</exec_depend>
+  <exec_depend>eric_a_teleop</exec_depend>
   <export><metapackage/></export>
 </package>
