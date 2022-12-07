@@ -1,5 +1,5 @@
 <launch>
-    <arg name="mode" default="1"/>
+    <arg name="mode" default="0"/>
     <!--slam is 0, navigation is 1 -->
     <group>
         <arg name="set_port_imu" default="/dev/ttyIMU"/>
@@ -9,21 +9,21 @@
 
         <machine
             name="control_machine"
-            address="192.168.240.52" 
+            address="192.168.3.52" 
             env-loader="/opt/ros/noetic/env_remote.sh"
             default="true"
             user="ubuntu"
         />
         <machine           
             name="rpi_main_machine"
-            address="192.168.240.127" 
+            address="192.168.3.127" 
             env-loader="/opt/ros/noetic/env_remote.sh"
             default="true"
             user="ubuntu"
         />
         <machine           
             name="main_machine"
-            address="192.168.240.22" 
+            address="192.168.3.22" 
             env-loader="/opt/ros/noetic/env_remote.sh"
             default="true"
             user="jeonghan"
@@ -31,7 +31,7 @@
 
         <!-- <machine           
             name="jetson"
-            address="192.168.240.24" 
+            address="192.168.3.24" 
             env-loader="/opt/ros/melodic/env_remote.sh"
             default="true"
             user="crashlab"
@@ -80,11 +80,11 @@
 
         <!--            up control down main             -->
 
-        <!-- <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
+        <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
             <arg name="set_frame_id" default="$(arg set_imu_frame_id)"/>
             <arg name="frequency" default="100.0"/>
             <arg name="machine" default="control_machine"/>
-        </include> -->
+        </include>
 
         <include file="$(find eric_a_lidar)/launch/eric_a_lidar.launch">
             <arg name="set_port" default="$(arg set_port_lidar)"/>
