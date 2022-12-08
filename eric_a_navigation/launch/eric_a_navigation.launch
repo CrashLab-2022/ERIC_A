@@ -16,8 +16,8 @@
   </include>
 
   <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
+  <!-- <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true" machine="$(arg machine)"
           args="-d $(find eric_a_navigation)/rviz/eric_a_navigation.rviz"/>
-  </group>
+  </group> -->
 </launch>
