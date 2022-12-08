@@ -37,8 +37,10 @@
             user="crashlab"
         /> -->
 
-        <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
+        <include file="$(find eric_a_servo)/launch/eric_a_dynamixel.launch">
             <arg name="machine" default="control_machine"/>
+            <arg name="usb_port"                default="/dev/ttyDYNAMIXEL"/>
+            <arg name="dxl_baud_rate"           default="57600"/>
         </include>
         <!-- motor -->
 
@@ -52,9 +54,9 @@
         </include> -->
         <!-- linear -->
 
-        <include if="$(eval arg('mode') ==1)" file="$(find eric_a_navigation)/launch/eric_a_navigation.launch">
+        <!-- <include if="$(eval arg('mode') ==1)" file="$(find eric_a_navigation)/launch/eric_a_navigation.launch">
             <arg name="machine" default="main_machine"/>
-        </include>
+        </include> -->
         <!-- navigation -->
 
         <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/amcl.launch">
@@ -67,15 +69,15 @@
         </include> -->
         <!-- mcl -->
 
-        <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
+        <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
             <arg name="machine" default="main_machine"/>
-        </include>
+        </include> -->
         <!-- emcl2 -->
 
 
         <!--            up control down main             -->
 
-        <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
+        <!-- <include file="$(find eric_a_imu)/launch/eric_a_imu.launch">
             <arg name="set_frame_id" default="$(arg set_imu_frame_id)"/>
             <arg name="frequency" default="100.0"/>
             <arg name="machine" default="control_machine"/>
@@ -89,13 +91,13 @@
         </include>
 
 
-        <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/>
+        <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/> -->
         <!-- mapping -->
 
 
-        <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
+        <!-- <include file="$(find eric_a_navigation)/launch/eric_a_configuration.launch">
             <arg name="machine" default="main_machine"/>
-        </include>  
+        </include>   -->
         <!-- kalman, reset -->
 
         <!-- <include file="$(find eric_a_vision)/launch/darknet_ros.launch">

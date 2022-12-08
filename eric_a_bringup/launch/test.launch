@@ -1,0 +1,6 @@
+<launch>
+    <include file="$(find eric_a_servo)/launch/eric_a_dynamixel.launch">
+        <arg name="usb_port"                default="/dev/ttyDYNAMIXEL"/>
+        <arg name="dxl_baud_rate"           default="57600"/>
+    </include>
+</launch>
