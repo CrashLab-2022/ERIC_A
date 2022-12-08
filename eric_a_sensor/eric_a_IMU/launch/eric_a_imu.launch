@@ -4,7 +4,7 @@
   <arg name="machine" default=""/>     
   <!-- <arg name="set_port_imu" default="/dev/ttyIMU"/> -->
   <arg name="set_frame_id" default="imu_link"/>
-  <arg name="frequency" default="100.0"/>
+  <arg name="frequency" default="50.0"/>
   <node pkg="eric_a_imu" type="eric_a_imu" name="eric_a_IMU_node" output="screen"  machine="$(arg machine)">
     <!-- string property -->
     <!-- <param name="port" type="string" value="$(arg set_port_imu)" /> -->
