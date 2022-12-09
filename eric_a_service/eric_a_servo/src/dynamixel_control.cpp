@@ -28,13 +28,13 @@ bool Control::pushitem_service(std_srvs::Trigger::Request &req, std_srvs::Trigge
     while (count < 112) {     
         geometry_msgs::Twist twist;
         
-        if (count < 50) {
+        if (count < 45) {
             twist.linear.x = -0.1;     
         }
-        else if (count < 60) {
+        else if (count < 55) {
             twist.linear.x = 0;
         }
-        else if (count < 110) {
+        else if (count < 100) {
             twist.linear.x = 0.1;
         }
 
