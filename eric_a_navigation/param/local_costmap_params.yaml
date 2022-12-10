@@ -4,7 +4,12 @@ local_costmap:
 
   update_frequency: 10.0
   publish_frequency: 10.0
-  transform_tolerance: 0.5 # default 0.5  
+  transform_tolerance: 0.8 # default 0.5  
+#초 단위로 허용되는 변환(tf) 데이터의 지연을 지정합니다. 
+#이 매개변수는 tf 트리에서 링크 손실에 대한 보호 장치 역할을 하는 동시에 사용자가 시스템에 편안하게 머무를 수 있는 대기 시간을 허용합니다. 
+#예를 들어 0.2초가 지난 변환은 허용될 수 있지만 8초가 지난 변환은 허용되지 않습니다. 
+#global_frame 및 robot_base_frame 매개변수 로 지정된 좌표 프레임 간의 tf 변환이 ros ::Time::now() 
+#보다 transform_tolerance 초 더 오래된 경우 탐색 스택이 로봇을 중지합니다.
 
   static_map: false  
   rolling_window: true

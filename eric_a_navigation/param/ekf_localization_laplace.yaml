@@ -1,5 +1,5 @@
 #Configuation for robot odometry EKF
-frequency: 30
+frequency: 10
 two_d_mode: true
 publish_tf: true
 
