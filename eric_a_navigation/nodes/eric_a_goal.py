@@ -9,9 +9,9 @@ from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
 from std_srvs.srv import Empty, EmptyRequest
 
 class Dest():
-    start=(-1.7,0.0,-1.57)
-    middle=(-1,6,0)
-    final=(-1,9,0)
+    start=(-4.0,2.0,1.57)
+    middle=(16.0,7.5,0.0)
+    final=(24.0,6.0,0.0)
 
 class MoveClient():
     def __init__(self):
