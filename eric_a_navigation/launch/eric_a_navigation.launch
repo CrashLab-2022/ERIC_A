@@ -15,6 +15,8 @@
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
 
+
+  <node pkg="eric_a_navigation" name="eric_a_goal" type="eric_a_goal.py" machine="$(arg machine)"/>
   <!-- rviz -->
   <!-- <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true" machine="$(arg machine)"
