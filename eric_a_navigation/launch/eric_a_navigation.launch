@@ -16,7 +16,7 @@
   </include>
 
 
-  <node pkg="eric_a_navigation" name="eric_a_goal" type="eric_a_goal.py" machine="$(arg machine)"/>
+  <node pkg="eric_a_navigation" name="eric_a_goal" type="eric_a_goal.py" machine="$(arg machine)" output="screen"/>
   <!-- rviz -->
   <!-- <group if="$(arg open_rviz)"> 
     <node pkg="rviz" type="rviz" name="rviz" required="true" machine="$(arg machine)"
