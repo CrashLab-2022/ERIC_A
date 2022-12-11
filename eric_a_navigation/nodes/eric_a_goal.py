@@ -53,9 +53,9 @@ class MoveClient():
         else:
             state= self.actionclient.get_state()
             if state == 3:
-                self.costmap_clear()
-                rospy.loginfo("self.cnt")
-                rospy.loginfo(self.cnt)
+                # self.costmap_clear()
+                # rospy.loginfo("self.cnt")
+                # rospy.loginfo(self.cnt)
 
                 if self.cnt==0:
                     self.cnt+=1
@@ -80,7 +80,7 @@ class MoveClient():
         self.costmap_clear()
 
     def web_client_1(self):
-        rospy.loginfo("1")
+        rospy.loginfo("middle_Arrive")
         web_service=rospy.ServiceProxy('middle_arrive', Trigger)
         return web_service()
         
