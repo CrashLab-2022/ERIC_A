@@ -5,7 +5,7 @@
         <arg name="set_port_imu" default="/dev/ttyIMU"/>
         <arg name="set_imu_frame_id" default="imu_link"/>
         <arg name="set_port_lidar" default="/dev/ttyLIDAR"/>
-        <arg name="set_lidar_frame_id" default="base_link"/>
+        <arg name="set_lidar_frame_id" default="base_scan"/>
 
         <machine
             name="control_machine"
@@ -29,6 +29,14 @@
             user="jeonghan"
         />
 
+        <!-- <machine           
+            name="sub_machine"
+            address="192.168.3.18" 
+            env-loader="/opt/ros/noetic/env_remote.sh"
+            default="true"
+            user="jongchan"
+        /> -->
+
         <machine           
             name="jetson"
             address="192.168.3.24" 
@@ -37,16 +45,17 @@
             user="crashlab"
         />
 
+
         <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
             <arg name="machine" default="control_machine"/>
         </include>
         <!-- motor -->
 
-        <include file="$(find eric_a_servo)/launch/eric_a_dynamixel.launch">
+        <!-- <include file="$(find eric_a_servo)/launch/eric_a_dynamixel.launch">
             <arg name="machine" default="rpi_main_machine"/>
             <arg name="usb_port"                default="/dev/ttyDYNAMIXEL"/>
             <arg name="dxl_baud_rate"           default="57600"/>
-        </include>
+        </include> -->
         <!-- servo -->
 
         <include file="$(find eric_a_servo)/launch/eric_a_serial.launch">
@@ -60,13 +69,13 @@
         <!-- navigation -->
 
         <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_bringup)/launch/eric_a_remote.launch">
-            <arg name="machine" default="rpi_main_machine"/>
+            <arg name="machine" default="control_machine"/>
         </include>
         <!-- remote -->
 
-        <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/amcl.launch">
-            <arg name="machine" default="main_machine"/>
-        </include> -->
+        <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/amcl.launch">
+            <arg name="machine" default="control_machine"/>
+        </include>
         <!-- amcl -->
 
         <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/mcl.launch">
@@ -74,9 +83,9 @@
         </include> -->
         <!-- mcl -->
 
-        <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
+        <!-- <include if="$(eval arg('mode') ==1)"  file="$(find eric_a_navigation)/launch/emcl2.launch">
             <arg name="machine" default="control_machine"/>
-        </include>
+        </include> -->
         <!-- emcl2 -->
 
 
@@ -97,11 +106,11 @@
             <arg name="set_port" default="$(arg set_port_lidar)"/>
             <arg name="set_frame_id" default="$(arg set_lidar_frame_id)"/>
             <arg name="frequency" default="10.0"/>
-            <arg name="machine" default="rpi_main_machine"/>
+            <arg name="machine" default="control_machine"/>
         </include>
 
 
-        <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/>
+        <!-- <include if="$(eval arg('mode') ==0)" file="$(find eric_a_slam)/launch/eric_a_slam.launch"/> -->
         <!-- mapping -->
 
 
@@ -110,8 +119,8 @@
             <arg name="machine" default="jetson"/>
         </include> 
 
-        <node pkg="rviz" type="rviz" name="rviz" required="true" machine="main_machine"
-          args="-d $(find eric_a_navigation)/rviz/eric_a_navigation.rviz"/>
+        <!-- <node pkg="rviz" type="rviz" name="rviz" required="true" machine="main_machine"
+          args="-d $(find eric_a_navigation)/rviz/eric_a_navigation.rviz"/> -->
 
     </group>
 
