@@ -37,13 +37,13 @@
             user="jongchan"
         /> -->
 
-        <machine           
+        <!-- <machine           
             name="jetson"
             address="192.168.3.24" 
             env-loader="/opt/ros/melodic/env_remote.sh"
             default="true"
             user="crashlab"
-        />
+        /> -->
 
 
         <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
@@ -115,9 +115,9 @@
 
 
 
-        <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
+        <!-- <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
             <arg name="machine" default="jetson"/>
-        </include> 
+        </include>  -->
 
         <!-- <node pkg="rviz" type="rviz" name="rviz" required="true" machine="main_machine"
           args="-d $(find eric_a_navigation)/rviz/eric_a_navigation.rviz"/> -->
