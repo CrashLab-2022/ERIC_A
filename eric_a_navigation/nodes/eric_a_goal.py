@@ -5,20 +5,24 @@ import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 import numpy as np
-from eric_a_navigation.srv import Destination, DestinationResponse
-from std_srvs.srv import EmptyRequest, Empty
+from std_srvs.srv import Trigger, TriggerRequest, TriggerResponse
+from std_srvs.srv import Empty, EmptyRequest
 
 class Dest():
-    start=(-3,2,0)
+    start=(0,0,0)
     middle=(-4,2,0)
     final=(-2,1.5,0)
 
 class MoveClient():
     def __init__(self):
+        self.cnt=0
         self.srvs = [] 
-        self.srvs.append(rospy.Service('dest', Destination, self.handle_track)) 
+        self.srvs.append(rospy.Service('start', Trigger, self.start)) 
+        self.srvs.append(rospy.Service('middle', Trigger, self.middle)) 
+        self.srvs.append(rospy.Service('final', Trigger, self.final)) 
         self.actionclient = actionlib.SimpleActionClient('move_base',MoveBaseAction)
-        
+        self.timer=rospy.Timer(rospy.Duration(5), self.clear_callback)
+
     def euler2quat(self):
         self.qx = np.sin(0) * np.cos(0) * np.cos(self.theta) - np.cos(0) * np.sin(0) * np.sin(self.theta)
         self.qy = np.cos(0) * np.sin(0) * np.cos(self.theta) + np.sin(0) * np.cos(0) * np.sin(self.theta)
@@ -27,7 +31,6 @@ class MoveClient():
         self.movebase_client()
 
     def movebase_client(self):
-        self.costmap_clear()
         self.actionclient.wait_for_server()
 
         goal = MoveBaseGoal()
@@ -46,64 +49,83 @@ class MoveClient():
         if not wait:
             rospy.logerr("Action server not available!")
             rospy.signal_shutdown("Action server not available!")
+        
         else:
-            rospy.loginfo(self.actionclient.get_state())
-            # self.costmap_clear()
-            # if client.get_state()!=3:
-            state= self.actionclient.get_state() 
+            state= self.actionclient.get_state()
             if state == 3:
-                return self.finish()
+                self.costmap_clear()
+                rospy.loginfo("self.cnt")
+                rospy.loginfo(self.cnt)
+
+                if self.cnt==0:
+                    self.cnt+=1
+                    self.web_client_1()
+                    
+                elif self.cnt==1: 
+                    self.cnt+=1
+                    self.web_client_2()
+                    
+                elif self.cnt==2: 
+                    self.web_client_3()
+
             else:
                 return self.restart()
 
     def restart(self):
-        rospy.sleep(2)
+        rospy.loginfo("restart")
+        rospy.sleep(5)
         self.movebase_client()
 
-    def finish(self):
-        try:    
-            start_clear = rospy.ServiceProxy(' ', Empty)
-            return start_clear()
-        except rospy.ServiceException as e:
-            print("Service call failed: %s"%e)
-        pass
+    def clear_callback(self, timer):
+        self.costmap_clear()
+
+    def web_client_1(self):
+        rospy.loginfo("1")
+        web_service=rospy.ServiceProxy('middle_arrive', Trigger)
+        return web_service()
+        
+    def web_client_2(self):
+        rospy.loginfo("2")
+        web_service=rospy.ServiceProxy('final_arrive', Trigger)
+        return web_service()
+
+    def web_client_3(self):
+        rospy.loginfo("3")
+        web_service=rospy.ServiceProxy('start_arrive', Trigger)
+        return web_service()
 
     def costmap_clear(self):
         try:    
             start_clear = rospy.ServiceProxy('move_base/clear_costmaps', Empty)
             return start_clear()
+
         except rospy.ServiceException as e:
             print("Service call failed: %s"%e)
 
-    def handle_track(self, req):
-        if req.dest=='middle':
-            rospy.loginfo("middle")
-            self.x=Dest.middle[0]
-            self.y=Dest.middle[1]
-            self.theta=Dest.middle[2] 
-            self.euler2quat()           
-            return DestinationResponse('middle')
+    def start(self,req):
+        self.x=Dest.start[0]
+        self.y=Dest.start[1]
+        self.theta=Dest.start[2]
+        self.euler2quat()
+        return TriggerResponse
 
-        elif req.dest=='final':
-            rospy.loginfo("final")
-            self.x=Dest.final[0]
-            self.y=Dest.final[1]
-            self.theta=Dest.final[2]
-            self.euler2quat()
-            return DestinationResponse('final')
+    def middle(self, req):
+        self.x=Dest.middle[0]
+        self.y=Dest.middle[1]
+        self.theta=Dest.middle[2]
+        self.euler2quat()
+        return TriggerResponse
 
-        elif req.dest=='start':
-            rospy.loginfo("start")
-            self.x=Dest.start[0]
-            self.y=Dest.start[1]
-            self.theta=Dest.start[2]
-            self.euler2quat()
-            return DestinationResponse('start')
+    def final(self, req):
+        self.x=Dest.final[0]
+        self.y=Dest.final[1]
+        self.theta=Dest.final[2]
+        self.euler2quat()
+        return TriggerResponse
 
-    def main(self):
-        rospy.spin()
+
 
 if __name__ == '__main__':
     rospy.init_node('movebase_client_py')
-    node=MoveClient()
-    node.main()
+    cls_=MoveClient()
+    rospy.spin()
