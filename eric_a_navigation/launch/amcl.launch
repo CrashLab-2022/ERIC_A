@@ -2,10 +2,10 @@
   <!-- Arguments -->
   <arg name="machine" default=""/> 
   <arg name="scan_topic"     default="scan"/>
-  <arg name="initial_pose_x" default="0.0"/>
-  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_x" default="-1.7"/>
+  <arg name="initial_pose_y" default="0.7"/>
   <arg name="initial_pose_z" default="0.0"/>
-  <arg name="initial_pose_a" default="0.0"/>
+  <arg name="initial_pose_a" default="1.57"/>
   <arg name="ekf_option"     default="1"/>
 
   <!-- AMCL -->
