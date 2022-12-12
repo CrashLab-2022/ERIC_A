@@ -1,7 +1,7 @@
 DWAPlannerROS:
 
 # Robot Configuration Parameters
-  max_vel_x: 0.4
+  max_vel_x: 0.8
   min_vel_x: -0.26
 
   max_vel_y: 0.0
@@ -11,12 +11,12 @@ DWAPlannerROS:
   max_vel_trans:  0.26
   min_vel_trans:  0.13
 
-  max_vel_theta: 1.0
+  max_vel_theta: 0.8
   min_vel_theta: 0.2
 
   acc_lim_x: 2.5
   acc_lim_y: 0.0
-  acc_lim_theta: 3.2 
+  acc_lim_theta: 2.0
 
 # Goal Tolerance Parameters
   xy_goal_tolerance: 0.2
@@ -36,7 +36,7 @@ DWAPlannerROS:
   occdist_scale: 0.02
   forward_point_distance: 0.325
   stop_time_buffer: 0.2
-  scaling_speed: 0.25
+  scaling_speed: 0.5  #로봇의 풋프린트 크기 조정을 시작할 속도의 절대값(m/s)
   max_scaling_factor: 0.2
 
 # Oscillation Prevention Parameters
