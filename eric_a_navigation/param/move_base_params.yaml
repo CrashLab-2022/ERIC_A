@@ -1,5 +1,5 @@
 shutdown_costmaps: false
-controller_frequency: 5 # default 10 제어 루프를 실행하고 베이스에 속도 명령을 보내는 Hz 단위의 속도입니다.
+controller_frequency: 10 # default 10 제어 루프를 실행하고 베이스에 속도 명령을 보내는 Hz 단위의 속도입니다.
 planner_patience: 5.0 #default 5  플래너가 공간 정리 작업을 수행하기 전에 유효한 계획을 찾기 위해 대기하는 시간(초)입니다.
 controller_patience: 15.0 #공간 비우기 작업이 수행되기 전에 컨트롤러가 유효한 제어를 수신하지 않고 대기하는 시간(초)입니다.
 conservative_reset_dist: 3.0 #맵에서 공간을 비우려고 시도할 때 비용 맵 에서 장애물이 제거되는 로봇으로부터의 거리(미터)입니다 .
