@@ -80,8 +80,10 @@ typedef struct purpose{
 
 double left_rpm;
 double left_rpm_abs;
+double left_rpm_abs2;
 double right_rpm;
 double right_rpm_abs;
+double right_rpm_abs2;
 double present_pwm1;
 double last_pwm1;
 double present_pwm2;

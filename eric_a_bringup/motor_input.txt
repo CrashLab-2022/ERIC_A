@@ -1,14 +1,14 @@
 pwm_range = 512
 pwm_frequency = 40000
 pwm_limit = 256
-control_cycle = 30
+control_cycle = 15
 acceleration_ratio = 25
 wheel_radius = 57.5
 robot_radius = 205.2
 encoder_resolution = 228
 kp1 = 0.5
-ki1 = 0.3
+ki1 = 0.5
 kd1 = 0.5
 kp2 = 0.5
-ki2 = 0.3
+ki2 = 0.5
 kd2 = 3

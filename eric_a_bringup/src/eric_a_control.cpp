@@ -330,12 +330,14 @@ void PID_TO_MOTOR()
   if(left_rpm < 0){ //left_motor DIR
       left_rpm_abs = -left_rpm;
 
-      present_pwm2 = PidContoller2(left_rpm_abs, RPM_Value2, Control_cycle, &data2, &paramdata2, 3); //오차에 대한 output rpm
+      present_pwm2 = PidContoller2(left_rpm_abs, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
       last_pwm2+=present_pwm2;
       Motor_Controller(2, true, last_pwm2);
     }
     else if(left_rpm > 0){
-      present_pwm2 = PidContoller2(left_rpm, RPM_Value2, Control_cycle, &data2, &paramdata2, 3); //오차에 대한 output rpm
+      left_rpm_abs2 = left_rpm;
+
+      present_pwm2 = PidContoller2(left_rpm, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
       last_pwm2 += present_pwm2;
       Motor_Controller(2, false, last_pwm2); 
     }
@@ -346,12 +348,15 @@ void PID_TO_MOTOR()
 
     if(right_rpm < 0){  //right_motor DIR 
       right_rpm_abs = -right_rpm;
-      present_pwm1 = PidContoller1(right_rpm_abs, RPM_Value1, Control_cycle, &data1, &paramdata1, 3);
+
+      present_pwm1 = PidContoller1(right_rpm_abs, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
       last_pwm1 += present_pwm1;
       Motor_Controller(1, false, last_pwm1);
     }
     else if(right_rpm > 0){
-      present_pwm1 = PidContoller1(right_rpm, RPM_Value1, Control_cycle, &data1, &paramdata1, 3);
+      right_rpm_abs2 = right_rpm;
+
+      present_pwm1 = PidContoller1(right_rpm, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
       last_pwm1 += present_pwm1;
       Motor_Controller(1, true, last_pwm1);
     }
