@@ -86,12 +86,12 @@ class MoveClient():
         return web_service()
         
     def web_client_2(self):
-        self.speakclient(4)
+        self.speakclient(5)
         web_service=rospy.ServiceProxy('final_arrive', Trigger)
         return web_service()
 
     def web_client_3(self):
-        self.speakclient(5)
+        self.speakclient(6)
         web_service=rospy.ServiceProxy('start_arrive', Trigger)
         return web_service()
 
@@ -119,6 +119,7 @@ class MoveClient():
         return TriggerResponse(True,'middle finish')
 
     def final(self, req):
+        self.speakclient(4)
         self.x=Dest.final[0]
         self.y=Dest.final[1]
         self.theta=Dest.final[2]
