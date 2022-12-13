@@ -2,8 +2,8 @@ local_costmap:
   global_frame: odom
   robot_base_frame: base_footprint
 
-  update_frequency: 20.0
-  publish_frequency: 20.0
+  update_frequency: 3.0
+  publish_frequency: 3.0
   transform_tolerance: 0.8 # default 0.5  
 #초 단위로 허용되는 변환(tf) 데이터의 지연을 지정합니다. 
 #이 매개변수는 tf 트리에서 링크 손실에 대한 보호 장치 역할을 하는 동시에 사용자가 시스템에 편안하게 머무를 수 있는 대기 시간을 허용합니다. 
