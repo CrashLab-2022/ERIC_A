@@ -26,9 +26,12 @@ void Text_Input(void)
       case 5: Wheel_radius = atof(line.substr(found+2).c_str()); break;
       case 6: Robot_radius = atof(line.substr(found+2).c_str()); break;
       case 7: Encoder_resolution = atof(line.substr(found+2).c_str()); break;
-      case 8: kp = atof(line.substr(found+2).c_str()); break;
-      case 9: ki = atof(line.substr(found+2).c_str()); break;
-      case 10: kd = atof(line.substr(found+2).c_str()); break;
+      case 8: kp1 = atof(line.substr(found+2).c_str()); break;
+      case 9: ki1 = atof(line.substr(found+2).c_str()); break;
+      case 10: kd1 = atof(line.substr(found+2).c_str()); break;
+      case 11: kp2 = atof(line.substr(found+2).c_str()); break;
+      case 12: ki2 = atof(line.substr(found+2).c_str()); break;
+      case 13: kd2 = atof(line.substr(found+2).c_str()); break;
           //case :  = atof(line.substr(found+2).c_str()); break;
       }
       i +=1;
@@ -241,11 +244,52 @@ void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg){
 
 
 
-double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat)
+double PidContoller1(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat)
 {
-  pid_paramdata->kP =kp;
-  pid_paramdata->kI =ki;
-  pid_paramdata->kD = kd;
+  pid_paramdata->kP =kp1;
+  pid_paramdata->kI =ki1;
+  pid_paramdata->kD = kd1;
+  double error = goal - curr;
+  double dt = 1/control_cycle;
+  
+  if (fabs(error) < error_rat)
+    error = 0;
+
+  pid_data->p_out = pid_paramdata->kP * error;
+  double p_data = pid_data->p_out ;
+
+  pid_data->integrator += (error * pid_paramdata->kI) * dt;
+  pid_data->integrator = constrain(pid_data->integrator, -pid_paramdata->Imax, pid_paramdata->Imax);
+  double i_data = pid_data->integrator;
+
+  double filter = 15.9155e-3; // Set to  "1 / ( 2 * PI * f_cut )";
+  // Examples for _filter:
+  // f_cut = 10 Hz -> _filter = 15.9155e-3
+  // f_cut = 15 Hz -> _filter / ROS_INFO(" goal : %f, curr: %f", goal,curr);
+  // ROS_INFO(" error : %f", error);= 10.6103e-3
+  // f_cut = 20 Hz -> _filter =  7.9577e-3
+  // f_cut = 25 Hz -> _filter =  6.3662e-3
+  // f_cut = 30 Hz -> _filter =  5.3052e-3
+
+  pid_data->derivative = (goal - pid_data->last_input) / dt;
+  pid_data->derivative = pid_data->lastderivative + (dt / (filter + dt)) * (pid_data->derivative - pid_data->lastderivative);
+  pid_data->last_input = goal;
+  pid_data->lastderivative = pid_data->derivative;
+  double d_data = pid_paramdata->kD * pid_data->derivative;
+  d_data = constrain(d_data, -pid_paramdata->Dmax, pid_paramdata->Dmax);
+
+  double output = p_data + i_data + d_data;
+  pid_data->output = output;
+
+  return pid_data->output;
+}
+
+
+double PidContoller2(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat)
+{
+  pid_paramdata->kP =kp2;
+  pid_paramdata->kI =ki2;
+  pid_paramdata->kD = kd2;
   double error = goal - curr;
   double dt = 1/control_cycle;
   
@@ -286,12 +330,14 @@ void PID_TO_MOTOR()
   if(left_rpm < 0){ //left_motor DIR
       left_rpm_abs = -left_rpm;
 
-      present_pwm2 = PidContoller(left_rpm_abs, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
+      present_pwm2 = PidContoller2(left_rpm_abs, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
       last_pwm2+=present_pwm2;
       Motor_Controller(2, true, last_pwm2);
     }
     else if(left_rpm > 0){
-      present_pwm2 = PidContoller(left_rpm, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
+      left_rpm_abs2 = left_rpm;
+
+      present_pwm2 = PidContoller2(left_rpm, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
       last_pwm2 += present_pwm2;
       Motor_Controller(2, false, last_pwm2); 
     }
@@ -302,12 +348,15 @@ void PID_TO_MOTOR()
 
     if(right_rpm < 0){  //right_motor DIR 
       right_rpm_abs = -right_rpm;
-      present_pwm1 = PidContoller(right_rpm_abs, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
+
+      present_pwm1 = PidContoller1(right_rpm_abs, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
       last_pwm1 += present_pwm1;
       Motor_Controller(1, false, last_pwm1);
     }
     else if(right_rpm > 0){
-      present_pwm1 = PidContoller(right_rpm, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
+      right_rpm_abs2 = right_rpm;
+
+      present_pwm1 = PidContoller1(right_rpm, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
       last_pwm1 += present_pwm1;
       Motor_Controller(1, true, last_pwm1);
     }
@@ -348,7 +397,7 @@ int main(int argc, char** argv)
   while(ros::ok())
   {
     carcul_packet();  //linear, angular odom 계산
-    Motor_View();
+    // Motor_View();
     RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
     PID_TO_MOTOR();
 

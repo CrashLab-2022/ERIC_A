@@ -8,8 +8,11 @@ sudo apt install -y ros-noetic-rosserial \
  ros-noetic-dynamixel-sdk \
  ros-noetic-slam-toolbox \
  ros-noetic-rosbridge-server \
- ros-noetic-robot_localization \
  ros-noetic-usb-cam \
  ros-noetic-actionlib \
  ros-noetic-tf2-ros \
- ros-noetic-tf2
+ ros-noetic-tf2 \
+ ros-noetic-geographic-msgs
+
+
+

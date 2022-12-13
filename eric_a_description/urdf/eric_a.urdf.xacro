@@ -89,7 +89,7 @@
           filename="package://eric_a_description/meshes/wheel_left_link.STL" />
       </geometry>
     </collision>
-  </link> <!--wheel_left_joint-->
+  </link> <!--wheel_left_link-->
   <joint
     name="wheel_left_joint"
     type="continuous">
@@ -142,7 +142,7 @@
           filename="package://eric_a_description/meshes/wheel_right_link.STL" />
       </geometry>
     </collision>
-  </link> <!--wheel_right_joint-->
+  </link> <!--wheel_right_link-->
   <joint
     name="wheel_right_joint"
     type="continuous">
@@ -155,7 +155,7 @@
       link="wheel_right_link" />
     <axis
       xyz="0 1 0" />
-  </joint>
+  </joint> <!--wheel right joint-->
   <link
     name="base_scan">
     <inertial>
@@ -208,5 +208,21 @@
       link="base_scan" />
     <axis
       xyz="0 0 0" />
+  </joint>
+
+  <link name="imu_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.01 0.01 0.01" />
+        </geometry>
+        <material name="" />
+      </visual>
+  </link>
+
+  <joint name="base_link_to_imu_link" type="fixed">
+    <origin xyz="0.0 0 0.2" rpy="0 0 0" />
+    <parent link="base_link"/>
+    <child link="imu_link" />
   </joint>
 </robot>

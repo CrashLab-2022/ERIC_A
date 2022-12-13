@@ -80,8 +80,10 @@ typedef struct purpose{
 
 double left_rpm;
 double left_rpm_abs;
+double left_rpm_abs2;
 double right_rpm;
 double right_rpm_abs;
+double right_rpm_abs2;
 double present_pwm1;
 double last_pwm1;
 double present_pwm2;
@@ -95,8 +97,8 @@ typedef struct pid_param
   double kP=0;
   double kI=0;
   double kD=0;
-  double Imax=1;
-  double Dmax=1;
+  double Imax=10;
+  double Dmax=10;
 } pid_param;
 
 typedef struct pid
@@ -109,12 +111,17 @@ typedef struct pid
 
   double output=0;
 } pid;
-double kp;
-double ki;
-double kd;
+
+double kp1;
+double ki1;
+double kd1;
+double kp2;
+double ki2;
+double kd2;
 pid data1, data2;
 pid_param paramdata1, paramdata2;
-double PidContoller(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat);
+double PidContoller1(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat);
+double PidContoller2(double goal, double curr, double control_cycle, pid *pid_data, pid_param *pid_paramdata, int error_rat);
 void PID_TO_MOTOR();
 ////////////////////////////////
 void linear_vel();

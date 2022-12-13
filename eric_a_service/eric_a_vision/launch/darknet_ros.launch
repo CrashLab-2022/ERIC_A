@@ -24,7 +24,10 @@
   <node pkg="darknet_ros" type="darknet_ros" name="darknet_ros" output="screen" launch-prefix="$(arg launch_prefix)" machine="$(arg machine)">
     <param name="weights_path"          value="/home/crashlab/catkin_ws/src/darknet_ros/darknet_ros/yolo_network_config/weights" />
     <param name="config_path"           value="/home/crashlab/catkin_ws/src/darknet_ros/darknet_ros/yolo_network_config/cfg" />
-    <remap from="camera/usb_cam/image_raw"  to="$(arg image)" />
+    <!-- <remap from="camera/usb_cam/image_raw"  to="$(arg image)" /> -->
   </node>
+
+  <node name="eric_a_speak_node" type="human_detect_realserver.py" pkg="darknet_ros" output="screen" machine="$(arg machine)"/>
+  <node name="human_detect" type="human_detect.py" pkg="darknet_ros" output="screen" machine="$(arg machine)"/>
  <!--<node name="republish" type="republish" pkg="image_transport" output="screen" 	args="compressed in:=/front_camera/image_raw raw out:=/camera/image_raw" /> -->
 </launch>

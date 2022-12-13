@@ -330,7 +330,7 @@ int main (int argc, char** argv)
 	pose_velocity_reset_service = sh.advertiseService("pose_velocity_reset_cmd", Pose_Velocity_Reset_Command);
 	reboot_sensor_service = sh.advertiseService("reboot_sensor_cmd", Reboot_Sensor_Command);
 	
-	nh.param<bool>("m_bSingle_TF_option", m_bSingle_TF_option, true);
+	nh.param<bool>("m_bSingle_TF_option", m_bSingle_TF_option, false);
 		printf("##m_bSingle_TF_option: %d \n", m_bSingle_TF_option);
 
 	ros::Rate loop_rate(frequency); //HZ
@@ -389,7 +389,7 @@ int main (int argc, char** argv)
             		ros::Time measurement_time = ros::Time::now() + ros::Duration(time_offset_in_seconds);
 
 			imu_data_msg.header.stamp = measurement_time;
-			imu_data_msg.header.frame_id = tf_prefix_ + "/imu_link";  // "imu_link"
+			imu_data_msg.header.frame_id = tf_prefix_ + "imu_link";  // "imu_link"
 
 			// publish the IMU data
 			imu_data_pub.publish(imu_data_msg);

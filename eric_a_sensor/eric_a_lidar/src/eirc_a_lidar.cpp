@@ -70,8 +70,8 @@ int main(int argc, char **argv) {
   laser.setlidaropt(LidarPropIgnoreArray, str_optvalue.c_str(),
                     str_optvalue.size());
 
-  std::string frame_id = "laser_frame";
-  nh_private.param<std::string>("frame_id", frame_id, "laser_frame");
+  std::string frame_id = "base_scan";
+  nh_private.param<std::string>("frame_id", frame_id, "base_scan");
 
   //////////////////////int property/////////////////
   /// lidar baudrate
