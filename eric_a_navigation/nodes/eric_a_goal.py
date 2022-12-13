@@ -108,7 +108,7 @@ class MoveClient():
         self.y=Dest.start[1]
         self.theta=Dest.start[2]
         self.euler2quat()
-        return TriggerResponse
+        return TriggerResponse(True,'first finish')
 
     def middle(self, req):
         self.speakclient(2)
@@ -116,20 +116,20 @@ class MoveClient():
         self.y=Dest.middle[1]
         self.theta=Dest.middle[2]
         self.euler2quat()
-        return TriggerResponse
+        return TriggerResponse(True,'middle finish')
 
     def final(self, req):
         self.x=Dest.final[0]
         self.y=Dest.final[1]
         self.theta=Dest.final[2]
         self.euler2quat()
-        return TriggerResponse
+        return TriggerResponse(True,'final finish')
 
     def speakclient(self,num):
         # rospy.wait_for_service('play_song')
         try:
             play=rospy.ServiceProxy('play_song', Speak)
-            rospy.loginfo("detect")
+            rospy.loginfo("play song detect")
             return play(num)
 
         except rospy.ServiceException as e:
