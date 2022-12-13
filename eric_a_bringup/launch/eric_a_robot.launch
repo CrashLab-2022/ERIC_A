@@ -21,29 +21,14 @@
             default="true"
             user="ubuntu"
         />
+
         <machine           
-            name="main_machine"
-            address="192.168.3.22" 
-            env-loader="/opt/ros/noetic/env_remote.sh"
-            default="true"
-            user="jeonghan"
-        />
-
-        <!-- <machine           
-            name="sub_machine"
-            address="192.168.3.18" 
-            env-loader="/opt/ros/noetic/env_remote.sh"
-            default="true"
-            user="jongchan"
-        /> -->
-
-        <!-- <machine           
             name="jetson"
             address="192.168.3.24" 
             env-loader="/opt/ros/melodic/env_remote.sh"
             default="true"
             user="crashlab"
-        /> -->
+        />
 
 
         <include file="$(find eric_a_bringup)/launch/eric_a_motor.launch">
@@ -51,11 +36,10 @@
         </include>
         <!-- motor -->
 
-        <!-- <include file="$(find eric_a_servo)/launch/eric_a_dynamixel.launch">
-            <arg name="machine" default="rpi_main_machine"/>
+        <include file="$(find eric_a_servo)/launch/eric_a_dynamixel.launch">
             <arg name="usb_port"                default="/dev/ttyDYNAMIXEL"/>
             <arg name="dxl_baud_rate"           default="57600"/>
-        </include> -->
+        </include>
         <!-- servo -->
 
         <include file="$(find eric_a_servo)/launch/eric_a_serial.launch">
@@ -115,9 +99,11 @@
 
 
 
-        <!-- <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
+
+
+        <include file="$(find eric_a_vision)/launch/darknet_ros.launch">
             <arg name="machine" default="jetson"/>
-        </include>  -->
+        </include> 
 
         <!-- <node pkg="rviz" type="rviz" name="rviz" required="true" machine="main_machine"
           args="-d $(find eric_a_navigation)/rviz/eric_a_navigation.rviz"/> -->
