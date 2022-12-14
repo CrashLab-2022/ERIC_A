@@ -262,11 +262,10 @@ double PidContoller1(double goal, double curr, double control_cycle, pid *pid_da
   pid_data->integrator = constrain(pid_data->integrator, -pid_paramdata->Imax, pid_paramdata->Imax);
   double i_data = pid_data->integrator;
 
-  double filter = 15.9155e-3; // Set to  "1 / ( 2 * PI * f_cut )";
+  double filter = 10.6103e-3; // Set to  "1 / ( 2 * PI * f_cut )";
   // Examples for _filter:
   // f_cut = 10 Hz -> _filter = 15.9155e-3
-  // f_cut = 15 Hz -> _filter / ROS_INFO(" goal : %f, curr: %f", goal,curr);
-  // ROS_INFO(" error : %f", error);= 10.6103e-3
+  // f_cut = 15 Hz -> _filter = 10.6103e-3
   // f_cut = 20 Hz -> _filter =  7.9577e-3
   // f_cut = 25 Hz -> _filter =  6.3662e-3
   // f_cut = 30 Hz -> _filter =  5.3052e-3
@@ -303,11 +302,10 @@ double PidContoller2(double goal, double curr, double control_cycle, pid *pid_da
   pid_data->integrator = constrain(pid_data->integrator, -pid_paramdata->Imax, pid_paramdata->Imax);
   double i_data = pid_data->integrator;
 
-  double filter = 15.9155e-3; // Set to  "1 / ( 2 * PI * f_cut )";
+  double filter = 10.6103e-3; // Set to  "1 / ( 2 * PI * f_cut )";
   // Examples for _filter:
   // f_cut = 10 Hz -> _filter = 15.9155e-3
-  // f_cut = 15 Hz -> _filter / ROS_INFO(" goal : %f, curr: %f", goal,curr);
-  // ROS_INFO(" error : %f", error);= 10.6103e-3
+  // f_cut = 15 Hz -> _filter = 10.6103e-3
   // f_cut = 20 Hz -> _filter =  7.9577e-3
   // f_cut = 25 Hz -> _filter =  6.3662e-3
   // f_cut = 30 Hz -> _filter =  5.3052e-3
@@ -331,13 +329,13 @@ void PID_TO_MOTOR()
       left_rpm_abs = -left_rpm;
 
       present_pwm2 = PidContoller2(left_rpm_abs, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
-      last_pwm2+=present_pwm2;
+      last_pwm2 += present_pwm2;
       Motor_Controller(2, true, last_pwm2);
     }
     else if(left_rpm > 0){
       left_rpm_abs2 = left_rpm;
 
-      present_pwm2 = PidContoller2(left_rpm, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
+      present_pwm2 = PidContoller2(left_rpm_abs2, RPM_Value2, Control_cycle, &data2, &paramdata2, 1); //오차에 대한 output rpm
       last_pwm2 += present_pwm2;
       Motor_Controller(2, false, last_pwm2); 
     }
@@ -356,7 +354,7 @@ void PID_TO_MOTOR()
     else if(right_rpm > 0){
       right_rpm_abs2 = right_rpm;
 
-      present_pwm1 = PidContoller1(right_rpm, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
+      present_pwm1 = PidContoller1(right_rpm_abs2, RPM_Value1, Control_cycle, &data1, &paramdata1, 1);
       last_pwm1 += present_pwm1;
       Motor_Controller(1, true, last_pwm1);
     }
@@ -397,7 +395,7 @@ int main(int argc, char** argv)
   while(ros::ok())
   {
     carcul_packet();  //linear, angular odom 계산
-    // Motor_View();
+    Motor_View();
     RPM_Calculator(); //rpm 계산 -> 현재 모터에 대한 
     PID_TO_MOTOR();
 
@@ -416,4 +414,4 @@ int main(int argc, char** argv)
   Motor_Controller(1, true, 0);
   Motor_Controller(2, false, 0);
   return 0;
-}
+control_cycle = 15
