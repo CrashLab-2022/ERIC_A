@@ -24,3 +24,4 @@ TrajectoryPlannerROS:
   vx_samples: 20 # default 18
   vtheta_samples: 50 # default 20
   sim_granularity: 0.025 # default 0.05
+  track_unknown_space: true

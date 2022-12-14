@@ -10,9 +10,9 @@ from std_srvs.srv import Empty, EmptyRequest
 from eric_a_navigation.srv import Speak, SpeakRequest
 
 class Dest():
-    start=(0,0,0)
-    middle=(10.0,18.0,0)
-    final=(8.5,29.0,0)
+    start=(0,0,3.14)
+    middle=(22.8.0,10.2,0)
+    final=(29.0,8.5,1.72)
 
 class MoveClient():
     def __init__(self):
