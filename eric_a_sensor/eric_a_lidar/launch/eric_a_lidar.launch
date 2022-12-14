@@ -31,8 +31,13 @@
     <param name="point_cloud_preservative"    type="bool"   value="false"/>
 
     <!-- float property -->
+<<<<<<< HEAD
     <param name="angle_min"    type="double" value="-99.54" /> -100.54
     <param name="angle_max"    type="double" value="100.54" />  100.54
+=======
+    <param name="angle_min"    type="double" value="-100.54" /> -100.54
+    <param name="angle_max"    type="double" value="98" />  100.54
+>>>>>>> 980b9f67913c6116cf23529d9055da154ee0c9b8
     <param name="range_min"    type="double" value="0.1" />
     <param name="range_max"    type="double" value="16.0" />
     <param name="frequency"    type="double" value="$(arg frequency)"/>
