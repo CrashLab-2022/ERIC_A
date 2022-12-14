@@ -1,5 +1,4 @@
 <launch>
-  <arg name="machine" default=""/> 
   <arg name="usb_port"                default="/dev/ttyDYNAMIXEL"/>
   <arg name="dxl_baud_rate"           default="57600"/>
   <arg name="namespace"               default="eric_a_dynamixel_workbench"/>
@@ -11,7 +10,7 @@
   <param name="dynamixel_info"          value="$(find eric_a_servo)/config/basic.yaml"/>
 
   <node name="$(arg namespace)" pkg="eric_a_servo" type="dynamixel_workbench_controllers"
-        required="true" output="screen" args="$(arg usb_port) $(arg dxl_baud_rate)" machine="$(arg machine)">
+        required="true" output="screen" args="$(arg usb_port) $(arg dxl_baud_rate)">
     <param name="use_moveit"              value="$(arg use_moveit)"/>
     <param name="use_joint_states_topic"  value="$(arg use_joint_state)"/>
     <param name="use_cmd_vel_topic"       value="$(arg use_cmd_vel)"/>
@@ -25,5 +24,5 @@
     </rosparam>
   </node>
   
-  <node name="dynamixel_control" pkg="eric_a_servo" type="dynamixel_control" output="screen" machine="$(arg machine)"/>
+  <node name="dynamixel_control" pkg="eric_a_servo" type="dynamixel_control" output="screen"/>
 </launch>

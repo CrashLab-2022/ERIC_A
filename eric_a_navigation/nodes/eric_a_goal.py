@@ -11,7 +11,7 @@ from eric_a_navigation.srv import Speak, SpeakRequest
 
 class Dest():
     start=(0,0,3.14)
-    middle=(22.8.0,10.2,0)
+    middle=(22.8,10.2,0)
     final=(29.0,8.5,1.72)
 
 class MoveClient():
