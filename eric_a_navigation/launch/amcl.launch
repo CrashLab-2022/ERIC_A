@@ -2,8 +2,8 @@
   <!-- Arguments -->
   <arg name="machine" default=""/> 
   <arg name="scan_topic"     default="scan"/>
-  <arg name="initial_pose_x" default="-4"/>
-  <arg name="initial_pose_y" default="-2"/>
+  <arg name="initial_pose_x" default="0"/>
+  <arg name="initial_pose_y" default="0"/>
   <arg name="initial_pose_z" default="0.0"/>
   <arg name="initial_pose_a" default="0"/>
   <arg name="ekf_option"     default="1"/>
