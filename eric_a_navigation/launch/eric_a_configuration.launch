@@ -2,7 +2,7 @@
     <arg name="machine" default=""/>
     <!-- ekf_localization -->
     <node pkg="robot_localization" type="ekf_localization_node" name="eric_a_ekf_kalman" clear_params="true" machine="$(arg machine)"> 
-        <rosparam command="load" file="/home/ubuntu/catkin_ws/src/ERIC_A/eric_a_navigation/param/ekf_localization_laplace.yaml" />
+        <rosparam command="load" file="/home/ubuntu/catkin_ws/src/ERIC_A/eric_a_navigation/param/ekf_localization.yaml" />
     </node>
 
     <node pkg="eric_a_navigation" type="init_pose.py" name="eric_a_init_pose" machine="$(arg machine)"/>
