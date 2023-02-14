@@ -86,6 +86,5 @@ roslaunch eric_a_bringup eric_a_robot.launch
 ```
 
 ## Additional Resources
-- [ACM Digital Library](https://doi.org/10.1145/3434074.3446948)
 - [Youtube](https://www.youtube.com/)
 - [ERICA'22 Presentaion ](https://docs.google.com/presentation/)
