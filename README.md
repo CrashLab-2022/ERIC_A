@@ -30,9 +30,7 @@
 
 ## Abstract
 
-It is an ERIC_A indoor delivery robot. It is a robot made for delivery of goods indoors. Basically, ERIC_A is equipped with an autonomous driving system, so it accurately identifies its current location and arrives at its destination. Also, the robot is equipped with YOLO artificial intelligence, so when you see a person on your path, it says, "The robot passes by."
-After logging in through the web page, enter your name, item, and delivery address to proceed with the order. When the order is accepted, the order is accumulated in the database of the administrator page. The administrator can select from the ordered details and start shipping.
-When the robot arrives at the administrator's store, the robot notifies it, and the manager puts goods into the robot through the administrator page. When the administrator presses the delivery start, the robot starts shipping to the delivery destination, completes the delivery, and returns to the start station.
+ERIC-A is an indoor autonomous robot designed for indoor package delivery. The robot is equipped with a self-driving system, which allows it to accurately estimate its current location and reach its destination. The robot is also equipped with YOLO artificial intelligence technology, so if there is a person in its path, it will say "Robot is passing by". If there is a person in the path, a voice will say "Robot is passing by". After logging in to the webpage, enter your name, product, and delivery address to place an order. As orders are placed, they are accumulated in the admin page database. The admin can select multiple orders to send for delivery. When the robot arrives at the admin page, the robot announces "Arrived" and the admin manipulates the admin page to open the robot and load the package. The admin presses the "Start delivery" button on the admin page and the delivery proceeds to the destination. After that, the robot returns to the starting station.
 
 Please refer to YouTube for more detailed understanding.
 
