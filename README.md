@@ -4,7 +4,7 @@
 
 ### Member : 
 
-[김정한(Jeonghan Kim)](https://github.com/Kim-JeongHan), [배가연(Gayeon Bae)](https://github.com/BaeGayeon), [박종찬(Jongchan Park)](https://github.com/coldbell8918), [이하연(Hayeon Lee)](https://github.com/quokkalover), [권기현(GIhyeon Gi)](https://github.com/raisewise0211), [강지훈(Jihun Kang)](https://github.com/jh4946)
+[김정한(Jeonghan Kim)](https://github.com/Kim-JeongHan), [배가연(Gayeon Bae)](https://github.com/BaeGayeon), [박종찬(Jongchan Park)](https://github.com/coldbell8918), [이하연(Hayeon Lee)](https://github.com/quokkalover), [권기현(Gihyeon Kwon)](https://github.com/raisewise0211), [강지훈(Jihun Kang)](https://github.com/jh4946)
 
 
 
