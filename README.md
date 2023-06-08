@@ -18,7 +18,7 @@
 
 #### Robot Software Developer : 
 
-[김정한(Jeonghan Kim)](https://github.com/Kim-JeongHan), [박종찬(Jongchan Park)](https://github.com/coldbell8918), [이하연(Hayeon Lee)](https://github.com/quokkalover), [권기현(GIhyeon Gi)](https://github.com/raisewise0211)
+[김정한(Jeonghan Kim)](https://github.com/Kim-JeongHan), [박종찬(Jongchan Park)](https://github.com/coldbell8918), [이하연(Hayeon Lee)](https://github.com/quokkalover), [권기현(GIhyeon Kwon)](https://github.com/raisewise0211)
 
 #### Web Developer : 
 
