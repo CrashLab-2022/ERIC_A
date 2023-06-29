@@ -84,5 +84,4 @@ roslaunch eric_a_bringup eric_a_robot.launch
 ```
 
 ## Additional Resources
-- [Youtube](https://www.youtube.com/)
-- [ERICA'22 Presentaion ](https://docs.google.com/presentation/)
+- [Youtube](https://www.youtube.com/watch?v=_MbvD7s8zbo)
