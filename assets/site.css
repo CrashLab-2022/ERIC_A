@@ -114,8 +114,7 @@ a {
 }
 
 .action-button,
-.media-tab,
-.copy-button {
+.media-tab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -146,9 +145,7 @@ a {
 .action-button:hover,
 .action-button:focus-visible,
 .media-tab:hover,
-.media-tab:focus-visible,
-.copy-button:hover,
-.copy-button:focus-visible {
+.media-tab:focus-visible {
   background: var(--accent-strong);
   color: #fff;
 }
@@ -311,8 +308,7 @@ figcaption {
   line-height: 23px;
 }
 
-.feature-card p,
-.role-list p {
+.feature-card p {
   margin: 0;
   color: var(--text);
   font-size: 15px;
@@ -353,76 +349,23 @@ figcaption {
   height: 360px;
 }
 
-.code-block {
-  position: relative;
-  margin-top: 16px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #1f2529;
-}
-
-.code-block pre {
-  margin: 0;
-  padding: 24px;
-  overflow-x: auto;
-  color: #f5f7f9;
-  font-size: 14px;
-  line-height: 22px;
-}
-
-.copy-button {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  min-height: 32px;
-  padding: 0.45em 0.75em;
-  background: #3a444a;
-  font-size: 13px;
-}
-
-.role-list {
-  display: grid;
-  gap: 10px;
-  padding: 22px 24px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--soft);
-}
-
-.resource-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.resource-list a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 38px;
-  padding: 0.55em 1em;
-  border: 1px solid var(--line);
-  border-radius: 0.2rem;
-  background: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.resource-list a:hover,
-.resource-list a:focus-visible {
-  border-color: var(--accent);
-  color: var(--accent-strong);
-}
-
 .footer {
   padding: 42px 0 12px;
+  text-align: center;
 }
 
-.footer .paragraph {
+.footer p {
+  max-width: 780px;
+  margin: 0 auto 10px;
   color: var(--muted);
   font-size: 14px;
+  line-height: 21px;
   text-align: center;
+}
+
+.footer a {
+  color: var(--text);
+  text-underline-offset: 3px;
 }
 
 @media (max-width: 820px) {
@@ -477,15 +420,6 @@ figcaption {
     line-height: 23px;
   }
 
-  .resource-list {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .resource-list a {
-    width: 100%;
-  }
-
   .link-row,
   .media-toolbar {
     gap: 8px;
@@ -510,10 +444,5 @@ figcaption {
 
   .section-title {
     margin-top: 36px;
-  }
-
-  .code-block pre {
-    padding: 56px 16px 18px;
-    font-size: 13px;
   }
 }

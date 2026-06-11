@@ -14,22 +14,3 @@ tabButtons.forEach((button) => {
     });
   });
 });
-
-document.querySelectorAll("[data-copy-target]").forEach((button) => {
-  button.addEventListener("click", async () => {
-    const target = document.getElementById(button.dataset.copyTarget);
-    if (!target || !navigator.clipboard) return;
-
-    const label = button.querySelector("span");
-    const previousLabel = label ? label.textContent : "";
-
-    await navigator.clipboard.writeText(target.innerText.trim());
-
-    if (label) {
-      label.textContent = "Copied";
-      window.setTimeout(() => {
-        label.textContent = previousLabel;
-      }, 1400);
-    }
-  });
-});
