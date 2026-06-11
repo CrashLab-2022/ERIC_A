@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ERIC-A is an indoor autonomous delivery robot by Team Deli-Bery."
+    />
+    <meta property="og:title" content="ERIC-A: Automatic Delivery Robot" />
+    <meta
+      property="og:description"
+      content="An indoor autonomous package delivery robot with ROS navigation, YOLO-based human detection, and a web ordering workflow."
+    />
+    <meta
+      property="og:image"
+      content="https://user-images.githubusercontent.com/98142496/209920864-a059d868-698b-4810-b211-bdf6e99cc63f.jpg"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>ERIC-A: Automatic Delivery Robot</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css"
+    />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/site.css" />
+  </head>
+  <body>
+    <header class="project-header">
+      <h1 class="title">ERIC-A</h1>
+      <div class="subtitle-row">
+        <h2 class="subheader">Erica Robot Intelligence Car</h2>
+        <h2 class="subheader">Automatic Delivery</h2>
+      </div>
+
+      <div class="author-row" aria-label="Project team">
+        <span class="author-text">Team Deli-Bery</span>
+      </div>
+
+      <div class="author-row member-row">
+        <a class="author-text" href="https://github.com/Kim-JeongHan">Jeonghan Kim</a>
+        <a class="author-text" href="https://github.com/BaeGayeon">Gayeon Bae</a>
+        <a class="author-text" href="https://github.com/coldbell8918">Jongchan Park</a>
+        <a class="author-text" href="https://github.com/quokkalover">Hayeon Lee</a>
+        <a class="author-text" href="https://github.com/raisewise0211">Gihyeon Kwon</a>
+        <a class="author-text" href="https://github.com/jh4946">Jihun Kang</a>
+      </div>
+
+      <div class="link-row" aria-label="Project links">
+        <a class="action-button" href="https://github.com/CrashLab-2022/ERIC_A">
+          <i class="ti ti-brand-github" aria-hidden="true"></i>
+          <span>Code</span>
+        </a>
+        <a class="action-button" href="https://www.youtube.com/watch?v=_MbvD7s8zbo">
+          <i class="ti ti-player-play" aria-hidden="true"></i>
+          <span>Demo</span>
+        </a>
+        <a
+          class="action-button"
+          href="https://github.com/CrashLab-2022/ERIC-A-web-frontend-nuxtjs"
+        >
+          <i class="ti ti-browser" aria-hidden="true"></i>
+          <span>Frontend</span>
+        </a>
+        <a
+          class="action-button"
+          href="https://github.com/CrashLab-2022/ERIC-A-web-backend-expressjs"
+        >
+          <i class="ti ti-server" aria-hidden="true"></i>
+          <span>Backend</span>
+        </a>
+      </div>
+
+      <p class="expanded-name">
+        (<b>E</b>rica <b>R</b>obot <b>I</b>ntelligence <b>C</b>ar -
+        <b>A</b>utomatic delivery)
+      </p>
+    </header>
+
+    <main>
+      <section class="section intro-section" aria-labelledby="tldr-title">
+        <h2 id="tldr-title" class="tldr">
+          <b>TL;DR</b>:
+          <span class="code-font">ERIC-A</span> is an indoor autonomous robot
+          that receives delivery orders from the web, navigates to destinations,
+          detects people in its path, and returns to its station.
+        </h2>
+
+        <div class="media-shell" aria-live="polite">
+          <div class="media-toolbar" role="tablist" aria-label="Featured media">
+            <button class="media-tab is-active" type="button" data-media-tab="demo">
+              <i class="ti ti-video" aria-hidden="true"></i>
+              <span>Demo</span>
+            </button>
+            <button class="media-tab" type="button" data-media-tab="robot">
+              <i class="ti ti-robot" aria-hidden="true"></i>
+              <span>Robot</span>
+            </button>
+            <button class="media-tab" type="button" data-media-tab="workflow">
+              <i class="ti ti-route" aria-hidden="true"></i>
+              <span>Workflow</span>
+            </button>
+          </div>
+
+          <figure class="media-panel is-active" data-media-panel="demo">
+            <div class="video-frame">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/_MbvD7s8zbo"
+                title="ERIC-A demo video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <figcaption>Project demonstration video.</figcaption>
+          </figure>
+
+          <figure class="media-panel" data-media-panel="robot">
+            <div class="split-media">
+              <img
+                src="https://user-images.githubusercontent.com/98142496/209920864-a059d868-698b-4810-b211-bdf6e99cc63f.jpg"
+                alt="ERIC-A robot hardware design"
+              />
+              <img
+                src="https://user-images.githubusercontent.com/98142496/209925051-a3b93e7e-aa9f-402b-b194-f23531c2aa6c.jpg"
+                alt="ERIC-A robot assembled hardware"
+              />
+            </div>
+            <figcaption>Robot chassis and assembled delivery platform.</figcaption>
+          </figure>
+
+          <figure class="media-panel" data-media-panel="workflow">
+            <img
+              src="https://user-images.githubusercontent.com/98142496/209927234-fd644c19-fefb-4b4a-8ae4-0bc33c15ecf4.png"
+              alt="ERIC-A delivery workflow from order intake to robot return"
+            />
+            <figcaption>Delivery workflow from user order to station return.</figcaption>
+          </figure>
+        </div>
+
+        <p class="paragraph">
+          ERIC-A combines a ROS-based mobile robot stack, indoor localization,
+          path planning, YOLO vision, voice guidance, and a web service for
+          delivery request management. A user submits an order, an administrator
+          selects deliveries, and the robot travels to the selected destination
+          while announcing its presence around people.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="features-title">
+        <h2 id="features-title" class="section-title">System Highlights</h2>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <i class="ti ti-route" aria-hidden="true"></i>
+            <h3>Autonomous navigation</h3>
+            <p>ROS launch files for SLAM, localization, move_base, and robot bringup.</p>
+          </article>
+          <article class="feature-card">
+            <i class="ti ti-eye-check" aria-hidden="true"></i>
+            <h3>Human-aware delivery</h3>
+            <p>YOLO-based vision support for detecting people and triggering voice alerts.</p>
+          </article>
+          <article class="feature-card">
+            <i class="ti ti-package" aria-hidden="true"></i>
+            <h3>Order-to-robot flow</h3>
+            <p>Web ordering and admin controls connect delivery requests to robot dispatch.</p>
+          </article>
+          <article class="feature-card">
+            <i class="ti ti-cpu" aria-hidden="true"></i>
+            <h3>Hardware integration</h3>
+            <p>Motor, lidar, IMU, servo, and robot description packages share one workspace.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="architecture-title">
+        <h2 id="architecture-title" class="section-title">Architecture</h2>
+        <div class="figure-grid">
+          <figure>
+            <img
+              src="https://user-images.githubusercontent.com/98142496/209920998-c9386c03-3ca8-4c1e-8cb2-1d6f09950620.png"
+              alt="ERIC-A hardware architecture diagram"
+            />
+            <figcaption>Hardware system</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://user-images.githubusercontent.com/98142496/209925273-55ec6f5d-9286-4f32-b214-14abc07b7b17.jpg"
+              alt="ERIC-A web software architecture diagram"
+            />
+            <figcaption>Web architecture</figcaption>
+          </figure>
+        </div>
+        <figure class="wide-figure">
+          <img
+            src="https://user-images.githubusercontent.com/98142496/209921060-054379c7-239c-4820-9ed8-104d54dac2e0.png"
+            alt="ERIC-A robot system architecture"
+          />
+          <figcaption>Robot system architecture</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="interface-title">
+        <h2 id="interface-title" class="section-title">Web Interface</h2>
+        <div class="figure-grid interface-grid">
+          <figure>
+            <img
+              src="https://user-images.githubusercontent.com/98142496/209925531-5afb6480-846f-4bd0-a23a-06217aa2a99a.png"
+              alt="ERIC-A user order page"
+            />
+            <figcaption>User order page</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="https://user-images.githubusercontent.com/98142496/209925606-5ce08925-ab3e-4d4f-b674-4cf09bfc8e44.png"
+              alt="ERIC-A administrator delivery page"
+            />
+            <figcaption>Administrator delivery page</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="run-title">
+        <h2 id="run-title" class="section-title">Run</h2>
+        <p class="paragraph">
+          Clone the workspace with submodules, build the bringup scripts, and
+          launch the robot package.
+        </p>
+        <div class="code-block">
+          <button class="copy-button" type="button" data-copy-target="run-code">
+            <i class="ti ti-copy" aria-hidden="true"></i>
+            <span>Copy</span>
+          </button>
+          <pre id="run-code"><code>git clone --recurse-submodules https://github.com/CrashLab-2022/ERIC_A.git
+cd ERIC_A/eric_a_bringup/scripts
+sudo ./build.sh
+roslaunch eric_a_bringup eric_a_robot.launch</code></pre>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="team-title">
+        <h2 id="team-title" class="section-title">Team</h2>
+        <div class="role-list">
+          <p><b>Robot Hardware</b>: Jihun Kang, Hayeon Lee</p>
+          <p><b>Robot Software</b>: Jeonghan Kim, Jongchan Park, Hayeon Lee, Gihyeon Kwon</p>
+          <p><b>Web</b>: Gayeon Bae</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="resources-title">
+        <h2 id="resources-title" class="section-title">Resources</h2>
+        <div class="resource-list">
+          <a href="https://github.com/CrashLab-2022/ERIC_A">Main repository</a>
+          <a href="https://github.com/CrashLab-2022/ERIC-A-web-frontend-nuxtjs">Web frontend</a>
+          <a href="https://github.com/CrashLab-2022/ERIC-A-web-backend-expressjs">Web backend</a>
+          <a href="https://www.youtube.com/watch?v=_MbvD7s8zbo">YouTube demo</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="section footer">
+      <p class="paragraph">
+        Page structure inspired by the PyRoKi project page template, adapted for
+        ERIC-A.
+      </p>
+    </footer>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>
