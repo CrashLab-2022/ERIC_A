@@ -210,24 +210,140 @@
           can place and track orders, while administrators review requests and
           control each delivery from pickup through completion.
         </p>
-        <div class="feature-grid web-feature-grid">
-          <article class="feature-card web-role-card">
-            <i class="ti ti-user" aria-hidden="true"></i>
-            <h3>User experience</h3>
-            <ul>
-              <li>Sign up, sign in, and submit delivery requests.</li>
-              <li>Track the current status and review delivery details.</li>
-              <li>Open the robot lid when an in-person delivery arrives.</li>
-            </ul>
+        <div class="web-carousel-grid">
+          <article class="web-carousel-card" data-carousel tabindex="0">
+            <div class="web-carousel-heading">
+              <i class="ti ti-user" aria-hidden="true"></i>
+              <div>
+                <h3>User page</h3>
+                <p>Submit delivery requests, track progress, and receive packages.</p>
+              </div>
+            </div>
+            <div class="carousel-viewport">
+              <img
+                src="assets/web/user-home.png"
+                alt="ERIC-A user home page"
+                data-carousel-slide
+                data-caption="Home"
+              />
+              <img
+                src="assets/web/user-sign-up.png"
+                alt="ERIC-A user sign-up page"
+                data-carousel-slide
+                data-caption="Sign up"
+                loading="lazy"
+                hidden
+              />
+              <img
+                src="assets/web/user-login.png"
+                alt="ERIC-A user login page"
+                data-carousel-slide
+                data-caption="Login"
+                loading="lazy"
+                hidden
+              />
+              <img
+                src="assets/web/user-new-delivery.png"
+                alt="ERIC-A delivery request form"
+                data-carousel-slide
+                data-caption="New delivery request"
+                loading="lazy"
+                hidden
+              />
+              <img
+                src="assets/web/user-delivery-tracking.png"
+                alt="ERIC-A user delivery list"
+                data-carousel-slide
+                data-caption="Delivery tracking"
+                loading="lazy"
+                hidden
+              />
+              <img
+                src="assets/web/user-delivery-details.png"
+                alt="ERIC-A user delivery details at destination"
+                data-carousel-slide
+                data-caption="Delivery details"
+                loading="lazy"
+                hidden
+              />
+            </div>
+            <div class="carousel-controls">
+              <button
+                class="carousel-button"
+                type="button"
+                data-carousel-previous
+                aria-label="Previous user page screenshot"
+              >
+                <i class="ti ti-chevron-left" aria-hidden="true"></i>
+              </button>
+              <p class="carousel-status" aria-live="polite">
+                <span data-carousel-caption>Home</span>
+                <span data-carousel-count>1 / 6</span>
+              </p>
+              <button
+                class="carousel-button"
+                type="button"
+                data-carousel-next
+                aria-label="Next user page screenshot"
+              >
+                <i class="ti ti-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </article>
-          <article class="feature-card web-role-card">
-            <i class="ti ti-settings" aria-hidden="true"></i>
-            <h3>Administrator controls</h3>
-            <ul>
-              <li>Accept or reject incoming delivery requests.</li>
-              <li>Dispatch the robot and monitor delivery progress.</li>
-              <li>Open or close the robot lid when handling packages.</li>
-            </ul>
+          <article class="web-carousel-card" data-carousel tabindex="0">
+            <div class="web-carousel-heading">
+              <i class="ti ti-settings" aria-hidden="true"></i>
+              <div>
+                <h3>Administrator page</h3>
+                <p>Review requests, dispatch the robot, and manage package handling.</p>
+              </div>
+            </div>
+            <div class="carousel-viewport">
+              <img
+                src="assets/web/admin-dashboard.png"
+                alt="ERIC-A administrator home page"
+                data-carousel-slide
+                data-caption="Dashboard"
+              />
+              <img
+                src="assets/web/admin-request-queue.png"
+                alt="ERIC-A administrator request list"
+                data-carousel-slide
+                data-caption="Request queue"
+                loading="lazy"
+                hidden
+              />
+              <img
+                src="assets/web/admin-request-review.png"
+                alt="ERIC-A administrator request review page"
+                data-carousel-slide
+                data-caption="Request review"
+                loading="lazy"
+                hidden
+              />
+            </div>
+            <div class="carousel-controls">
+              <button
+                class="carousel-button"
+                type="button"
+                data-carousel-previous
+                aria-label="Previous administrator page screenshot"
+              >
+                <i class="ti ti-chevron-left" aria-hidden="true"></i>
+              </button>
+              <p class="carousel-status" aria-live="polite">
+                <span data-carousel-caption>Dashboard</span>
+                <span data-carousel-count>1 / 3</span>
+              </p>
+              <button
+                class="carousel-button"
+                type="button"
+                data-carousel-next
+                aria-label="Next administrator page screenshot"
+              >
+                <i class="ti ti-chevron-right" aria-hidden="true"></i>
+              </button>
+            </div>
           </article>
         </div>
         <ol class="delivery-flow" aria-label="Delivery status flow">
@@ -239,22 +355,6 @@
           <li><span>6</span>Complete</li>
         </ol>
         <p class="web-stack"><strong>Web stack</strong> Vue.js · Nuxt.js · Axios</p>
-        <div class="figure-grid interface-grid">
-          <figure>
-            <img
-              src="https://user-images.githubusercontent.com/98142496/209925531-5afb6480-846f-4bd0-a23a-06217aa2a99a.png"
-              alt="ERIC-A user order page"
-            />
-            <figcaption>User order page</figcaption>
-          </figure>
-          <figure>
-            <img
-              src="https://user-images.githubusercontent.com/98142496/209925606-5ce08925-ab3e-4d4f-b674-4cf09bfc8e44.png"
-              alt="ERIC-A administrator delivery page"
-            />
-            <figcaption>Administrator delivery page</figcaption>
-          </figure>
-        </div>
       </section>
 
     </main>

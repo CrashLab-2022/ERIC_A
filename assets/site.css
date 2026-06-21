@@ -345,32 +345,123 @@ figcaption {
   background: #fff;
 }
 
-.interface-grid img {
-  height: 360px;
-}
-
 .web-intro {
   margin-bottom: 18px;
 }
 
-.web-feature-grid {
+.web-carousel-grid {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
 }
 
-.web-role-card {
-  min-height: auto;
+.web-carousel-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
 }
 
-.web-role-card ul {
+.web-carousel-card:focus-visible {
+  outline: 3px solid rgba(35, 111, 142, 0.35);
+  outline-offset: 3px;
+}
+
+.web-carousel-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 112px;
+  padding: 20px;
+  background: var(--soft);
+}
+
+.web-carousel-heading > i {
+  color: var(--accent);
+  font-size: 30px;
+}
+
+.web-carousel-heading h3 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 23px;
+}
+
+.web-carousel-heading p {
   margin: 0;
-  padding-left: 20px;
   color: var(--text);
   font-size: 15px;
   line-height: 22px;
 }
 
-.web-role-card li + li {
-  margin-top: 6px;
+.carousel-viewport {
+  height: 430px;
+  padding: 16px;
+  background: #fff;
+  touch-action: pan-y;
+}
+
+.carousel-viewport img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carousel-controls {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 10px;
+  min-height: 62px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--soft);
+}
+
+.carousel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+  font-size: 21px;
+}
+
+.carousel-button:hover,
+.carousel-button:focus-visible {
+  background: var(--accent-strong);
+}
+
+.carousel-button:focus-visible {
+  outline: 3px solid rgba(35, 111, 142, 0.35);
+  outline-offset: 2px;
+}
+
+.carousel-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.carousel-status [data-carousel-count] {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
 }
 
 .delivery-flow {
@@ -458,9 +549,12 @@ figcaption {
   }
 
   .split-media img,
-  .figure-grid img,
-  .interface-grid img {
+  .figure-grid img {
     height: 280px;
+  }
+
+  .carousel-viewport {
+    height: 360px;
   }
 
   .delivery-flow {
@@ -500,7 +594,8 @@ figcaption {
 
   .feature-grid,
   .figure-grid,
-  .split-media {
+  .split-media,
+  .web-carousel-grid {
     grid-template-columns: 1fr;
   }
 
@@ -516,9 +611,16 @@ figcaption {
     text-align: left;
   }
 
+  .web-carousel-heading {
+    min-height: auto;
+  }
+
+  .carousel-viewport {
+    height: 420px;
+  }
+
   .split-media img,
-  .figure-grid img,
-  .interface-grid img {
+  .figure-grid img {
     height: auto;
     max-height: none;
   }
