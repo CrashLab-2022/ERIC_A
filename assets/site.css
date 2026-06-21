@@ -349,6 +349,75 @@ figcaption {
   height: 360px;
 }
 
+.web-intro {
+  margin-bottom: 18px;
+}
+
+.web-feature-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.web-role-card {
+  min-height: auto;
+}
+
+.web-role-card ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.web-role-card li + li {
+  margin-top: 6px;
+}
+
+.delivery-flow {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.delivery-flow li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.delivery-flow span {
+  display: inline-flex;
+  flex: 0 0 24px;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+}
+
+.web-stack {
+  margin: 14px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+}
+
 .footer {
   padding: 42px 0 12px;
   text-align: center;
@@ -393,6 +462,10 @@ figcaption {
   .interface-grid img {
     height: 280px;
   }
+
+  .delivery-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 560px) {
@@ -433,6 +506,14 @@ figcaption {
 
   .feature-card {
     min-height: auto;
+  }
+
+  .delivery-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .web-stack {
+    text-align: left;
   }
 
   .split-media img,

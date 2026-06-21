@@ -59,14 +59,6 @@
           <i class="ti ti-brand-github" aria-hidden="true"></i>
           <span>Code</span>
         </a>
-        <a class="action-button" href="https://www.youtube.com/watch?v=_MbvD7s8zbo">
-          <i class="ti ti-player-play" aria-hidden="true"></i>
-          <span>Demo</span>
-        </a>
-        <a class="action-button" href="https://kim-jeonghan.github.io/">
-          <i class="ti ti-user" aria-hidden="true"></i>
-          <span>Portfolio</span>
-        </a>
         <a
           class="action-button"
           href="https://github.com/CrashLab-2022/ERIC-A-web-frontend-nuxtjs"
@@ -213,6 +205,40 @@
 
       <section class="section" aria-labelledby="interface-title">
         <h2 id="interface-title" class="section-title">Web Interface</h2>
+        <p class="paragraph web-intro">
+          The web application connects delivery requests to robot operation. Users
+          can place and track orders, while administrators review requests and
+          control each delivery from pickup through completion.
+        </p>
+        <div class="feature-grid web-feature-grid">
+          <article class="feature-card web-role-card">
+            <i class="ti ti-user" aria-hidden="true"></i>
+            <h3>User experience</h3>
+            <ul>
+              <li>Sign up, sign in, and submit delivery requests.</li>
+              <li>Track the current status and review delivery details.</li>
+              <li>Open the robot lid when an in-person delivery arrives.</li>
+            </ul>
+          </article>
+          <article class="feature-card web-role-card">
+            <i class="ti ti-settings" aria-hidden="true"></i>
+            <h3>Administrator controls</h3>
+            <ul>
+              <li>Accept or reject incoming delivery requests.</li>
+              <li>Dispatch the robot and monitor delivery progress.</li>
+              <li>Open or close the robot lid when handling packages.</li>
+            </ul>
+          </article>
+        </div>
+        <ol class="delivery-flow" aria-label="Delivery status flow">
+          <li><span>1</span>Request</li>
+          <li><span>2</span>To pickup</li>
+          <li><span>3</span>At pickup</li>
+          <li><span>4</span>In transit</li>
+          <li><span>5</span>At destination</li>
+          <li><span>6</span>Complete</li>
+        </ol>
+        <p class="web-stack"><strong>Web stack</strong> Vue.js · Nuxt.js · Axios</p>
         <div class="figure-grid interface-grid">
           <figure>
             <img
