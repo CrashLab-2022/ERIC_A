@@ -25,6 +25,7 @@ carousels.forEach((carousel) => {
   const nextButton = carousel.querySelector("[data-carousel-next]");
   const viewport = carousel.querySelector(".carousel-viewport");
   let currentIndex = 0;
+  let ignoreNextClick = false;
   let touchStartX = null;
 
   const showSlide = (index) => {
@@ -40,6 +41,13 @@ carousels.forEach((carousel) => {
 
   previousButton.addEventListener("click", () => showSlide(currentIndex - 1));
   nextButton.addEventListener("click", () => showSlide(currentIndex + 1));
+  viewport.addEventListener("click", () => {
+    if (ignoreNextClick) {
+      ignoreNextClick = false;
+      return;
+    }
+    showSlide(currentIndex + 1);
+  });
 
   carousel.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") showSlide(currentIndex - 1);
@@ -61,6 +69,7 @@ carousels.forEach((carousel) => {
 
       const distance = event.changedTouches[0].clientX - touchStartX;
       if (Math.abs(distance) > 40) {
+        ignoreNextClick = true;
         showSlide(currentIndex + (distance < 0 ? 1 : -1));
       }
       touchStartX = null;
